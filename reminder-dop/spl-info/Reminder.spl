@@ -1,0 +1,24 @@
+SPL Lembretes {
+
+	Features = {Services, Category, GoogleCalendar}
+
+	Deltas = {dBase, dGoogleCalendar, dCategory}
+
+	Constraints {
+		
+	}
+
+	Partitions {
+		{dBase} when (Services);
+		{dBase, dCategory} when (Category);
+		{dBase, dGoogleCalendar} when (GoogleCalendar);
+		
+	}
+
+	Products {
+		Base = {Services};
+		AddCategory = {Category};
+		GoogleCalendar = {GoogleCalendar};
+		Full = {Services, Category, GoogleCalendar};
+	}
+}
