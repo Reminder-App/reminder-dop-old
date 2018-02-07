@@ -1256,12 +1256,12 @@ delta dBase {
 				lvFilters.setAdapter(adapter);
 			}
 		
-			public void onItemClick(AdapterView<T> adapterView, View view, int position, long id) {
+			public void onItemClick(AdapterView<? extends Object> adapterView, View view, int position, long id) {
 				notifyListeners(adapter.getItem(position));
 		
 			}
 		
-			public void onNothingSelected(AdapterView<T> arg0) {
+			public void onNothingSelected(AdapterView<? extends Object> arg0) {
 				// TODO Auto-generated method stub
 		
 			}
@@ -1391,12 +1391,12 @@ delta dBase {
 		
 			private void addListenerToSpinnerCategory() {
 				spinnerCategory.setOnItemSelectedListener(new OnItemSelectedListener() {
-					public void onItemSelected(AdapterView<T> parent, View view, int pos, long id) {
+					public void onItemSelected(AdapterView<? extends Object> parent, View view, int pos, long id) {
 						// get the category from the spinner
 						selectedCategory = (Category) parent.getItemAtPosition(pos);
 					}
 		
-					public void onNothingSelected(AdapterView<T> parent) {
+					public void onNothingSelected(AdapterView<? extends Obejct> parent) {
 						// well... do nothing
 					}
 				});
@@ -1404,11 +1404,11 @@ delta dBase {
 		
 			private void addListenerToSpinnerPriority() {
 				spinnerPriority.setOnItemSelectedListener(new OnItemSelectedListener() {
-					public void onItemSelected(AdapterView<T> parent, View view, int pos, long id) {
+					public void onItemSelected(AdapterView<? extends Object> parent, View view, int pos, long id) {
 						selectedPriority = (Priority) parent.getItemAtPosition(pos);
 					}
 		
-					public void onNothingSelected(AdapterView<T> parent) {
+					public void onNothingSelected(AdapterView<? extends Object> parent) {
 						// well... do nothing
 					}
 				});
