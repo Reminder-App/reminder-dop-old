@@ -3386,14 +3386,12 @@ delta dBase {
 		
 			// private Category selectedCategory;
 			private Priority selectedPriority;
-			private CalendarEventCreator creator;
 			protected Reminder reminder;
 			protected Calendar date, time;
 		
 			protected EditText edtReminder, edtDetails, edtDate, edtTime;
 			protected Spinner spinnerDate, spinnerTime, spinnerPriority, spinnerCategory;
 			private Button btnSave, btnCancel;
-			private CheckBox cbCalendar;
 		
 			// TODO: Rename XML from reminder_add to reminder_form.
 		
@@ -3419,7 +3417,6 @@ delta dBase {
 				// edtDate = (EditText) findViewById(R.id.selectedDate);
 				// edtTime = (EditText) findViewById(R.id.selectedTime);
 				spinnerPriority = getSpinnerPriority();
-				cbCalendar = (CheckBox) findViewById(R.id.cbCalendar);
 				try {
 					spinnerCategory = getSpinnerCategory();
 				} catch (Exception e) {
@@ -3615,10 +3612,6 @@ delta dBase {
 					reminder.setHour(timeToString());
 					reminder.setPriority(selectedPriority);
 					reminder.setCategory((Category) spinnerCategory.getSelectedItem());
-					if (cbCalendar.isChecked()) {
-						creator = new CalendarEventCreator();
-						creator.addEventCalendar(reminder, getApplicationContext());
-					}
 				} catch (InvalidTextException e) {
 					// This catch is handling both Reminder's Text and Details.
 					Toast.makeText(getApplicationContext(), "Texto inválido.", Toast.LENGTH_SHORT).show();
@@ -3626,10 +3619,6 @@ delta dBase {
 					Toast.makeText(getApplicationContext(), "Data inválida.", Toast.LENGTH_SHORT).show();
 				} catch (InvalidHourException e) {
 					Toast.makeText(getApplicationContext(), "Hora inválida.", Toast.LENGTH_SHORT).show();
-				} catch (CalendarNotFoundException e) {
-					Toast.makeText(getApplicationContext(), "Não foi encontrado um Google Calendar", Toast.LENGTH_SHORT).show();
-				} catch (ParseException e) {
-					Toast.makeText(getApplicationContext(), "Transformação incorreta de data", Toast.LENGTH_SHORT).show();
 				} catch (Exception e) {
 					// this is an exceptional case that needs to be studied
 					Toast.makeText(getApplicationContext(), "Erro grave.", Toast.LENGTH_SHORT).show();
