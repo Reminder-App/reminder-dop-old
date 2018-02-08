@@ -1396,7 +1396,7 @@ delta dBase {
 						selectedCategory = (Category) parent.getItemAtPosition(pos);
 					}
 		
-					public void onNothingSelected(AdapterView<? extends Obejct> parent) {
+					public void onNothingSelected(AdapterView<? extends Object> parent) {
 						// well... do nothing
 					}
 				});
