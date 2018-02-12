@@ -1,4 +1,4 @@
-SPL Lembretes {
+SPL Reminder {
 
 	Features = {Services, Category, GoogleCalendar}
 
