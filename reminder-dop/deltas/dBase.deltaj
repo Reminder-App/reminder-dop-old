@@ -1129,19 +1129,6 @@ delta dBase {
 			}
 		
 			/**
-			 * Creates the context menu where shows the Edit and Delete options.
-			 */
-			// @Override
-			public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-				super.onCreateContextMenu(menu, v, menuInfo);
-		
-				menu.setHeaderTitle(R.string.context_menu_category_title);
-		
-				MenuInflater inflater = getActivity().getMenuInflater();
-				inflater.inflate(R.menu.category_list_fragment_context_menu, menu);
-			}
-		
-			/**
 			 * Provides each action based in the chosen option(Edit or Delete).
 			 **/
 			/*
@@ -1819,7 +1806,7 @@ delta dBase {
 					if (days == 1)
 						return "Ontem";
 					else
-						return "Há " + days + " dias";
+						return "Hï¿½ " + days + " dias";
 					// break;
 		
 				case TODAY:
@@ -3614,11 +3601,11 @@ delta dBase {
 					reminder.setCategory((Category) spinnerCategory.getSelectedItem());
 				} catch (InvalidTextException e) {
 					// This catch is handling both Reminder's Text and Details.
-					Toast.makeText(getApplicationContext(), "Texto inválido.", Toast.LENGTH_SHORT).show();
+					Toast.makeText(getApplicationContext(), "Texto invï¿½lido.", Toast.LENGTH_SHORT).show();
 				} catch (InvalidDateException e) {
-					Toast.makeText(getApplicationContext(), "Data inválida.", Toast.LENGTH_SHORT).show();
+					Toast.makeText(getApplicationContext(), "Data invï¿½lida.", Toast.LENGTH_SHORT).show();
 				} catch (InvalidHourException e) {
-					Toast.makeText(getApplicationContext(), "Hora inválida.", Toast.LENGTH_SHORT).show();
+					Toast.makeText(getApplicationContext(), "Hora invï¿½lida.", Toast.LENGTH_SHORT).show();
 				} catch (Exception e) {
 					// this is an exceptional case that needs to be studied
 					Toast.makeText(getApplicationContext(), "Erro grave.", Toast.LENGTH_SHORT).show();
@@ -3744,7 +3731,7 @@ delta dBase {
 		
 				List<String> items = new ArrayList<String>();
 				// TODO: Move these to XML.
-				items.add("Sem horário");
+				items.add("Sem horï¿½rio");
 				items.add("+ Selecionar");
 		
 				spinner.setAdapter(adapterTimeGenerator.getSpinnerAdapter(items, this));
