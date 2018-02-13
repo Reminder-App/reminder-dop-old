@@ -68,8 +68,6 @@ delta dBase {
 					Intent reminderIntent = new Intent(getApplicationContext(), AddReminderActivity.class);
 					startActivity(reminderIntent);
 					return true;
-				case R.id.menu_searchReminder:
-					return true;
 				default:
 					return super.onOptionsItemSelected(item);
 				}
