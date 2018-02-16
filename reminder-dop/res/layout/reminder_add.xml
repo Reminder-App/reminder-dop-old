@@ -181,32 +181,11 @@
             android:minWidth="290dip" >
         </Spinner>
 
-        <TextView
-            android:id="@+id/txtAddgCalendar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@id/spinnerCategories"
-            android:gravity="right"
-            android:text="@string/googleCalendar"
-            android:width="70dip" >
-        </TextView>
-
-        <CheckBox
-            android:id="@+id/cbCalendar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/spinnerCategories"
-            android:layout_marginLeft="5dip"
-            android:layout_toRightOf="@id/txtAddgCalendar"
-            android:checked="false"
-            android:gravity="right" />
-
         <LinearLayout
             android:id="@+id/linearLayout1"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/txtAddgCalendar"
+            android:layout_below="@id/spinnerCategories"
             android:gravity="center_vertical" >
 
             <Button
