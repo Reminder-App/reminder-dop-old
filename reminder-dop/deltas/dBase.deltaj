@@ -16,7 +16,7 @@ delta dBase {
 		
 		public class ReminderMainActivity extends Activity {
 		
-			private static String TAG = "lembretes";
+			private static String TAG = "Reminder";
 		
 			/**
 			 * Called when the activity is first created.
