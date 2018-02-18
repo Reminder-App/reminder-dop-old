@@ -18,7 +18,7 @@
     <string name="reminderHourBlank">No Time</string>
     <string name="reminderHourButton">Choose Time</string>
     <string name="reminderPriority">Priority</string>
-    <string name="reminderPriorityTip">Reminder's priority</string>
+    <string name="reminderPriorityTip">Reminder\'s priority</string>
     <string name="reminderCategory">Category</string>
     <string name="saveButton">Save</string>
     <string name="cancelButton">Cancel</string>
@@ -32,7 +32,7 @@
     <!-- category_dialog -->
     <string name="dialog_category_cancel">Cancel</string>
     <!-- add_category_dialog -->
-    <string name="dialog_addcategory_name">Category's name</string>
+    <string name="dialog_addcategory_name">Category\'s name</string>
     <string name="dialog_addcategory_title">Add category:</string>
     <string name="dialog_addcategory_add">Add</string>
     <!-- edit_category_dialog -->
