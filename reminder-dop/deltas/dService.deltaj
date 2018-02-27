@@ -1603,11 +1603,8 @@ delta dService {
 						editIntent.putExtra("id", reminder.getId());
 						editIntent.putExtra("text", reminder.getText());
 						editIntent.putExtra("details", reminder.getDetails());
-						editIntent.putExtra("category_name", reminder.getCategory().getName());
-						editIntent.putExtra("category_id", Long.toString(reminder.getCategory().getId()));
 						editIntent.putExtra("date", reminder.getDate());
 						editIntent.putExtra("hour", reminder.getHour());
-						editIntent.putExtra("priority", Integer.toString(reminder.getPriority()));
 						startActivity(editIntent);
 						updateListView(null);
 						return true;
