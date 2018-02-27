@@ -583,11 +583,6 @@ delta dService {
 						Log.i(DBHelper.class.getCanonicalName(), sql);
 						db.execSQL(sql);
 					}
-		
-					for (String sql : DBConstants.PREDEFINED_CATEGORIES) {
-						Log.i(DBHelper.class.getCanonicalName(), sql);
-						db.execSQL(sql);
-					}
 				} catch (SQLiteException e) {
 					Log.v(DBHelper.class.getName(), e.getMessage());
 				}
