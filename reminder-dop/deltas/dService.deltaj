@@ -2366,13 +2366,9 @@ delta dService {
 		import android.os.Bundle;
 		import br.unb.cic.framework.persistence.DBException;
 		import br.unb.cic.reminders.controller.Controller;
-		import br.unb.cic.reminders.model.Category;
-		import br.unb.cic.reminders.model.Priority;
 		import br.unb.cic.reminders.model.Reminder;
 		
 		public class ExternalAddReminderActivity extends ReminderActivity {
-		
-			private Category newCategory = null;
 		
 			@Override
 			protected void onCreate(Bundle savedInstanceState) {
@@ -2396,24 +2392,12 @@ delta dService {
 				if (action.equals("br.com.positivo.reminders.ADD_REMINDER") && "text/plain".equals(type)) {
 					String text = intent.getStringExtra("text");
 					String details = intent.getStringExtra("details");
-					String categoryName = intent.getStringExtra("category_name");
 					String date = intent.getStringExtra("date");
 					String hour = intent.getStringExtra("hour");
-					String priority = intent.getStringExtra("priority");
-		
-					List<Category> categories = Controller.instance(getApplicationContext()).listCategories();
-					for (Category c : categories) {
-						if (c.getName().equals(categoryName)) {
-							newCategory = c;
-							break;
-						}
-					}
 					reminder.setText(text);
 					reminder.setDetails(details);
 					reminder.setDate(date);
 					reminder.setHour(hour);
-					reminder.setPriority(Priority.fromCode(Integer.parseInt(priority)));
-					reminder.setCategory(newCategory);
 				} else
 					reminder = null;
 		
@@ -2431,13 +2415,6 @@ delta dService {
 				updateDateFromString(reminder.getDate());
 				updateSpinnerDateHour(spinnerTime, reminder.getHour());
 				updateTimeFromString(reminder.getHour());
-				spinnerPriority.setSelection(reminder.getPriority());
-				try {
-					spinnerCategory.setSelection(categoryToIndex(reminder.getCategory()));
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
 		
 			}
 		
@@ -2452,34 +2429,6 @@ delta dService {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-			}
-		
-			@Override
-			protected List<Category> getCategories() throws Exception {
-		
-				List<Category> categories = super.getCategories();
-				return categories;
-			}
-		
-			private Category findCategory(Category category) throws Exception {
-				List<Category> categories = Controller.instance(getApplicationContext()).listCategories();
-				for (Category c : categories) {
-					if (c.getName().equals(category.getName()))
-						return c;
-				}
-				return null;
-			}
-		
-			private int categoryToIndex(Category category) throws Exception {
-				List<Category> categories = Controller.instance(getApplicationContext()).listCategories();
-				int i = 0;
-				for (Category c : categories) {
-					if (c.getName().equals(category.getName())) {
-						return i;
-					}
-					i++;
-				}
-				return 0;
 			}
 		
 		}
