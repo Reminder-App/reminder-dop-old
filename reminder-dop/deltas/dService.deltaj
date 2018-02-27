@@ -1,4 +1,4 @@
-delta dBase {
+delta dService {
 	adds {
 		package br.unb.cic.reminders;
 
