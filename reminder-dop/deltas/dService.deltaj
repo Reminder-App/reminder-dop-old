@@ -928,11 +928,9 @@ delta dService {
 		import android.widget.Spinner;
 		import android.widget.Toast;
 		import br.unb.cic.reminders.controller.Controller;
-		import br.unb.cic.reminders.model.Category;
 		import br.unb.cic.reminders.model.InvalidDateException;
 		import br.unb.cic.reminders.model.InvalidFormatException;
 		import br.unb.cic.reminders.model.InvalidTextException;
-		import br.unb.cic.reminders.model.Priority;
 		import br.unb.cic.reminders.model.Reminder;
 		import br.unb.cic.reminders2.R;
 		
@@ -949,12 +947,6 @@ delta dService {
 			private EditText edtReminder, edtDetails, edtDate, edtHour; // ,
 																		// edtPriority,
 																		// edtCategory;
-		
-			private Category selectedCategory;
-		
-			private Priority selectedPriority;
-		
-			private Spinner spinnerPriority, spinnerCategory;
 		
 			private Button btnSave, btnCancel;
 		
@@ -994,33 +986,6 @@ delta dService {
 			private void configureActionListener() {
 				addListenerToBtnSave();
 				addListenerToBtnCancel();
-				addListenerToSpinnerPriority();
-				addListenerToSpinnerCategory();
-			}
-		
-			private void addListenerToSpinnerCategory() {
-				spinnerCategory.setOnItemSelectedListener(new OnItemSelectedListener() {
-					public void onItemSelected(AdapterView<? extends Object> parent, View view, int pos, long id) {
-						// get the category from the spinner
-						selectedCategory = (Category) parent.getItemAtPosition(pos);
-					}
-		
-					public void onNothingSelected(AdapterView<? extends Object> parent) {
-						// well... do nothing
-					}
-				});
-			}
-		
-			private void addListenerToSpinnerPriority() {
-				spinnerPriority.setOnItemSelectedListener(new OnItemSelectedListener() {
-					public void onItemSelected(AdapterView<? extends Object> parent, View view, int pos, long id) {
-						selectedPriority = (Priority) parent.getItemAtPosition(pos);
-					}
-		
-					public void onNothingSelected(AdapterView<? extends Object> parent) {
-						// well... do nothing
-					}
-				});
 			}
 		
 			private void addListenerToBtnSave() {
@@ -1068,8 +1033,6 @@ delta dService {
 					reminder.setDetails(edtDetails.getText().toString());
 					reminder.setDate(edtDate.getText().toString());
 					reminder.setHour(edtHour.getText().toString());
-					reminder.setCategory(selectedCategory);
-					reminder.setPriority(selectedPriority);
 				} catch (InvalidTextException e) {
 					Toast.makeText(getApplicationContext(), "Texto invalido.", Toast.LENGTH_SHORT).show();
 				} catch (InvalidDateException e) {
@@ -1096,19 +1059,11 @@ delta dService {
 				if (Intent.ACTION_SEND.equals(action) && "text/plain".equals(type)) {
 					previewReminderId = intent.getLongExtra("id", 0);
 					String text = intent.getStringExtra("text");
-					String categoryName = intent.getStringExtra("category_name");
-					String categoryId = intent.getStringExtra("category_id");
 					String date = intent.getStringExtra("date");
 					String hour = intent.getStringExtra("hour");
-					String priority = intent.getStringExtra("priority");
 		
 					reminder = new Reminder();
 					reminder.setText(text);
-					reminder.setPriority(Priority.fromCode(Integer.parseInt(priority, 10)));
-					Category category = new Category();
-					category.setName(categoryName);
-					category.setId(Long.parseLong(categoryId));
-					reminder.setCategory(category);
 					reminder.setDate(date);
 					reminder.setHour(hour);
 					reminder.setId(previewReminderId);
@@ -1144,10 +1099,8 @@ delta dService {
 					try {
 						String text = intent.getStringExtra("text");
 						String details = intent.getStringExtra("details");
-						String category = intent.getStringExtra("category");
 						String date = intent.getStringExtra("date");
 						String hour = intent.getStringExtra("hour");
-						String priority = intent.getStringExtra("priority");
 		
 						/*
 						 * Code below just validates the data supplied, since validation
@@ -1158,10 +1111,6 @@ delta dService {
 						Reminder reminder = new Reminder();
 						reminder.setText(text);
 						reminder.setDetails(details);
-		
-						Category auxCategory = new Category();
-						auxCategory.setName(category);
-						reminder.setCategory(auxCategory);
 		
 						reminder.setDate(date);
 						reminder.setHour(hour);
@@ -1205,10 +1154,6 @@ delta dService {
 					// edtHour = (EditText) findViewById(R.id.edtHour);
 					// edtHour.addTextChangedListener(Mask.insert("##:##", edtHour));
 		
-					spinnerPriority = getSpinnerPriority();
-		
-					spinnerCategory = getSpinnerCategory();
-		
 					if (reminder != null) {
 						updateFieldsFromReminder(reminder);
 					}
@@ -1227,48 +1172,6 @@ delta dService {
 				edtDetails.setText(reminder.getDetails());
 				edtDate.setText(reminder.getDate());
 				edtHour.setText(reminder.getHour());
-				spinnerPriority.setSelection(reminder.getPriority());
-				spinnerCategory.setSelection(categoryToIndex(reminder.getCategory()));
-			}
-		
-			private Spinner getSpinnerCategory() throws Exception {
-				Spinner spinner = (Spinner) findViewById(R.id.spinnerCategories);
-		
-				SpinnerAdapterGenerator<Category> adapterCategoryGenerator = new SpinnerAdapterGenerator<Category>();
-		
-				List<Category> categories = Controller.instance(getApplicationContext()).listCategories();
-		
-				spinner.setAdapter(adapterCategoryGenerator.getSpinnerAdapter(categories, this));
-		
-				return spinner;
-			}
-		
-			private Spinner getSpinnerPriority() {
-				Spinner spinner = (Spinner) findViewById(R.id.spinnerPriorities);
-		
-				SpinnerAdapterGenerator<Priority> adapterPriorityGenerator = new SpinnerAdapterGenerator<Priority>();
-		
-				List<Priority> priorityValues = Arrays.asList(Priority.values());
-		
-				ArrayAdapter<Priority> priorityArrayAdapter = adapterPriorityGenerator.getSpinnerAdapter(priorityValues, this);
-		
-				spinner.setAdapter(priorityArrayAdapter);
-		
-				spinner.setSelection(Priority.NORMAL.getCode());
-		
-				return spinner;
-			}
-		
-			private int categoryToIndex(Category category) throws Exception {
-				List<Category> categories = Controller.instance(getApplicationContext()).listCategories();
-				int i = 0;
-				for (Category c : categories) {
-					if (c.getName().equals(category.getName())) {
-						return i;
-					}
-					i++;
-				}
-				return 0;
 			}
 		
 		}
