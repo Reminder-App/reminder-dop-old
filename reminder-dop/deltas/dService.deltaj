@@ -2169,11 +2169,6 @@ delta dService {
 			}
 
 			@Override
-			public CategoryDAO createCategoryDAO() {
-				return new DefaultCategoryDAO(context);
-			}
-
-			@Override
 			public ReminderDAO createReminderDAO() {
 				return new DefaultReminderDAO(context);
 			}
