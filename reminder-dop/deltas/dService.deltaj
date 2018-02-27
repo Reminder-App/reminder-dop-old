@@ -2145,13 +2145,6 @@ delta dService {
 			}
 		
 			/**
-			 * Returns an instance of CategoryDAO.
-			 * 
-			 * @return an instance of CategoryDAO.
-			 */
-			public abstract CategoryDAO createCategoryDAO();
-		
-			/**
 			 * Returns an instance of ReminderDAO.
 			 * 
 			 * @return an instance of ReminderDAO
