@@ -2458,25 +2458,19 @@ delta dService {
 		import android.widget.EditText;
 		import android.widget.Spinner;
 		import android.widget.Toast;
-		import br.unb.cic.reminders.calendar.CalendarEventCreator;
 		import br.unb.cic.reminders.controller.Controller;
-		import br.unb.cic.reminders.model.CalendarNotFoundException;
-		import br.unb.cic.reminders.model.Category;
 		import br.unb.cic.reminders.model.InvalidDateException;
 		import br.unb.cic.reminders.model.InvalidTextException;
-		import br.unb.cic.reminders.model.Priority;
 		import br.unb.cic.reminders.model.Reminder;
 		import br.unb.cic.reminders2.R;
 		
 		public abstract class ReminderActivity extends Activity {
 		
-			// private Category selectedCategory;
-			private Priority selectedPriority;
 			protected Reminder reminder;
 			protected Calendar date, time;
 		
 			protected EditText edtReminder, edtDetails, edtDate, edtTime;
-			protected Spinner spinnerDate, spinnerTime, spinnerPriority, spinnerCategory;
+			protected Spinner spinnerDate, spinnerTime;
 			private Button btnSave, btnCancel;
 		
 			// TODO: Rename XML from reminder_add to reminder_form.
@@ -2502,13 +2496,6 @@ delta dService {
 				spinnerTime = getSpinnerTime();
 				// edtDate = (EditText) findViewById(R.id.selectedDate);
 				// edtTime = (EditText) findViewById(R.id.selectedTime);
-				spinnerPriority = getSpinnerPriority();
-				try {
-					spinnerCategory = getSpinnerCategory();
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
 		
 			}
 		
@@ -2517,8 +2504,6 @@ delta dService {
 				addListenerToBtnCancel();
 				addListenerToSpinnerDate();
 				addListenerToSpinnerTime();
-				addListenerToSpinnerPriority();
-				addListenerToSpinnerCategory();
 			}
 		
 			protected abstract void initializeValues();
@@ -2663,28 +2648,6 @@ delta dService {
 		
 			}
 		
-			private void addListenerToSpinnerPriority() {
-				spinnerPriority.setOnItemSelectedListener(new OnItemSelectedListener() {
-					public void onItemSelected(AdapterView<? extends Object> parent, View view, int pos, long id) {
-						selectedPriority = (Priority) parent.getItemAtPosition(pos);
-					}
-		
-					public void onNothingSelected(AdapterView<? extends Object> parent) {
-						// well... do nothing
-					}
-				});
-			}
-		
-			private void addListenerToSpinnerCategory() {
-				spinnerCategory.setOnItemSelectedListener(new OnItemSelectedListener() {
-					public void onItemSelected(AdapterView<? extends Object> parent, View view, int pos, long id) {}
-		
-					public void onNothingSelected(AdapterView<? extends Object> parent) {
-						// well... do nothing
-					}
-				});
-			}
-		
 			/**
 			 * Just an auxiliary method to create reminders from the UI data.
 			 * 
@@ -2696,8 +2659,6 @@ delta dService {
 					reminder.setDetails(edtDetails.getText().toString());
 					reminder.setDate(dateToString());
 					reminder.setHour(timeToString());
-					reminder.setPriority(selectedPriority);
-					reminder.setCategory((Category) spinnerCategory.getSelectedItem());
 				} catch (InvalidTextException e) {
 					// This catch is handling both Reminder's Text and Details.
 					Toast.makeText(getApplicationContext(), "Texto inv�lido.", Toast.LENGTH_SHORT).show();
@@ -2767,26 +2728,8 @@ delta dService {
 					time = Calendar.getInstance();
 				time.set(Calendar.MINUTE, minute);
 				time.set(Calendar.HOUR_OF_DAY, hour);
-			}
-		
-			private Spinner getSpinnerCategory() throws Exception {
-				Spinner spinner = (Spinner) findViewById(R.id.spinnerCategories);
-		
-				SpinnerAdapterGenerator<Category> adapterCategoryGenerator = new SpinnerAdapterGenerator<Category>();
-		
-				List<Category> categories = getCategories();
-		
-				ArrayAdapter<Category> adapter = adapterCategoryGenerator.getSpinnerAdapter(categories, this);
-		
-				spinner.setAdapter(adapter);
-		
-				return spinner;
-			}
-		
-			protected List<Category> getCategories() throws Exception {
-				return Controller.instance(getApplicationContext()).listCategories();
-			}
-		
+			}			
+
 			/*
 			 * Utility method which inserts a new date into the last position of the
 			 * spinner.
@@ -2795,9 +2738,9 @@ delta dService {
 			protected void updateSpinnerDateHour(Spinner spinner, String dateOrHour) {
 				if (dateOrHour == null)
 					return;
-		
+
 				ArrayAdapter<String> adapter = (ArrayAdapter<String>) spinner.getAdapter();
-		
+
 				int count = adapter.getCount();
 				if (count > 2) {
 					for (int i = 2; i < count; ++i)
@@ -2834,32 +2777,6 @@ delta dService {
 				items.add("+ Selecionar");
 		
 				spinner.setAdapter(adapterTimeGenerator.getSpinnerAdapter(items, this));
-		
-				return spinner;
-			}
-		
-			protected Spinner getSpinnerCategory(List<Category> categories) throws Exception {
-				Spinner spinner = (Spinner) findViewById(R.id.spinnerCategories);
-		
-				SpinnerAdapterGenerator<Category> adapterCategoryGenerator = new SpinnerAdapterGenerator<Category>();
-		
-				spinner.setAdapter(adapterCategoryGenerator.getSpinnerAdapter(categories, this));
-		
-				return spinner;
-			}
-		
-			private Spinner getSpinnerPriority() {
-				Spinner spinner = (Spinner) findViewById(R.id.spinnerPriorities);
-		
-				SpinnerAdapterGenerator<Priority> adapterPriorityGenerator = new SpinnerAdapterGenerator<Priority>();
-		
-				List<Priority> priorityValues = Arrays.asList(Priority.values());
-		
-				ArrayAdapter<Priority> priorityArrayAdapter = adapterPriorityGenerator.getSpinnerAdapter(priorityValues, this);
-		
-				spinner.setAdapter(priorityArrayAdapter);
-		
-				spinner.setSelection(Priority.NORMAL.getCode());
 		
 				return spinner;
 			}
