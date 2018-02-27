@@ -10,7 +10,6 @@ delta dService {
 		import android.view.MenuInflater;
 		import android.view.MenuItem;
 		import br.unb.cic.reminders.view.AddReminderActivity;
-		import br.unb.cic.reminders.view.FilterListFragment;
 		import br.unb.cic.reminders.view.ReminderListFragment;
 		import br.unb.cic.reminders2.R;
 		
@@ -40,10 +39,7 @@ delta dService {
 			private void createUI() {
 				FragmentTransaction ft = getFragmentManager().beginTransaction();
 				ReminderListFragment listReminderFragment = new ReminderListFragment();
-				FilterListFragment listCategoryFragment = new FilterListFragment();
-				listCategoryFragment.addListener(listReminderFragment);
 				ft.add(R.id.listReminders, listReminderFragment);
-				ft.add(R.id.listCategories, listCategoryFragment);
 				ft.commit();
 			}
 		
