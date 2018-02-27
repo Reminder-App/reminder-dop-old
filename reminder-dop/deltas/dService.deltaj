@@ -1258,7 +1258,6 @@ delta dService {
 				}
 		
 				// Takes the views included in the row
-				ImageView ivPriority = (ImageView) reminderRow.findViewById(R.id.ivPriority);
 				TextView tvReminder = (TextView) reminderRow.findViewById(R.id.txtReminder);
 				TextView tvDateFirst = (TextView) reminderRow.findViewById(R.id.txtDateFirst);
 				TextView tvDateSecond = (TextView) reminderRow.findViewById(R.id.txtDateSecond);
@@ -1276,17 +1275,7 @@ delta dService {
 					}
 				});
 		
-				// Fill the views with its contents
-				// Fill the imageview based in the priority
-				if (getItem(position).getPriority() == 1)
-					ivPriority.setImageResource(R.drawable.important);
-				else if (getItem(position).getPriority() == 2)
-					ivPriority.setImageResource(R.drawable.urgent);
-		
 				tvReminder.setTextColor(rowColor);
-				// if it is "Importante" or "Urgente" it might be bold!
-				if (getItem(position).getPriority() != 0)
-					tvReminder.setTypeface(null, Typeface.BOLD);
 				tvReminder.setText(getItem(position).getText());
 		
 				// Based in the type of the row includes the specified date
