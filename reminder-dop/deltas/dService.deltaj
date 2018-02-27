@@ -2184,9 +2184,7 @@ delta dService {
 		import android.database.Cursor;
 		import android.net.Uri;
 		import br.unb.cic.framework.persistence.DBException;
-		import br.unb.cic.reminders.model.Category;
 		import br.unb.cic.reminders.model.Reminder;
-		import br.unb.cic.reminders.model.db.CategoryDAO;
 		import br.unb.cic.reminders.model.db.DBConstants;
 		import br.unb.cic.reminders.model.db.DefaultDBFactory;
 		import br.unb.cic.reminders.model.db.ReminderDAO;
@@ -2207,10 +2205,6 @@ delta dService {
 		
 			public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + BASE_PATH);
 		
-			public static final String category() {
-				return DBConstants.CATEGORY_NAME_COLUMN;
-			}
-		
 			public static final String text() {
 				return DBConstants.REMINDER_TEXT_COLUMN;
 			}
@@ -2224,7 +2218,6 @@ delta dService {
 			}
 		
 			private ReminderDAO rdao;
-			private CategoryDAO cdao;
 		
 			// this is only relevant in the cases where we want to expose
 			// access to more than one database table.
@@ -2237,7 +2230,6 @@ delta dService {
 			@Override
 			public boolean onCreate() {
 				rdao = DefaultDBFactory.factory(getContext()).createReminderDAO();
-				cdao = DefaultDBFactory.factory(getContext()).createCategoryDAO();
 				return false;
 			}
 		
@@ -2245,11 +2237,7 @@ delta dService {
 			public Uri insert(Uri uri, ContentValues values) {
 				try {
 					Reminder reminder = new Reminder();
-		
-					Category category = cdao.findCategory(values.getAsString(category()));
-		
-					
-					reminder.setCategory(category);
+
 					reminder.setText(values.getAsString(text()));
 					reminder.setDate(values.getAsString(date()));
 					reminder.setHour(values.getAsString(hour()));
