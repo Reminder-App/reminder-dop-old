@@ -1919,18 +1919,11 @@ delta dService {
 			@Column(column = "DETAILS", type = DBTypes.TEXT)
 			private String details;
 		
-			@Column(column = "FK_CATEGORY", type = DBTypes.LONG)
-			@ForeignKey(mappedBy = "id")
-			private Category category;
-		
 			@Column(column = "DATE", type = DBTypes.TEXT)
 			private String date; // it must be in the YYYY-MM-DD format
 		
 			@Column(column = "HOUR", type = DBTypes.TEXT)
 			private String hour; // it must be in the HH:mm format
-		
-			@Column(column = "PRIORITY", type = DBTypes.INT)
-			private Priority priority;
 		
 			@Column(column = "DONE", type = DBTypes.INT)
 			private boolean done;
@@ -1975,14 +1968,6 @@ delta dService {
 				}
 			}
 		
-			public Category getCategory() {
-				return category;
-			}
-		
-			public void setCategory(Category category) {
-				this.category = category;
-			}
-		
 			public String getDate() {
 				return date;
 			}
@@ -2013,16 +1998,8 @@ delta dService {
 				return m.matches();
 			}
 		
-			public int getPriority() {
-				return priority.getCode();
-			}
-		
-			public void setPriority(Priority priority) {
-				this.priority = priority;
-			}
-		
 			public boolean isValid() {
-				return (text != null && category != null && date != null && hour != null && priority != null);
+				return (text != null && date != null && hour != null);
 			}
 		
 			public boolean isDone() {
