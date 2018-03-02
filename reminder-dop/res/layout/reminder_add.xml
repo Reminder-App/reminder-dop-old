@@ -72,34 +72,6 @@
             android:minWidth="290dip" >
         </Spinner>
 
-        <!--
-    <TextView
-        android:id="@+id/txtDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@id/spinnerDate"
-        android:layout_marginTop="10dip"
-        android:gravity="right"
-        android:text="@string/reminderDate"
-        android:width="70dip" >
-    </TextView>
-
-    <EditText
-        android:id="@+id/selectedDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/spinnerDate"
-        android:layout_marginLeft="5dip"
-        android:layout_toRightOf="@id/txtDate"
-        android:clickable="true"
-        android:focusable="false"
-        android:inputType="date"
-        android:onClick="onClick"
-        android:text="@string/reminderDateBlank"
-        android:width="290dip" />
-        -->
-
         <TextView
             android:id="@+id/txtTime"
             android:layout_width="wrap_content"
@@ -121,71 +93,11 @@
             android:minWidth="290dip" >
         </Spinner>
 
-        <!--
-         <EditText
-        android:id="@+id/selectedTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/spinnerDate"
-        android:layout_marginLeft="5dip"
-        android:layout_marginTop="10dip"
-        android:layout_toRightOf="@id/txtTime"
-        android:inputType="time"
-        android:focusable="false"
-        android:onClick="onClick"
-        android:text="@string/reminderHourBlank"
-        android:width="290dip" />
-        -->
-
-        <TextView
-            android:id="@+id/txtPriority"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@id/spinnerTime"
-            android:layout_marginTop="10dip"
-            android:gravity="right"
-            android:text="@string/reminderPriority"
-            android:width="70dip" >
-        </TextView>
-
-        <Spinner
-            android:id="@+id/spinnerPriorities"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/spinnerTime"
-            android:layout_marginLeft="5dip"
-            android:layout_toRightOf="@id/txtPriority"
-            android:minWidth="290dip" >
-        </Spinner>
-
-        <TextView
-            android:id="@+id/txtCategory"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@id/spinnerPriorities"
-            android:layout_marginTop="10dip"
-            android:gravity="right"
-            android:text="@string/reminderCategory"
-            android:width="70dip" >
-        </TextView>
-
-        <Spinner
-            android:id="@+id/spinnerCategories"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/spinnerPriorities"
-            android:layout_marginLeft="5dip"
-            android:layout_toRightOf="@id/txtCategory"
-            android:minWidth="290dip" >
-        </Spinner>
-
         <LinearLayout
             android:id="@+id/linearLayout1"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/spinnerCategories"
+            android:layout_below="@id/spinnerTime"
             android:gravity="center_vertical" >
 
             <Button
