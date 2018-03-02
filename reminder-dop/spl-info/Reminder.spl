@@ -1,24 +1,18 @@
 SPL Reminder {
 
-	Features = {Services, Category, GoogleCalendar}
+	Features = {Service}
 
-	Deltas = {dService, dGoogleCalendar, dCategory}
+	Deltas = {dService}
 
 	Constraints {
 		
 	}
 
 	Partitions {
-		{dService} when (Services);
-		{dService, dCategory} when (Category);
-		{dService, dGoogleCalendar} when (GoogleCalendar);
-		
+		{dService} when (Service);
 	}
 
 	Products {
-		Base = {Services};
-		AddCategory = {Category};
-		GoogleCalendar = {GoogleCalendar};
-		Full = {Services, Category, GoogleCalendar};
+		Base = {Service};
 	}
 }
