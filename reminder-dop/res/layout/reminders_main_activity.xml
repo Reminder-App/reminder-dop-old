@@ -5,17 +5,6 @@
     android:background="#999999"
     android:orientation="vertical" >
 
-    <!-- List of Categories -->
-
-    <LinearLayout
-        android:id="@+id/listCategories"
-        android:layout_width="160dp"
-        android:layout_height="fill_parent"
-        android:layout_marginLeft="0dp"
-        android:background="#DBDBDB"
-        android:orientation="vertical" >
-    </LinearLayout>
-
     <!-- List of Reminders -->
 
     <LinearLayout
