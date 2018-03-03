@@ -539,4 +539,19 @@ delta dCategory {
 			}
 		}
 	}
+	modifies br.unb.cic.reminders.model.Reminder {
+		adds @Column(column = "FK_CATEGORY", type = DBTypes.LONG)
+			@ForeignKey(mappedBy = "id")
+			private Category category;
+		adds public Category getCategory() {
+			return category;
+		}
+		adds public void setCategory(Category category) {
+			this.category = category;
+		}
+		removes isValid();
+		adds public boolean isValid() {
+			return(text != null && category != null && date != null && hour != null);
+		}
+	}
 }
