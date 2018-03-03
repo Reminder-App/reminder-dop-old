@@ -31,4 +31,71 @@ delta dCategory {
 		
 		adds public static String REMINDER_FK_CATEGORY_COLUMN = "FK_CATEGORY";
 	}
+	modifies br.unb.cic.framework.persistence.GenericDAO {
+		adds import br.unb.cic.reminders.model.db.DefaultCategoryDAO;
+		
+		removes persist(T entity);
+		adds protected Long persist(T entity) throws DBInvalidEntityException, DBException {
+			try {
+				db = dbHelper.getWritableDatabase();
+				ContentValues values = new ContentValues();
+				if(! entity.getClass().isAnnotationPresent(Entity.class)) {
+					throw new DBInvalidEntityException(entity);
+				}
+				String tableName = entity.getClass().getAnnotation(Entity.class).table();
+				boolean update = false;
+				String updateWhereClause = null;
+				for(Field f : entity.getClass().getDeclaredFields()) {
+					if(f.isAnnotationPresent(Column.class)) {
+						String column = f.getAnnotation(Column.class).column();
+						boolean pk = f.getAnnotation(Column.class).primaryKey();
+						String methodName = getMethod(f.getName());
+						Class args [] = {
+						};
+						Method m = entity.getClass().getDeclaredMethod(methodName, args);
+						Object value = m.invoke(entity, args);
+						if(f.isAnnotationPresent(ForeignKey.class)) {
+							String fk = f.getAnnotation(ForeignKey.class).mappedBy();
+							methodName = getMethod(fk);
+							m = value.getClass().getDeclaredMethod(methodName, args);
+							value = m.invoke(value, args);
+						}
+						if(value != null) {
+							values.put(column, value.toString());
+						}
+						else {
+							values.putNull(column);
+						}
+						if(pk && value != null) {
+							update = true;
+							updateWhereClause = column + " = " + value.toString();
+						}
+					}
+				}
+				Long id = null;
+				db.beginTransaction();
+				if(! update) {
+					id = db.insert(tableName, null, values);
+				}
+				else {
+					db.update(tableName, values, updateWhereClause, null);
+				}
+				db.setTransactionSuccessful();
+				return id;
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+				Log.e(DefaultCategoryDAO.class.getCanonicalName(), e.getLocalizedMessage());
+				throw new DBException();
+			}
+			finally {
+				if(db.inTransaction()) {
+					db.endTransaction();
+				}
+				db.close();
+				dbHelper.close();
+			}
+		}
+				
+	}
 }
