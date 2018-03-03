@@ -567,4 +567,57 @@ delta dCategory {
 			ft.commit();
 		}
 	}
+	modifies br.unb.cic.reminders.EditReminderActivity {
+		adds import br.unb.cic.reminders.model.Category;
+		modifies initializeValues() {
+			String categoryName = intent.getStringExtra("category_name");
+			String categoryId = intent.getStringExtra("category_id");
+			Category category = new Category();
+			category.setId(Long.parseLong(categoryId));
+			category.setName(categoryName);
+			try {
+				spinnerCategory.setSelection(categoryToIndex(category));
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			original();
+		}
+		removes persist(Reminder reminder);
+		adds @Override protected void persist(Reminder reminder) {
+			try {
+				Category category = findCategory(reminder.getCategory());
+				reminder.setCategory(category);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	
+			try {
+				Controller.instance(getApplicationContext()).updateReminder(reminder);
+			} catch (DBException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		adds private int categoryToIndex(Category category) throws Exception {
+			List<Category> categories = Controller.instance(getApplicationContext()).listCategories();
+			int i = 0;
+			for (Category c : categories) {
+				if (c.getName().equals(category.getName())) {
+					return i;
+				}
+				i++;
+			}
+			return 0;
+		}
+		adds private Category findCategory(Category category) throws Exception {
+			List<Category> categories = Controller.instance(getApplicationContext()).listCategories();
+			for (Category c : categories) {
+				if (c.getName().equals(category.getName()))
+					return c;
+			}
+			return null;
+		}
+	}
 }
