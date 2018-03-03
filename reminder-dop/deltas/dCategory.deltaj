@@ -130,4 +130,42 @@ delta dCategory {
 		
 		}
 	}
+	modifies br.unb.cic.reminders.controller.Controller {
+		adds import br.unb.cic.reminders.model.Category;
+		adds public List<Category> listCategories() throws Exception {
+			try {
+				return DBFactory.factory(context).createCategoryDAO().listCategories();
+			} catch (DBException e) {
+				// TODO: we need to define what to do in these situations.
+				throw e;
+			}
+		}
+		adds public Category findCategory(Long id) throws Exception {
+			return DBFactory.factory(context).createCategoryDAO().findCategoryById(id);
+		}
+		adds public Category findCategory(String name) throws Exception {
+			return DBFactory.factory(context).createCategoryDAO().findCategory(name);
+		}
+		adds public List<Reminder> listRemindersByCategory(Category category) throws Exception {
+			try {
+				return DBFactory.factory(context).createReminderDAO().listRemindersByCategory(category);
+			} catch (DBException e) {
+				// TODO: we need to define what to do in these situations.
+				throw e;
+			}
+		}
+		adds public Category getCategory(String name) throws DBException {
+			try {
+				List<Category> categories = DBFactory.factory(context).createCategoryDAO().listCategories();
+				for (Category c : categories) {
+					if (c.getName().equals(name))
+						return c;
+				}
+				return null;
+			} catch (DBException e) {
+				// TODO: we need to define what to do in these situations.
+				throw e;
+			}
+		}
+	}
 }
