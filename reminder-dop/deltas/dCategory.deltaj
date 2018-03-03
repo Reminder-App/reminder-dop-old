@@ -381,4 +381,9 @@ delta dCategory {
 			}
 		}
 	}
+	modifies br.unb.cic.reminders.model.db.DefaultDBFactory {
+		adds @Override public CategoryDAO createCategoryDAO() {
+			return new DefaultCategoryDAO(context);
+		}
+	}
 }
