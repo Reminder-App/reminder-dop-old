@@ -2686,8 +2686,8 @@ delta dService {
 		
 				List<String> items = new ArrayList<String>();
 				// TODO: Move these to XML.
-				items.add("Sem data");
-				items.add("+ Selecionar");
+				items.add("No date");
+				items.add("+ Select");
 		
 				spinner.setAdapter(adapterDateGenerator.getSpinnerAdapter(items, this));
 		
@@ -2701,8 +2701,8 @@ delta dService {
 		
 				List<String> items = new ArrayList<String>();
 				// TODO: Move these to XML.
-				items.add("Sem hor�rio");
-				items.add("+ Selecionar");
+				items.add("No time");
+				items.add("+ Select");
 		
 				spinner.setAdapter(adapterTimeGenerator.getSpinnerAdapter(items, this));
 		
