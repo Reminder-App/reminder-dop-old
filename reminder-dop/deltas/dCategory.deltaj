@@ -198,4 +198,7 @@ delta dCategory {
 			}
 		}
 	}
+	modifies br.unb.cic.reminders.model.db.DBFactory {
+		adds public abstract CategoryDAO createCategoryDAO();
+	}
 }
