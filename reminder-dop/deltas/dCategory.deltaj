@@ -386,4 +386,81 @@ delta dCategory {
 			return new DefaultCategoryDAO(context);
 		}
 	}
+	modifies br.unb.cic.reminders.model.db.DefaultReminderDAO {
+		adds import br.unb.cic.reminders.model.Category;
+		adds public List<Reminder> listRemindersByCategory(Category category) throws DBException {
+			try {
+				db = dbHelper.getReadableDatabase();
+				Cursor cursor = db.rawQuery(DBConstants.SELECT_REMINDERS_BY_CATEGORY,
+						new String[] { category.getId().toString() });
+	
+				return remindersFromCursor(cursor);
+			} catch (Exception e) {
+				Log.e(DefaultCategoryDAO.class.getCanonicalName(), e.getLocalizedMessage());
+				throw new DBException();
+			} finally {
+				db.close();
+				dbHelper.close();
+			}
+		}
+		removes listReminders();
+		adds public List<Reminder> listReminders() throws DBException {
+			try {
+				db = dbHelper.getReadableDatabase();
+				Cursor cursor = db.rawQuery(DBConstants.SELECT_REMINDERS, null);
+				return remindersFromCursor(cursor);
+			}
+			catch(Exception e) {
+				Log.e(DefaultCategoryDAO.class.getCanonicalName(), e.getLocalizedMessage());
+				throw new DBException();
+			}
+			finally {
+				db.close();
+				dbHelper.close();
+			}
+		}
+		removes deleteReminder(Reminder reminder);
+		adds public void deleteReminder(Reminder reminder) throws DBException {
+			try {
+				db = dbHelper.getWritableDatabase();
+				db.delete(DBConstants.REMINDER_TABLE, DBConstants.REMINDER_PK_COLUMN + "="
+					+ reminder.getId(), null);
+			}
+			catch(SQLiteException e) {
+				Log.e(DefaultCategoryDAO.class.getCanonicalName(), e.getLocalizedMessage());
+				throw new DBException();
+			}
+			finally {
+				db.close();
+				dbHelper.close();
+			}
+		}
+		removes cursorToReminder(Cursor cursor);
+		adds private Reminder cursorToReminder(Cursor cursor) throws DBException {
+			Long pk =
+			cursor.getLong(cursor.getColumnIndex(DBConstants.REMINDER_PK_COLUMN));
+			String text =
+			cursor.getString(cursor.getColumnIndex(DBConstants.REMINDER_TEXT_COLUMN));
+			String details =
+			cursor.getString(cursor.getColumnIndex(DBConstants.REMINDER_DETAILS_COLUMN));
+			String date =
+			cursor.getString(cursor.getColumnIndex(DBConstants.REMINDER_DATE_COLUMN));
+			String hour =
+			cursor.getString(cursor.getColumnIndex(DBConstants.REMINDER_HOUR_COLUMN));
+			int done =
+			cursor.getInt(cursor.getColumnIndex(DBConstants.REMINDER_DONE_COLUMN));
+			Long categoryId = cursor.getLong(cursor.getColumnIndex(DBConstants.REMINDER_FK_CATEGORY_COLUMN));
+
+			Category category = DBFactory.factory(context).createCategoryDAO().findCategoryById(categoryId);
+			Reminder reminder = new Reminder();
+			reminder.setText(text);
+			reminder.setDetails(details);
+			reminder.setId(pk);
+			reminder.setDate(date);
+			reminder.setHour(hour);
+			reminder.setDone(done);
+			reminder.setCategory(category);
+			return reminder;
+		}
+	}
 }
