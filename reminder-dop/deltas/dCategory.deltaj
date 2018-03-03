@@ -463,4 +463,8 @@ delta dCategory {
 			return reminder;
 		}
 	}
+	modifies br.unb.cic.reminders.model.db.ReminderDAO {
+		adds import br.unb.cic.reminders.model.Category;
+		adds public List<Reminder> listRemindersByCategory(Category category) throws DBException;
+	}
 }
