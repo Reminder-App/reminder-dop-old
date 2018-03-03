@@ -22,7 +22,7 @@ To run this project it is necessary to use the Eclipse IDE - we are using the [E
 
 5. To run the project click **Properties -> Java Builder**  and verify that the following parameters are configured: <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![Java Compiler Configuration](https://i.imgur.com/z30LeVx.png)
 
-6. After, right click on the project and then on **Run As -> Run Configurator -> Android Application -> New** and make the following settings: <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![Settings to Run Configurator](https://i.imgur.com/gasu7hI.png)
+6. After, right click on the project and then on **Run As -> Run Configurator -> Android Application -> New** and make the following settings: <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![Settings to Run Configurator](https://i.imgur.com/3oQcgx8.png)
 
 7. *This step is optional because it is intended for anyone who wants to modify the project*. Now right click on the project and go to **SPL** and enable **Enable project specific settings** and make the following settings: <br />
 7.1. In the **Source Folder** option: <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![Settings to Source Folder](https://i.imgur.com/53MyHiO.png)
