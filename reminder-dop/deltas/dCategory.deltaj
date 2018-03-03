@@ -168,4 +168,34 @@ delta dCategory {
 			}
 		}
 	}
+	modifies br.unb.cic.reminders.model.cp.ReminderContentProvider {
+		adds import br.unb.cic.reminders.model.Category;
+		adds import br.unb.cic.reminders.model.db.CategoryDAO;
+		adds public static final String category() {
+			return DBConstants.CATEGORY_NAME_COLUMN;
+		}
+		adds private CategoryDAO cdao;
+		modifies onCreate() {
+			cdao = DefaultDBFactory.factory(getContext()).createCategoryDAO();
+			rdao = DefaultDBFactory.factory(getContext()).createReminderDAO();
+			return false;
+		}
+		removes insert(Uri uri, ContentValues values);
+		adds @Override public Uri insert(Uri uri, ContentValues values) {
+			try {
+				Reminder reminder = new Reminder();
+				Category category = cdao.findCategory(values.getAsString(category()));
+				reminder.setCategory(category);
+				reminder.setText(values.getAsString(text()));
+				reminder.setDate(values.getAsString(date()));
+				reminder.setHour(values.getAsString(hour()));
+				Long id = rdao.saveReminder(reminder);
+				getContext().getContentResolver().notifyChange(uri, null);
+				return Uri.parse(BASE_PATH + "/" + id);
+			}
+			catch(DBException e) {
+				throw new RuntimeException(e.getLocalizedMessage());
+			}
+		}
+	}
 }
