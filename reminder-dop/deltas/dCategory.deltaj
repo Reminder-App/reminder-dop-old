@@ -201,4 +201,22 @@ delta dCategory {
 	modifies br.unb.cic.reminders.model.db.DBFactory {
 		adds public abstract CategoryDAO createCategoryDAO();
 	}
+	modifies br.unb.cic.reminders.model.db.DBHelper {
+		removes onCreate(SQLiteDatabase db);
+		adds @Override public void onCreate(SQLiteDatabase db) {
+			try {
+				for (String sql : DBConstants.CREATE_TABLE_STATEMENTS) {
+					Log.i(DBHelper.class.getCanonicalName(), sql);
+					db.execSQL(sql);
+				}
+	
+				for (String sql : DBConstants.PREDEFINED_CATEGORIES) {
+					Log.i(DBHelper.class.getCanonicalName(), sql);
+					db.execSQL(sql);
+				}
+			} catch (SQLiteException e) {
+				Log.v(DBHelper.class.getName(), e.getMessage());
+			}
+		}
+	}
 }
