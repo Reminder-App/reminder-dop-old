@@ -1,3 +1,34 @@
 delta dCategory {
-	
+	modifies br.unb.cic.reminders.model.db.DBConstants {
+		removes DROP_TABLE_STATEMENTS;
+		adds public static String DROP_TABLE_STATEMENTS[] = { "DROP TABLE IF EXISTS REMINDER", "DROP TABLE IF EXISTS CATEGORY" };
+		
+		removes CREATE_TABLE_STATEMENTS;
+		adds public static String CREATE_TABLE_STATEMENTS[] = { "CREATE TABLE CATEGORY("
+			+ "PK INTEGER PRIMARY KEY AUTOINCREMENT, " + "NAME VARCHAR(50) NOT NULL, " + "LOCKED INT NOT NULL);",
+
+			"CREATE TABLE REMINDER ( " + "PK INTEGER PRIMARY KEY AUTOINCREMENT, " + "TEXT VARCHAR(50) NOT NULL,"
+					+ "DETAILS VARCHAR(50) NULL,"
+					+ "FK_CATEGORY INTEGER NOT NULL REFERENCES CATEGORY ON DELETE CASCADE," + "DATE CHAR(10) NULL,"
+					+ "HOUR CHAR(5) NULL," + "DONE INTEGER NOT NULL);", };
+		
+		adds public static final String SELECT_CATEGORIES = "SELECT PK, NAME FROM CATEGORY";
+		adds public static final String SELECT_CATEGORY_BY_NAME = "SELECT PK, NAME FROM CATEGORY WHERE NAME = ?";
+		adds public static final String SELECT_CATEGORY_BY_ID = "SELECT PK, NAME FROM CATEGORY WHERE PK = ?";
+		
+		removes SELECT_REMINDERS;
+		adds public static final String SELECT_REMINDERS = "SELECT PK, TEXT, DETAILS, FK_CATEGORY, DATE, HOUR, DONE FROM REMINDER";
+		adds public static final String SELECT_REMINDERS_BY_CATEGORY = "SELECT PK, TEXT, DETAILS, FK_CATEGORY, DATE, HOUR, DONE FROM REMINDER WHERE FK_CATEGORY = ?";
+		adds public static String DELETE_CATEGORIES = "DELETE FROM CATEGORY WHERE PK = ?";
+		
+		adds public static final String PREDEFINED_CATEGORIES[] = { "INSERT INTO CATEGORY VALUES (NULL,'Faculdade',1);",
+			"INSERT INTO CATEGORY VALUES (NULL,'Trabalho',1);", "INSERT INTO CATEGORY VALUES (NULL,'Pessoal',1);" };
+
+		adds public static String CATEGORY_TABLE = "CATEGORY";
+		adds public static String CATEGORY_PK_COLUMN = "PK";
+		adds public static String CATEGORY_NAME_COLUMN = "NAME";
+		adds public static String CATEGORY_LOCKED_COLUMN = "LOCKED";
+		
+		adds public static String REMINDER_FK_CATEGORY_COLUMN = "FK_CATEGORY";
+	}
 }
