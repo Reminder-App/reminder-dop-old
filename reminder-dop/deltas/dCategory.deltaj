@@ -554,4 +554,17 @@ delta dCategory {
 			return(text != null && category != null && date != null && hour != null);
 		}
 	}
+	modifies br.unb.cic.reminders.ReminderMainActivity {
+		adds import br.unb.cic.reminders.view.FilterListFragment;
+		removes createUI();
+		adds private void createUI() {
+			FragmentTransaction ft = getFragmentManager().beginTransaction();
+			ReminderListFragment listReminderFragment = new ReminderListFragment();
+			FilterListFragment listCategoryFragment = new FilterListFragment();
+			listCategoryFragment.addListener(listReminderFragment);
+			ft.add(R.id.listReminders, listReminderFragment);
+			ft.add(R.id.listCategories, listCategoryFragment);
+			ft.commit();
+		}
+	}
 }
