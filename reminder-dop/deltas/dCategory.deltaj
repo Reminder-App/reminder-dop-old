@@ -1119,4 +1119,142 @@ delta dCategory {
 			return spinner;
 		}
 	}
+	modifies br.unb.cic.reminders.view.ReminderAddActivity {
+		adds import br.unb.cic.reminders.model.Category;
+		adds private Category selectedCategory;
+		adds private Spinner spinnerCategory;
+		modifies configureActionListener() {
+			original();
+			addListenerToSpinnerCategory();
+		}
+		adds private void addListenerToSpinnerCategory() {
+			spinnerCategory.setOnItemSelectedListener(new OnItemSelectedListener() {
+				public void onItemSelected(AdapterView<? extends Object> parent, View view, int pos, long id) {
+					// get the category from the spinner
+					selectedCategory = (Category) parent.getItemAtPosition(pos);
+				}
+	
+				public void onNothingSelected(AdapterView<? extends Object> parent) {
+					// well... do nothing
+				}
+			});
+		}
+		removes createReminder();
+		adds private Reminder createReminder() {
+			/*
+			 * Since view's not passing all the information yet (priority ...), we
+			 * instantiate a reminder initially passing only "text" and "date".
+			 */
+			Reminder reminder = new Reminder();
+			try {
+				reminder.setText(edtReminder.getText().toString());
+				reminder.setDetails(edtDetails.getText().toString());
+				reminder.setDate(edtDate.getText().toString());
+				reminder.setHour(edtHour.getText().toString());
+				reminder.setCategory(selectedCategory);
+			} catch (InvalidTextException e) {
+				Toast.makeText(getApplicationContext(), "Texto invalido.", Toast.LENGTH_SHORT).show();
+			} catch (InvalidDateException e) {
+				Toast.makeText(getApplicationContext(), "Data invalida.", Toast.LENGTH_SHORT).show();
+			} catch (InvalidHourException e) {
+				Toast.makeText(getApplicationContext(), "Hora invalida.", Toast.LENGTH_SHORT).show();
+			}
+			return reminder;
+		}
+		removes getExistingReminder();
+		adds private Reminder getExistingReminder() {
+			Reminder reminder = null;
+			Intent intent = getIntent();
+			String action = intent.getAction();
+			String type = intent.getType();
+			if(Intent.ACTION_SEND.equals(action) && "text/plain".equals(type)) {
+				previewReminderId = intent.getLongExtra("id", 0);
+				String text = intent.getStringExtra("text");
+				String categoryName = intent.getStringExtra("category_name");
+				String categoryId = intent.getStringExtra("category_id");
+				String date = intent.getStringExtra("date");
+				String hour = intent.getStringExtra("hour");
+				reminder = new Reminder();
+				reminder.setText(text);
+				Category category = new Category();
+				category.setName(categoryName);
+				category.setId(Long.parseLong(categoryId));
+				reminder.setCategory(category);
+				reminder.setDate(date);
+				reminder.setHour(hour);
+				reminder.setId(previewReminderId);
+			}
+			return reminder;
+		}
+		removes getReminderFromIntent();
+		adds private Reminder getReminderFromIntent() {
+			Intent intent = getIntent();
+			String action = intent.getAction();
+			String type = intent.getType();
+			if("br.com.positivo.reminders.ADD_REMINDER".equals(action) &&
+				"text/plain".equals(type)) {
+				try {
+					String text = intent.getStringExtra("text");
+					String details = intent.getStringExtra("details");
+					String category = intent.getStringExtra("category");
+					String date = intent.getStringExtra("date");
+					String hour = intent.getStringExtra("hour");
+					Reminder reminder = new Reminder();
+					reminder.setText(text);
+					reminder.setDetails(details);
+					Category auxCategory = new Category();
+					auxCategory.setName(category);
+					reminder.setCategory(auxCategory);
+					reminder.setDate(date);
+					reminder.setHour(hour);
+					return reminder;
+				}
+				catch(InvalidFormatException e) {
+				}
+			}
+			return null;
+		}
+		removes initialize(Reminder reminder);
+		adds private void initialize(Reminder reminder) {
+			try {
+				edtReminder = ( EditText ) findViewById(R.id.edtReminder);
+				edtDetails = ( EditText ) findViewById(R.id.edtDetails);
+				spinnerCategory = getSpinnerCategory();
+				if(reminder != null) {
+					updateFieldsFromReminder(reminder);
+				}
+				btnSave = ( Button ) findViewById(R.id.btnSave);
+				btnCancel = ( Button ) findViewById(R.id.btnCancel);
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		modifies updateFieldsFromReminder(Reminder reminder) {
+			original(reminder);
+			spinnerCategory.setSelection(categoryToIndex(reminder.getCategory()));
+		}
+		adds private Spinner getSpinnerCategory() throws Exception {
+			Spinner spinner = (Spinner) findViewById(R.id.spinnerCategories);
+	
+			SpinnerAdapterGenerator<Category> adapterCategoryGenerator = new SpinnerAdapterGenerator<Category>();
+	
+			List<Category> categories = Controller.instance(getApplicationContext()).listCategories();
+	
+			spinner.setAdapter(adapterCategoryGenerator.getSpinnerAdapter(categories, this));
+	
+			return spinner;
+		}
+		adds private int categoryToIndex(Category category) throws Exception {
+			List<Category> categories = Controller.instance(getApplicationContext()).listCategories();
+			int i = 0;
+			for (Category c : categories) {
+				if (c.getName().equals(category.getName())) {
+					return i;
+				}
+				i++;
+			}
+			return 0;
+		}
+	}
 }
