@@ -877,19 +877,6 @@ delta dCategory {
 			}
 		
 			/**
-			 * Creates the context menu where shows the Edit and Delete options.
-			 */
-			// @Override
-			public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-				super.onCreateContextMenu(menu, v, menuInfo);
-		
-				menu.setHeaderTitle(R.string.context_menu_category_title);
-		
-				MenuInflater inflater = getActivity().getMenuInflater();
-				inflater.inflate(R.menu.category_list_fragment_context_menu, menu);
-			}
-		
-			/**
 			 * Provides each action based in the chosen option(Edit or Delete).
 			 **/
 			/*
