@@ -1,0 +1,7 @@
+AndroidManifest => AndroidManifest.xml;
+ReminderMainActivity => res/layout/reminders_main_activity.xml;
+ReminderAdd => res/layout/reminder_add.xml;
+CategoriesList => res/layout/categories_list_fragment.xml;
+Strings => res/values/strings.xml;
+CategoryRow => res/layout/category_row.xml;
+
