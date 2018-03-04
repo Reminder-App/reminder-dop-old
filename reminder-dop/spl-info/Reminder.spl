@@ -1,8 +1,8 @@
 SPL Reminder {
 
-	Features = {Service}
+	Features = {Service, StaticCategory}
 
-	Deltas = {dService}
+	Deltas = {dService, dStaticCategory}
 
 	Constraints {
 		
@@ -10,9 +10,11 @@ SPL Reminder {
 
 	Partitions {
 		{dService} when (Service);
+		{dStaticCategory} when (StaticCategory);
 	}
 
 	Products {
 		Base = {Service};
+		StaticCategory = {Service, StaticCategory};
 	}
 }
