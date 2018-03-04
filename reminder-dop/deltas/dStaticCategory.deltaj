@@ -1,4 +1,4 @@
-delta dCategory {
+delta dStaticCategory {
 	modifies br.unb.cic.reminders.model.db.DBConstants {
 		removes DROP_TABLE_STATEMENTS;
 		adds public static String DROP_TABLE_STATEMENTS[] = { "DROP TABLE IF EXISTS REMINDER", "DROP TABLE IF EXISTS CATEGORY" };
