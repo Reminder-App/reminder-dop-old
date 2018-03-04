@@ -18,7 +18,7 @@
         android:theme="@style/Theme.Reminder" >
         //#ifdef staticCategory
         <activity
-            android:name="reminder.category.br.unb.cic.reminders.ReminderMainActivity"
+            android:name="reminder.staticcategory.br.unb.cic.reminders.ReminderMainActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="landscape" >
             <intent-filter>
@@ -28,19 +28,19 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="reminder.category.br.unb.cic.reminders.view.AddReminderActivity"
+            android:name="reminder.staticcategory.br.unb.cic.reminders.view.AddReminderActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/title_activity_reminder_add"
             android:screenOrientation="landscape" >
         </activity>
         <activity
-            android:name="reminder.category.br.unb.cic.reminders.view.EditReminderActivity"
+            android:name="reminder.staticcategory.br.unb.cic.reminders.view.EditReminderActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/title_activity_reminder_edit"
             android:screenOrientation="landscape" >
         </activity>
         <activity
-            android:name="reminder.category.br.unb.cic.reminders.view.ExternalAddReminderActivity"
+            android:name="reminder.staticcategory.br.unb.cic.reminders.view.ExternalAddReminderActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/title_activity_reminder_edit"
             android:screenOrientation="landscape" >
