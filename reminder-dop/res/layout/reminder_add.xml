@@ -92,14 +92,45 @@
             android:layout_toRightOf="@id/txtTime"
             android:minWidth="290dip" >
         </Spinner>
+        
+        //#ifdef staticCategory
+        <TextView
+            android:id="@+id/txtCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/spinnerTime"
+            android:layout_marginTop="10dip"
+            android:gravity="right"
+            android:text="@string/reminderCategory"
+            android:width="70dip" >
+        </TextView>
 
+        <Spinner
+            android:id="@+id/spinnerCategories"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/spinnerTime"
+            android:layout_marginLeft="5dip"
+            android:layout_toRightOf="@id/txtCategory"
+            android:minWidth="290dip" >
+        </Spinner>
+        
         <LinearLayout
+            android:id="@+id/linearLayout1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/spinnerCategories"
+            android:gravity="center_vertical" >
+       //#else
+       <LinearLayout
             android:id="@+id/linearLayout1"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/spinnerTime"
             android:gravity="center_vertical" >
-
+       //#endif
+       
             <Button
                 android:id="@+id/btnSave"
                 android:layout_width="0dip"
