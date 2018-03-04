@@ -17,8 +17,13 @@
     <string name="reminderHourTip">HH:MM</string>
     <string name="reminderHourBlank">No Time</string>
     <string name="reminderHourButton">Choose Time</string>
+    //#ifdef staticCategory
+    <string name="reminderCategory">Category</string>
+    //#endif
+    
     <string name="saveButton">Save</string>
     <string name="cancelButton">Cancel</string>
+    
     <!-- Reminder_list_fragment -->
     <string name="reminder_list_late">DELAYED</string>
     <string name="reminder_list_today">TODAY</string>
