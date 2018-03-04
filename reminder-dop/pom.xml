@@ -10,7 +10,7 @@
 	</parent>
 	
 	<groupId>br.unb.cic</groupId>
-	<artifactId>reminder-dop</artifactId>
+	<artifactId>reminder-dop-project</artifactId>
 	<version>0.0.1</version>
 	<name>Reminder - Application</name>
 
