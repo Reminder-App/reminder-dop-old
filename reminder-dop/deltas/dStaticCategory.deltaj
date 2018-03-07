@@ -567,21 +567,34 @@ delta dStaticCategory {
 			ft.commit();
 		}
 	}
-	modifies br.unb.cic.reminders.EditReminderActivity {
+	modifies br.unb.cic.reminders.view.EditReminderActivity {
 		adds import br.unb.cic.reminders.model.Category;
-		modifies initializeValues() {
+		removes initializeValues();
+		adds @Override protected void initializeValues() {
+			Intent intent = getIntent();
+			long reminderId = intent.getLongExtra("id", 0);
+			String text = intent.getStringExtra("text");
+			String details = intent.getStringExtra("details");
 			String categoryName = intent.getStringExtra("category_name");
 			String categoryId = intent.getStringExtra("category_id");
+			String date = intent.getStringExtra("date");
+			String hour = intent.getStringExtra("hour");
 			Category category = new Category();
 			category.setId(Long.parseLong(categoryId));
 			category.setName(categoryName);
+			reminder.setId(reminderId);
+			edtReminder.setText(text);
+			edtDetails.setText(details);
+			updateSpinnerDateHour(spinnerDate, date);
+			updateDateFromString(date);
+			updateSpinnerDateHour(spinnerTime, hour);
+			updateTimeFromString(hour);
 			try {
 				spinnerCategory.setSelection(categoryToIndex(category));
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			original();
 		}
 		removes persist(Reminder reminder);
 		adds @Override protected void persist(Reminder reminder) {
