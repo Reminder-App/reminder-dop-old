@@ -750,7 +750,8 @@ delta dStaticCategory {
 			}
 			else reminder = null;
 		}
-		modifies initializeValues() {
+		removes initializeValues();
+ 		adds @Override protected void initializeValues() {
 			if(! reminder.isValid()) return;
 			edtReminder.setText(reminder.getText());
 			edtDetails.setText(reminder.getDetails());
