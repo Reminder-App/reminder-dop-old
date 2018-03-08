@@ -11,7 +11,7 @@
         </transformation>
     </configuration>
     <configuration>
-      <expression>StaticCategory</expression>
+      <expression>Static Category</expression>
         <transformation>
           <name>createBuildEntries</name>
           <args>staticCategory</args>
