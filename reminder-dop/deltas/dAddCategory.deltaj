@@ -218,4 +218,9 @@ delta dAddCategory {
 			}
 		}
 	}
+	modifies br.unb.cic.reminders.model.db.CategoryDAO {
+		adds public void saveCategory(Category category) throws DBException;
+		adds public void updateCategory(Category category) throws DBException;
+		adds public void deleteCategory(Category category) throws DBException;
+	}
 }
