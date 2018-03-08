@@ -513,4 +513,41 @@ delta dAddCategory {
 			 return super.onContextItemSelected(item);
 		 }
 	}
+	modifies br.unb.cic.reminders.view.ReminderActivity {
+		removes addListenerToSpinnerCategory();
+		adds private void addListenerToSpinnerCategory() {
+			spinnerCategory.setOnItemSelectedListener(new OnItemSelectedListener() {
+				public void onItemSelected(AdapterView<? extends Object> parent, View view, int pos, long id) {
+					// if user clicked "+ Category"
+					if (pos == (spinnerCategory.getCount() - 1)) {
+						DialogFragment newFragment = AddCategoryDialogFragment.newInstance(spinnerCategory);
+						newFragment.show(getFragmentManager(), "" + R.string.dialog_addcategory_title);
+					}
+				}
+	
+				public void onNothingSelected(AdapterView<? extends Object> parent) {
+					// well... do nothing
+				}
+			});
+		}
+		removes getSpinnerCategory();
+		adds private Spinner getSpinnerCategory() throws Exception {
+			Spinner spinner = (Spinner) findViewById(R.id.spinnerCategories);
+	
+			SpinnerAdapterGenerator<Category> adapterCategoryGenerator = new SpinnerAdapterGenerator<Category>();
+	
+			List<Category> categories = getCategories();
+	
+			ArrayAdapter<Category> adapter = adapterCategoryGenerator.getSpinnerAdapter(categories, this);
+
+			// We do not persist this! It's just to show the add category dialog.
+			Category temp = new Category();
+			temp.setName("+ Categoria");
+			adapter.add(temp);
+	
+			spinner.setAdapter(adapter);
+	
+			return spinner;
+		}
+	}
 }
