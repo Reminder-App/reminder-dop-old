@@ -223,4 +223,42 @@ delta dAddCategory {
 		adds public void updateCategory(Category category) throws DBException;
 		adds public void deleteCategory(Category category) throws DBException;
 	}
+	modifies br.unb.cic.reminders.model.db.DefaultCategoryDAO {
+		adds public void saveCategory(Category category) throws DBException {
+			try {
+				persist(category);
+			} catch (DBInvalidEntityException e) {
+				throw new DBException();
+			}
+		}
+		adds public void updateCategory(Category category) throws DBException {
+			try {
+				// db.delete(DBConstants.CATEGORY_TABLE,
+				// DBConstants.CATEGORY_PK_COLUMN + "=" + category.getId(), null);
+				try {
+					persist(category);
+				} catch (DBInvalidEntityException e) {
+					throw new DBException();
+				}
+			} catch (SQLiteException e) {
+				Log.e(DefaultCategoryDAO.class.getCanonicalName(), e.getLocalizedMessage());
+				throw new DBException();
+			} finally {
+				db.close();
+				dbHelper.close();
+			}
+		}
+		adds public void deleteCategory(Category category) throws DBException {
+			try {
+				db = dbHelper.getWritableDatabase();
+				db.delete(DBConstants.CATEGORY_TABLE, DBConstants.CATEGORY_PK_COLUMN + "=" + category.getId(), null);
+			} catch (SQLiteException e) {
+				Log.e(DefaultCategoryDAO.class.getCanonicalName(), e.getLocalizedMessage());
+				throw new DBException();
+			} finally {
+				db.close();
+				dbHelper.close();
+			}
+		}
+	}
 }
