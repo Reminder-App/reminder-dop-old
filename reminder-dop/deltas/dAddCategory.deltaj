@@ -155,4 +155,42 @@ delta dAddCategory {
 		
 		}
 	}
+	modifies br.unb.cic.reminders.controller.Controller {
+		removes notImplementedYet();
+		adds public void deleteReminderByCategory(Category category) throws DBException {
+			try {
+				List<Reminder> allReminders = DBFactory.factory(context).createReminderDAO().listRemindersByCategory(category);
+				for (Reminder reminder : allReminders){
+					DBFactory.factory(context).createReminderDAO().deleteReminder(reminder);
+				}
+			} catch (DBException e) {
+				// TODO: we need to define what to do in these situations.
+				throw e;
+			}
+		}
+		adds public void addCategory(Category category) throws Exception {
+			try {
+				DBFactory.factory(context).createCategoryDAO().saveCategory(category);
+			} catch (DBException e) {
+				// TODO: we need to define what to do in these situations.
+				throw e;
+			}
+		}
+		adds public void updateCategory(Category category) throws DBException {
+			try {
+				DBFactory.factory(context).createCategoryDAO().updateCategory(category);
+			} catch (DBException e) {
+				// TODO: we need to define what to do in these situations.
+				throw e;
+			}
+		}
+		adds public void deleteCategory(Category category) throws DBException {
+			try {
+				DBFactory.factory(context).createCategoryDAO().deleteCategory(category);
+			} catch (DBException e) {
+				// TODO: we need to define what to do in these situations.
+				throw e;
+			}
+		}
+	}
 }
