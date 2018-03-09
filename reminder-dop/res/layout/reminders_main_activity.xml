@@ -5,7 +5,7 @@
     android:background="#999999"
     android:orientation="vertical" >
     
-	//#ifdef staticCategory 
+	//#ifdef category 
 	<!-- List of Categories -->
     <LinearLayout
         android:id="@+id/listCategories"
@@ -35,6 +35,6 @@
         android:background="#FFFFFF"
         android:orientation="vertical" >
     </LinearLayout>
-	//#endif
+    //#endif
     
 </RelativeLayout>
