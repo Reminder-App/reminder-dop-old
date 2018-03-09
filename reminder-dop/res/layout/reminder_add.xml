@@ -93,7 +93,7 @@
             android:minWidth="290dip" >
         </Spinner>
         
-        //#ifdef staticCategory
+        //#ifdef category
         <TextView
             android:id="@+id/txtCategory"
             android:layout_width="wrap_content"
