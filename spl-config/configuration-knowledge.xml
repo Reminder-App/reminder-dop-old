@@ -9,6 +9,24 @@
             <name>preprocessFiles</name>
             <args>AndroidManifest, ReminderMainActivity, ReminderAdd, Strings</args>
         </transformation>
+	<transformation>
+            <name>removeComponents</name>
+            <args>SearchIconHdpi, SearchIconLdpi, SearchIconMdpi, SearchIconXhdpi, SPLInfoFolder, DeltasFolder</args>
+        </transformation>
+    </configuration>
+    <configuration>
+      <expression>Or(Manage Category, Static Category)</expression>
+        <transformation>
+          <name>createBuildEntries</name>
+          <args>category</args>
+        </transformation>
+    </configuration>
+    <configuration>
+      <expression>Manage Category</expression>
+        <transformation>
+          <name>createBuildEntries</name>
+          <args>manageCategory</args>
+        </transformation>
     </configuration>
     <configuration>
       <expression>Static Category</expression>
@@ -18,10 +36,17 @@
         </transformation>
     </configuration>
     <configuration>
-      <expression>Not(Static Category)</expression>
+      <expression>Not(Or(Manage Category, Static Category))</expression>
         <transformation>
           <name>removeComponents</name>
           <args>CategoriesList, CategoryRow</args>
+        </transformation>
+    </configuration>
+	<configuration>
+      <expression>Not(Manage Category)</expression>
+        <transformation>
+          <name>removeComponents</name>
+          <args>CategoryDialog, CategoryListFragmentContextMenu</args>
         </transformation>
     </configuration>
 </configurationModel>

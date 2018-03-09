@@ -2,11 +2,20 @@
 	<featureModel chosenLayoutAlgorithm="1">
 		<struct>
 			<and mandatory="true" name="Reminder App">
-				<feature name="Static Category"/>
-				<feature mandatory="true" name="Services"/>
+				<and mandatory="true" name="Reminder Manage">
+					<feature mandatory="true" name="View"/>
+					<feature mandatory="true" name="Create"/>
+					<feature mandatory="true" name="Edit"/>
+					<feature mandatory="true" name="Delete"/>
+				</and>
+				<or name="Reminder Category">
+					<feature name="Manage Category"/>
+					<feature name="Static Category"/>
+				</or>
 			</and>
 		</struct>
 		<calculations Auto="true" Constraints="true" Features="true" Redundant="true"/>
 		<comments/>
 		<featureOrder userDefined="false"/>
 	</featureModel>
+
