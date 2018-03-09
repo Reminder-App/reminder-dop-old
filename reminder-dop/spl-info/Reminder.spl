@@ -1,20 +1,22 @@
 SPL Reminder {
 
-	Features = {Service, StaticCategory}
+	Features = {ManageReminder, ReminderCategory, ManageCategory, StaticCategory}
 
-	Deltas = {dService, dStaticCategory}
+	Deltas = {dManageReminder, dStaticCategory, dManageCategory}
 
 	Constraints {
-		
+		ReminderCategory AND (ManageCategory OR StaticCategory);
 	}
 
 	Partitions {
-		{dService} when (Service);
-		{dStaticCategory} when (StaticCategory);
+		{dManageReminder} when (ManageReminder);
+		{dManageReminder, dStaticCategory} when (StaticCategory);
+		{dManageReminder, dStaticCategory, dManageCategory} when (ManageCategory);
 	}
 
 	Products {
-		Base = {Service};
-		StaticCategory = {Service, StaticCategory};
+		Base = {ManageReminder};
+		StaticCategory = {ManageReminder, StaticCategory};
+		ManageCategory = {ManageReminder, ManageCategory};
 	}
 }
