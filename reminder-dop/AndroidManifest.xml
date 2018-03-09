@@ -16,7 +16,43 @@
         android:icon="@drawable/icon"
         android:label="@string/app_name"
         android:theme="@style/Theme.Reminder" >
-        //#ifdef staticCategory
+        //#ifdef manageCategory
+        <activity
+            android:name="reminder.managecategory.br.unb.cic.reminders.ReminderMainActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="landscape" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="reminder.managecategory.br.unb.cic.reminders.view.AddReminderActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:label="@string/title_activity_reminder_add"
+            android:screenOrientation="landscape" >
+        </activity>
+        <activity
+            android:name="reminder.managecategory.br.unb.cic.reminders.view.EditReminderActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:label="@string/title_activity_reminder_edit"
+            android:screenOrientation="landscape" >
+        </activity>
+        <activity
+            android:name="reminder.managecategory.br.unb.cic.reminders.view.ExternalAddReminderActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:label="@string/title_activity_reminder_edit"
+            android:screenOrientation="landscape" >
+            <intent-filter>
+                <action android:name="reminder.managecategory.br.unb.cic.reminders.ADD_REMINDER" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+        </activity>       
+        //#elifdef staticCategory
         <activity
             android:name="reminder.staticcategory.br.unb.cic.reminders.ReminderMainActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -45,13 +81,13 @@
             android:label="@string/title_activity_reminder_edit"
             android:screenOrientation="landscape" >
             <intent-filter>
-                <action android:name="reminder.base.br.unb.cic.reminders.ADD_REMINDER" />
+                <action android:name="reminder.staticcategory.br.unb.cic.reminders.ADD_REMINDER" />
 
                 <category android:name="android.intent.category.DEFAULT" />
 
                 <data android:mimeType="text/plain" />
             </intent-filter>
-        </activity>       
+        </activity>
         //#else
         <activity
             android:name="reminder.base.br.unb.cic.reminders.ReminderMainActivity"
@@ -90,5 +126,4 @@
         </activity>
         //#endif
     </application>
-
 </manifest>
