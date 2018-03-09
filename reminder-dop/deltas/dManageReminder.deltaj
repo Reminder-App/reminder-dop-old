@@ -1,4 +1,4 @@
-delta dService {
+delta dManageReminder {
 	adds {
 		package br.unb.cic.reminders;
 
