@@ -8,10 +8,10 @@
 					<feature mandatory="true" name="Edit"/>
 					<feature mandatory="true" name="Delete"/>
 				</and>
-				<or name="Reminder Category">
+				<alt name="Reminder Category">
 					<feature name="Manage Category"/>
 					<feature name="Static Category"/>
-				</or>
+				</alt>
 			</and>
 		</struct>
 		<calculations Auto="true" Constraints="true" Features="true" Redundant="true"/>
