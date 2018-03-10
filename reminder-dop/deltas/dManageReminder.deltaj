@@ -1302,8 +1302,8 @@ delta dManageReminder {
 					return "";
 				}
 		
-				String months[] = { "JAN", "FEV", "MAR", "ABR", "MAI", "JUN", "JUL", "AGO", "SET", "OUT", "NOV", "DEZ" };
-				String week[] = { "", "DOM", "SEG", "TER", "QUA", "QUI", "SEX", "SAB" };
+				String months[] = { "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC" };
+				String week[] = { "", "SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT" };
 		
 				// Today and thatDay Calendars being initialized
 				Calendar today = Calendar.getInstance();
@@ -1318,9 +1318,9 @@ delta dManageReminder {
 					long diff = today.getTimeInMillis() - thatDay.getTimeInMillis();
 					long days = diff / (24*60*60*1000);
 					if (days == 1)
-						return "Ontem";
+						return "Yesterday";
 					else
-						return "H� " + days + " dias";
+						return days + " days ago";
 					// break;
 		
 				case TODAY:
@@ -1362,7 +1362,7 @@ delta dManageReminder {
 					return getDatesHour(position);
 				// break;
 				case TODAY:
-					return "hoje";
+					return "today";
 				// break;
 				case NEXT_DAYS:
 					// Today and thatDay Calendars being initialized
@@ -1376,7 +1376,7 @@ delta dManageReminder {
 					long days = diff / (24*60*60*1000);
 		
 					if (days == 1)
-						return "amanha";
+						return "tomorrow";
 					else
 						return getDatesHour(position);
 					// break;
