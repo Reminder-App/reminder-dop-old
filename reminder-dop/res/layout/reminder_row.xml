@@ -15,21 +15,13 @@
         android:focusable="false" >
     </CheckBox>
 
-    <ImageView
-        android:id="@+id/ivPriority"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:layout_centerVertical="true"
-        android:layout_toRightOf="@id/cbDone" >
-    </ImageView>
-
     <TextView
         android:id="@+id/txtReminder"
         android:layout_width="wrap_content"
         android:layout_height="23dp"
         android:layout_centerVertical="true"
         android:layout_marginLeft="5dp"
-        android:layout_toRightOf="@id/ivPriority"
+        android:layout_toRightOf="@id/cbDone"
         android:ellipsize="end"
         android:maxLines="1"
         android:text="Reminder"
