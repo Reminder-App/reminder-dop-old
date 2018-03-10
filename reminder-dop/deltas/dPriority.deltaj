@@ -358,4 +358,17 @@ delta dPriority {
 		
 		}
 	}
+	modifies br.unb.cic.reminders.model.Reminder {
+		adds @Column(column = "PRIORITY", type = DBTypes.INT) private Priority priority;
+		adds public int getPriority() {
+			return priority.getCode();
+		}
+		adds public void setPriority(Priority priority) {
+			this.priority = priority;
+		}
+		removes isValid();
+		adds public boolean isValid() {
+			return(text != null && date != null && hour != null && priority != null);
+		}
+	}
 }
