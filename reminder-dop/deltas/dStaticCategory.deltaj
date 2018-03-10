@@ -21,8 +21,8 @@ delta dStaticCategory {
 		adds public static final String SELECT_REMINDERS_BY_CATEGORY = "SELECT PK, TEXT, DETAILS, FK_CATEGORY, DATE, HOUR, DONE FROM REMINDER WHERE FK_CATEGORY = ?";
 		adds public static String DELETE_CATEGORIES = "DELETE FROM CATEGORY WHERE PK = ?";
 		
-		adds public static final String PREDEFINED_CATEGORIES[] = { "INSERT INTO CATEGORY VALUES (NULL,'Faculdade',1);",
-			"INSERT INTO CATEGORY VALUES (NULL,'Trabalho',1);", "INSERT INTO CATEGORY VALUES (NULL,'Pessoal',1);" };
+		adds public static final String PREDEFINED_CATEGORIES[] = { "INSERT INTO CATEGORY VALUES (NULL,'College',1);",
+			"INSERT INTO CATEGORY VALUES (NULL,'Job',1);", "INSERT INTO CATEGORY VALUES (NULL,'Personal',1);" };
 
 		adds public static String CATEGORY_TABLE = "CATEGORY";
 		adds public static String CATEGORY_PK_COLUMN = "PK";
