@@ -1818,7 +1818,7 @@ delta dManageReminder {
 
 		public class AllRemindersFilter extends ReminderFilter {
 
-			private final String name = "Todos";
+			private final String name = "All";
 
 			public AllRemindersFilter(Context context) {
 				super(context);
