@@ -4,32 +4,54 @@ This project integrated the *Positivo Challenge*, a research and development pro
 ### Features
 The features present in this release are:
 
-![Feature Model](https://i.imgur.com/nmtGwK7.png)
+![Feature Model](https://i.imgur.com/bP7gvCr.png)
 
 
-# Steps to run the project
-To run this project it is necessary to use the Eclipse IDE - we are using the [Eclipse Neon for Android Developers](https://www.eclipse.org/downloads/packages/eclipse-android-developers/neonm6). Once you have the IDE installed, the steps that must be followed to import the project are:
+# Steps to Generate a Product
+To run this project it is necessary to use the Eclipse IDE - we are using the [Eclipse Neon for Android Developers](https://www.eclipse.org/downloads/packages/eclipse-android-developers/neonm6). For the project to work, make sure that you have the following components installed:
 
-1. Open the Eclipse IDE and go to **Help -> Install New Software** <br />
-1.1. Install the [DeltaJ 1.5](https://www.tu-braunschweig.de/isf/research/deltas/) plugin: https://www.isf.cs.tu-bs.de/cms/research/deltas/downloads/plug-in/
+* Open the Eclipse IDE and go to **Help -> Install New Software** and install the [DeltaJ 1.5](https://www.tu-braunschweig.de/isf/research/deltas/) plugin: https://www.isf.cs.tu-bs.de/cms/research/deltas/downloads/plug-in/
 
-2. Now go to **Window -> Android SDK Manager**<br />
-2.1. Select options to install **Android API 19**.
+* Install and configure the [Hepheatus](https://github.com/hephaestus-pl/hephaestus-base);
 
-3. *This step is optional*. To create a virtual device, go to **Window -> Android Virtual Device Manager** and create the device with the following configuration: <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![Create a Virtual Device to Android](https://i.imgur.com/nGM9z8u.png)
+In order for the final product to be generated, the following steps must be performed.
 
-4. To import the project go to **File -> Import -> Maven -> Existing Maven Project** and select the project in the directory where it was cloned;
+### First Step
 
-5. To run the project click **Properties -> Java Builder**  and verify that the following parameters are configured: <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![Java Compiler Configuration](https://i.imgur.com/z30LeVx.png)
+This first step is to generate the java source code for the desired product. It is important to note that importing this project into the Eclipse IDE will contain errors due to the preprocessing directives present in the *.xml* files that corresponds to the graphical interface of the Reminder app - this part will be handled in the **Second Step**.
 
-6. After, right click on the project and then on **Run As -> Run Configurator -> Android Application -> New** and make the following settings: <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![Settings to Run Configurator](https://i.imgur.com/3oQcgx8.png)
+1. With the DeltaJ plugin installed, import the project into the Eclipse IDE: <br />
+1.1. **File -> Import -> Existing Android Code Into Workspace**. **IMPORTANT**: After the import, ignore the errors in the product line, because we first used Eclipse to generate the java source code;
 
-7. *This step is optional because it is intended for anyone who wants to modify the project*. Now right click on the project and go to **SPL** and enable **Enable project specific settings** and make the following settings: <br />
-7.1. In the **Source Folder** option: <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![Settings to Source Folder](https://i.imgur.com/53MyHiO.png)
+2. Open the **Project Explorer** and go to **spl-info -> Reminder.spl**;
 
-8. To generate a product, go to the **Project -> Build Project** menu and select this project. Then select the desired product and wait for the source code to be generated.
+3. Go to menu **Project -> Clean**. After that, it will open a DeltaJ Plugin window so that a product is generated: <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![DeltaJ Products do select](https://i.imgur.com/wekIELK.png)
 
-9. Finally, run the application on the virtual device or on your own device.
+4. Close the Eclipse IDE.
+
+### Second Step
+
+To continue, all steps in step 1 must have been successfully executed. This step will be responsible for managing the graphical interface variability of the Reminders app. For this, the Hepheatus tool is used.
+
+1. In the directory for this project, open the **spl-config** folder. Then open the file **project.properties** and replace the *&lt;directory-where-this-repository-is-cloned&gt;* tag as requested. <br />
+1.1. Then change the value of *instance-model* according to the product generated in the First Step instruction 3. **IMPORTANT**: an error will occur if the product selected in this step is direct from the one generated in the First Step;
+
+2. Open the workspace where the Hepheastus tool is installed. Then go to **hephaestus-sb/bin** and run the *hepheastus* file. <br />
+2.1. After running hephaestus, the following screen will appear: <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![Hephaestus Tool](https://i.imgur.com/OvtqDMh.png)
+
+3. Enter the command *start*. Then enter the **absolute path** where the *project.properties* file is located and then confirm;
+
+4. Navigate to the target directory that was entered in the *projects.properties* file.
+
+5. Open the terminal and enter the command below. Remember to replace *&lt;hephaestus-workspace-path&gt;* with its corresponding value: <br /> *java -jar &lt;hephaestus-workspace-path&gt;/hephaestus-pp/bin/antenna-pp.jar files.pp build.lst --drop-lines*
+
+6. After, the generated product design is fully configured. So import it into the Eclipse IDE or Android Studio and emulate the Reminder app.
+
+
+##### It's important to know
+
+* Keep the Eclipse IDE closed by following the instructions in **Second Step**;
+* Using the Eclipse IDE in **First Step** is necessary because of the DeltaJ plugin. However, the product generated after performing the instructions in **Second Step** may be important to the Eclipse IDE as well as to Android Studio.
 
 That is all.
 
