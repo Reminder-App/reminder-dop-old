@@ -56,4 +56,11 @@
           <args>priority</args>
         </transformation>
     </configuration>
+    <configuration>
+      <expression>Google Calendar</expression>
+        <transformation>
+          <name>createBuildEntries</name>
+          <args>googleCalendar</args>
+        </transformation>
+    </configuration>
 </configurationModel>
