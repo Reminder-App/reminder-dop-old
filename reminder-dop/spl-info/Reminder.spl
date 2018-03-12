@@ -1,8 +1,8 @@
 SPL Reminder {
 
-	Features = {ManageReminder, ReminderCategory, ManageCategory, StaticCategory}
+	Features = {ManageReminder, ReminderCategory, ManageCategory, StaticCategory, Priority}
 
-	Deltas = {dManageReminder, dStaticCategory, dManageCategory}
+	Deltas = {dManageReminder, dStaticCategory, dManageCategory, dPriority}
 
 	Constraints {
 		ReminderCategory AND (ManageCategory OR StaticCategory);
@@ -12,11 +12,13 @@ SPL Reminder {
 		{dManageReminder} when (ManageReminder);
 		{dManageReminder, dStaticCategory} when (StaticCategory);
 		{dManageReminder, dStaticCategory, dManageCategory} when (ManageCategory);
+		{dManageReminder, dPriority} when (Priority);
 	}
 
 	Products {
 		Base = {ManageReminder};
 		StaticCategory = {ManageReminder, StaticCategory};
 		ManageCategory = {ManageReminder, ManageCategory};
+		Priority = {ManageReminder, Priority};
 	}
 }
