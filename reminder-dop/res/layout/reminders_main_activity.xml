@@ -5,7 +5,7 @@
     android:background="#999999"
     android:orientation="vertical" >
     
-	//#ifdef category 
+	//#if category || priority 
 	<!-- List of Categories -->
     <LinearLayout
         android:id="@+id/listCategories"
