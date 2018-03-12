@@ -1,4 +1,5 @@
 AndroidManifest => AndroidManifest.xml;
+ReminderRow => res/layout/reminder_row.xml;
 ReminderMainActivity => res/layout/reminders_main_activity.xml;
 ReminderAdd => res/layout/reminder_add.xml;
 CategoriesList => res/layout/categories_list_fragment.xml;
@@ -12,7 +13,3 @@ SearchIconMdpi => res/drawable-mdpi/search_reminder.png;
 SearchIconXhdpi => res/drawable-xhdpi/search_reminder.png;
 DeltasFolder => deltas;
 SPLInfoFolder => spl-info;
-ReminderRow => res/layout/reminder_row.xml;
-
-
-
