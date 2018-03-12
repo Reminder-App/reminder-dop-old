@@ -7,7 +7,7 @@
         </transformation>
 	<transformation>
             <name>preprocessFiles</name>
-            <args>AndroidManifest, ReminderMainActivity, ReminderAdd, Strings</args>
+            <args>AndroidManifest, ReminderMainActivity, ReminderAdd, Strings, ReminderRow</args>
         </transformation>
 	<transformation>
             <name>removeComponents</name>
@@ -36,17 +36,24 @@
         </transformation>
     </configuration>
     <configuration>
-      <expression>Not(Or(Manage Category, Static Category))</expression>
+      <expression>Not(Or(Or(Manage Category, Static Category), Reminder Priority))</expression>
         <transformation>
           <name>removeComponents</name>
           <args>CategoriesList, CategoryRow</args>
         </transformation>
     </configuration>
-	<configuration>
+    <configuration>
       <expression>Not(Manage Category)</expression>
         <transformation>
           <name>removeComponents</name>
           <args>CategoryDialog, CategoryListFragmentContextMenu</args>
+        </transformation>
+    </configuration>
+    <configuration>
+      <expression>Reminder Priority</expression>
+        <transformation>
+          <name>createBuildEntries</name>
+          <args>priority</args>
         </transformation>
     </configuration>
 </configurationModel>
