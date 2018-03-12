@@ -12,6 +12,7 @@ SearchIconMdpi => res/drawable-mdpi/search_reminder.png;
 SearchIconXhdpi => res/drawable-xhdpi/search_reminder.png;
 DeltasFolder => deltas;
 SPLInfoFolder => spl-info;
+ReminderRow => res/layout/reminder_row.xml;
 
 
 
