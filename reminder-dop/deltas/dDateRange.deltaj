@@ -702,4 +702,133 @@ delta dDateRange {
 				return getItem(position).getHourFinal().substring(0, 2) + "h";
 		}
 	}
+	modifies br.unb.cic.reminders.view.ReminderListFragment {
+		removes lvReminderNoDate;
+		removes createUI();
+		adds public void createUI() {
+			// Take the ListView view form the layout and apply the
+			// ReminderArrayAdapter to it
+			lvReminderLate = (ListView) view.findViewById(R.id.lvRemindersLate);
+			lvReminderToday = (ListView) view.findViewById(R.id.lvRemindersToday);
+			lvReminderNextDays = (ListView) view.findViewById(R.id.lvRemindersNextDays);
+			updateListView(null);
+			registerForContextMenu(lvReminderLate);
+			registerForContextMenu(lvReminderToday);
+			registerForContextMenu(lvReminderNextDays);
+		}
+		removes onContextItemSelected(MenuItem item);
+		adds @Override public boolean onContextItemSelected(MenuItem item) {
+			if (item.getGroupId() == R.id.context_menu_reminder) { // Used to verify
+				// if it is the right context_menu
+	
+				// Gets the item position and gets the reminder in that position:
+				AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+				Reminder reminder = (Reminder) contextMenuAdapter.getItem(info.position);
+	
+				// Switch between the options in the context menu(Edit, Delete and
+				// Share)
+				switch (item.getItemId()) {
+					case R.id.edit:
+						// Passes the current reminder to be edited via Intent and
+						// Invokes edit method
+						Intent editIntent = new Intent(getActivity().getApplicationContext(), EditReminderActivity.class);
+						editIntent.putExtra("id", reminder.getId());
+						editIntent.putExtra("text", reminder.getText());
+						editIntent.putExtra("details", reminder.getDetails());
+						editIntent.putExtra("dateStart", reminder.getDateStart());
+						editIntent.putExtra("hourStart", reminder.getHourStart());
+						editIntent.putExtra("dateFinal", reminder.getDateFinal());
+						editIntent.putExtra("hourFinal", reminder.getHourFinal());
+						startActivity(editIntent);
+						updateListView(null);
+						return true;
+					case R.id.delete:
+						// Invokes delete method
+						try {// Deletes from the bank;
+							Controller.instance(getActivity().getApplicationContext()).deleteReminder(reminder);
+						} catch (DBException e) {
+							Log.e(TAG, e.getMessage());
+						}
+						updateListView(null);
+						return true;
+					default:
+						return super.onContextItemSelected(item);
+				}
+	
+			}
+			return super.onContextItemSelected(item);
+		}
+		removes updateListView(ReminderFilter filter);
+		adds public void updateListView(ReminderFilter filter) {
+			if (filter == null)
+				filter = new AllRemindersFilter(getActivity());
+			adapter = new ReminderArrayAdapter(getActivity().getApplicationContext(), filter.getReminderList());
+	
+			// Divide the adapter in 4 possibilities of dates(Late, Today, Next Days
+			// and No Date)
+			// and distribute it to each responsible ListView:
+			ReminderArrayAdapter adapterLate, adapterToday, adapterNextDays;
+	
+			Reminder r = new Reminder();
+			List<Reminder> remindersLate = new ArrayList<Reminder>();
+			List<Reminder> remindersToday = new ArrayList<Reminder>();
+			List<Reminder> remindersNextDays = new ArrayList<Reminder>();
+	
+			// Runs through the adapter and divides to the correspondent adapter
+			for (int i = 0; i < adapter.getCount(); ++i) {
+				r = adapter.getItem(i);
+				if (r.getDateFinal() != null && r.getDateStart() != null) {
+					String dayStart = r.getDateStart().substring(0, 2);
+					String monthStart = r.getDateStart().substring(3, 5);
+					String yearStart = r.getDateStart().substring(6, 10);
+					String dayFinal = r.getDateFinal().substring(0, 2);
+					String monthFinal = r.getDateFinal().substring(3, 5);
+					String yearFinal = r.getDateFinal().substring(6, 10);
+	
+					Calendar cal = Calendar.getInstance();
+					GregorianCalendar gc = new GregorianCalendar();
+					GregorianCalendar gc2 = new GregorianCalendar();
+					if (r.getHourFinal() != null) {
+						String hour = r.getHourFinal().substring(0, 2);
+						String min = r.getHourFinal().substring(3, 5);
+						gc.set(Integer.parseInt(yearFinal), Integer.parseInt(monthFinal) - 1, Integer.parseInt(dayFinal),
+								Integer.parseInt(hour), Integer.parseInt(min));
+					} else {
+						gc.set(Integer.parseInt(yearFinal), Integer.parseInt(monthFinal) - 1, Integer.parseInt(dayFinal));
+					}
+					if (r.getHourStart() != null) {
+						String hour = r.getHourStart().substring(0, 2);
+						String min = r.getHourStart().substring(3, 5);
+						gc2.set(Integer.parseInt(yearStart), Integer.parseInt(monthStart) - 1, Integer.parseInt(dayStart),
+								Integer.parseInt(hour), Integer.parseInt(min));
+					} else {
+						gc2.set(Integer.parseInt(yearStart), Integer.parseInt(monthStart) - 1, Integer.parseInt(dayStart));
+					}
+					// if(Integer.parseInt(day)<cal.get(Calendar.DAY_OF_MONTH))
+					if (gc.before(cal))
+						remindersLate.add(r);
+					else if (gc.after(cal) && gc2.before(cal))
+						remindersToday.add(r);
+					else
+						remindersNextDays.add(r);
+				} 
+			}
+	
+			// Creates each adapter:
+			adapterLate = new ReminderArrayAdapter(getActivity().getApplicationContext(), remindersLate,
+					Color.rgb(0xED, 0x1C, 0x24), ReminderArrayAdapter.LATE);
+			adapterToday = new ReminderArrayAdapter(getActivity().getApplicationContext(), remindersToday,
+					Color.rgb(0x33, 0xB5, 0xE5), ReminderArrayAdapter.TODAY);
+			adapterNextDays = new ReminderArrayAdapter(getActivity().getApplicationContext(), remindersNextDays,
+					Color.rgb(0x99, 0x99, 0x99), ReminderArrayAdapter.NEXT_DAYS);
+	
+			// Apply the adapters and rearrange the ListViews to its contents size:
+			lvReminderLate.setAdapter(adapterLate);
+			Utility.setListViewHeightBasedOnChildren(lvReminderLate);
+			lvReminderToday.setAdapter(adapterToday);
+			Utility.setListViewHeightBasedOnChildren(lvReminderToday);
+			lvReminderNextDays.setAdapter(adapterNextDays);
+			Utility.setListViewHeightBasedOnChildren(lvReminderNextDays);
+		}
+	}
 }
