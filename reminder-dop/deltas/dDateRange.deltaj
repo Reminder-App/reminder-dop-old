@@ -1,0 +1,64 @@
+delta dDateRange {
+	modifies br.unb.cic.reminders.model.Reminder {
+		removes date;
+		removes hour;
+		adds @Column(column = "INITIAL_DATE", type = DBTypes.TEXT) private String dateStart;
+		adds @Column(column = "INITIAL_HOUR", type = DBTypes.TEXT) private String hourStart;
+		adds @Column(column = "FINAL_DATE", type = DBTypes.TEXT) private String dateFinal;
+		adds @Column(column = "FINAL_HOUR", type = DBTypes.TEXT) private String hourFinal;
+		removes getDate();
+		removes setDate(String date);
+		removes getHour();
+		removes setHour(String hour);
+		adds public String getDateStart() {
+			return dateStart;
+		}	
+		adds public void setDateStart(String dateStart) {
+			
+			if (dateStart == null) throw new InvalidDateException(dateStart);
+			if (!(dateStart == null || dateStart.equals("")) && !checkFormat(dateStart, Patterns.DATE_PATTERN)) {
+				throw new InvalidDateException(dateStart);
+			}
+			this.dateStart = dateStart;
+		}
+	
+		adds public String getHourStart() {
+			return hourStart;
+		}
+		adds public void setHourStart(String hourStart) {
+			// We allow reminders to have no hour associated.
+			if (!(hourStart == null || hourStart.equals("")) && !checkFormat(hourStart, Patterns.HOUR_PATTERN)) {
+				throw new InvalidHourException(hourStart);
+			}
+			this.hourStart = hourStart;
+		}
+		
+		adds public String getDateFinal() {
+			return dateFinal;
+		}
+		adds public void setDateFinal(String dateFinal) {
+			
+			if (dateFinal == null) throw new InvalidDateException(dateFinal);
+			if (!(dateFinal == null || dateFinal.equals("")) && !checkFormat(dateFinal, Patterns.DATE_PATTERN)) {
+				throw new InvalidDateException(dateFinal);
+			}
+			this.dateFinal = dateFinal;
+		}
+		adds public String getHourFinal() {
+			return hourFinal;
+		}
+		adds public void setHourFinal(String hourFinal) {
+			// We allow reminders to have no hour associated.
+			if (!(hourFinal == null || hourFinal.equals("")) && !checkFormat(hourFinal, Patterns.HOUR_PATTERN)) {
+				throw new InvalidHourException(hourFinal);
+			}
+			this.hourFinal = hourFinal;
+		}
+		removes isValid();
+		adds public boolean isValid() {
+			return (text != null && dateStart != null && hourStart != null 
+					&& dateFinal != null && hourFinal != null);
+		}
+	}
+	
+}
