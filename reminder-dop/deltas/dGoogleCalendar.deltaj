@@ -99,4 +99,46 @@ delta dGoogleCalendar {
 			}
 		}
 	}
+	modifies br.unb.cic.reminders.view.ReminderActivity {
+		adds import br.unb.cic.reminders.calendar.CalendarEventCreator;
+		adds import br.unb.cic.reminders.model.CalendarNotFoundException;
+		adds private CalendarEventCreator creator;
+		adds private CheckBox cbCalendar;
+
+		// implementar cbCalendar!!!
+		
+		modifies initializeFields() {
+			cbCalendar = (CheckBox) findViewById(R.id.cbCalendar);
+			original();
+		}
+		removes createReminder();
+		adds private void createReminder() {
+			try {
+				reminder.setText(edtReminder.getText().toString());
+				reminder.setDetails(edtDetails.getText().toString());
+				reminder.setDate(dateToString());
+				reminder.setHour(timeToString());
+				if (cbCalendar.isChecked()) {
+					creator = new CalendarEventCreator();
+					creator.addEventCalendar(reminder, getApplicationContext());
+				}
+			}
+			catch(InvalidTextException e) {
+				Toast.makeText(getApplicationContext(), "Texto invalido.",
+					Toast.LENGTH_SHORT).show();
+			}
+			catch(InvalidDateException e) {
+				Toast.makeText(getApplicationContext(), "Data invalida.",
+					Toast.LENGTH_SHORT).show();
+			}
+			catch(InvalidHourException e) {
+				Toast.makeText(getApplicationContext(), "Hora invalida.",
+					Toast.LENGTH_SHORT).show();
+			}
+			catch(Exception e) {
+				Toast.makeText(getApplicationContext(), "Erro grave.",
+					Toast.LENGTH_SHORT).show();
+			}
+		}
+	}
 }
