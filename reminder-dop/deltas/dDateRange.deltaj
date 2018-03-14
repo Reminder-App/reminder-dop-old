@@ -604,4 +604,102 @@ delta dDateRange {
 			edtHourFinal.setText(reminder.getHourFinal());
 		}
 	}
+	modifies br.unb.cic.reminders.view.ReminderArrayAdapter {
+		removes getDateFirst(int position);
+		adds private String getDateFirst(int position) {
+	
+			if (getItem(position).getDateFinal() == null) {
+				return "";
+			}
+	
+			String months[] = { "JAN", "FEV", "MAR", "ABR", "MAI", "JUN", "JUL", "AGO", "SET", "OUT", "NOV", "DEZ" };
+			String week[] = { "", "DOM", "SEG", "TER", "QUA", "QUI", "SEX", "SAB" };
+	
+			// Today and thatDay Calendars being initialized
+			Calendar today = Calendar.getInstance();
+			GregorianCalendar thatDay = new GregorianCalendar();
+			thatDay.set(Integer.parseInt(getItem(position).getDateFinal().substring(6, 10)), // year
+					Integer.parseInt(getItem(position).getDateFinal().substring(3, 5)) - 1, // month
+					Integer.parseInt(getItem(position).getDateFinal().substring(0, 2)));// day
+	
+			// switch based on the row type
+			switch (rowType) {
+			case LATE:
+				long diff = today.getTimeInMillis() - thatDay.getTimeInMillis();
+				long days = diff / (24*60*60*1000);
+				if (days == 1)
+					return "Ontem";
+				else
+					return "Há " + days + " dias";
+				// break;
+	
+			case TODAY:
+				return getDatesHour(position);
+			// break;
+	
+			case NEXT_DAYS:
+				diff = thatDay.getTimeInMillis() - today.getTimeInMillis();
+				days = diff / (24*60*60*1000);
+	
+				if (days == 1) {
+					return getDatesHour(position);
+				} else if (days < 6) {
+					return week[thatDay.get(Calendar.DAY_OF_WEEK)];
+				} else {
+					return thatDay.get(Calendar.DAY_OF_MONTH) + " " + months[thatDay.get(Calendar.MONTH)];
+				}
+	
+				// break;
+	
+			default:
+				break;
+			}
+	
+			return getItem(position).getDateFinal();
+		}
+		removes getDateSecond(int position);
+		adds private String getDateSecond(int position) {
+	
+			switch (rowType) {
+			case LATE:
+				return getDatesHour(position);
+			// break;
+			case TODAY:
+				return "hoje";
+			// break;
+			case NEXT_DAYS:
+				// Today and thatDay Calendars being initialized
+				Calendar today = Calendar.getInstance();
+				GregorianCalendar thatDay = new GregorianCalendar();
+				thatDay.set(Integer.parseInt(getItem(position).getDateFinal().substring(6, 10)), // year
+						Integer.parseInt(getItem(position).getDateFinal().substring(3, 5)) - 1, // month
+						Integer.parseInt(getItem(position).getDateFinal().substring(0, 2)));// day
+	
+				long diff = thatDay.getTimeInMillis() - today.getTimeInMillis();
+				long days = diff / (24*60*60*1000);
+	
+				if (days == 1)
+					return "amanha";
+				else
+					return getDatesHour(position);
+				// break;
+			default:
+				break;
+			}
+	
+			return getItem(position).getHourFinal();
+		}
+		removes getDatesHour(int position);
+		adds private String getDatesHour(int position) {
+	
+			if (getItem(position).getHourFinal() == null) {
+				return "";
+			}
+	
+			if (getItem(position).getHourFinal().substring(3, 5) != "00")
+				return getItem(position).getHourFinal().substring(0, 2) + "h" + getItem(position).getHourFinal().substring(3, 5);
+			else
+				return getItem(position).getHourFinal().substring(0, 2) + "h";
+		}
+	}
 }
