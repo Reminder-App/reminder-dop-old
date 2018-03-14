@@ -514,4 +514,94 @@ delta dDateRange {
 			return spinner;
 		}
 	}
+	modifies br.unb.cic.reminders.view.ReminderAddActivity {
+		removes edtDate;
+		removes edtHour;
+		adds private EditText edtDateStart, edtHourStart, edtDateFinal, edtHourFinal;
+		removes createReminder();
+		adds private Reminder createReminder() {
+			Reminder reminder = new Reminder();
+			try {
+				reminder.setText(edtReminder.getText().toString());
+				reminder.setDetails(edtDetails.getText().toString());
+				reminder.setDateStart(edtDateStart.getText().toString());
+				reminder.setHourStart(edtHourStart.getText().toString());
+				reminder.setDateFinal(edtDateFinal.getText().toString());
+				reminder.setHourFinal(edtHourFinal.getText().toString());
+			}
+			catch(InvalidTextException e) {
+				Toast.makeText(getApplicationContext(), "Texto invalido.",
+					Toast.LENGTH_SHORT).show();
+			}
+			catch(InvalidDateException e) {
+				Toast.makeText(getApplicationContext(), "Data invalida.",
+					Toast.LENGTH_SHORT).show();
+			}
+			catch(InvalidHourException e) {
+				Toast.makeText(getApplicationContext(), "Hora invalida.",
+					Toast.LENGTH_SHORT).show();
+			}
+			return reminder;
+		}
+		removes getExistingReminder();
+		adds private Reminder getExistingReminder() {
+			Reminder reminder = null;
+			Intent intent = getIntent();
+			String action = intent.getAction();
+			String type = intent.getType();
+			if(Intent.ACTION_SEND.equals(action) && "text/plain".equals(type)) {
+				previewReminderId = intent.getLongExtra("id", 0);
+				String text = intent.getStringExtra("text");
+				String dateStart = intent.getStringExtra("dateStart");
+				String hourStart = intent.getStringExtra("hourStart");
+				String dateFinal = intent.getStringExtra("dateFinal");
+				String hourFinal = intent.getStringExtra("hourFinal");
+				reminder = new Reminder();
+				reminder.setText(text);
+				reminder.setDateStart(dateStart);
+				reminder.setHourStart(hourStart);
+				reminder.setDateFinal(dateFinal);
+				reminder.setHourFinal(hourFinal);
+				reminder.setId(previewReminderId);
+			}
+			return reminder;
+		}
+		removes getReminderFromIntent();
+		adds private Reminder getReminderFromIntent() {
+			Intent intent = getIntent();
+			String action = intent.getAction();
+			String type = intent.getType();
+			if("br.com.positivo.reminders.ADD_REMINDER".equals(action) &&
+				"text/plain".equals(type)) {
+				try {
+					String text = intent.getStringExtra("text");
+					String details = intent.getStringExtra("details");
+					String dateStart = intent.getStringExtra("dateStart");
+					String hourStart = intent.getStringExtra("hourStart");
+					String dateFinal = intent.getStringExtra("dateFinal");
+					String hourFinal = intent.getStringExtra("hourFinal");
+					Reminder reminder = new Reminder();
+					reminder.setText(text);
+					reminder.setDetails(details);
+					reminder.setDateStart(dateStart);
+					reminder.setHourStart(hourStart);
+					reminder.setDateFinal(dateFinal);
+					reminder.setHourFinal(hourFinal);
+					return reminder;
+				}
+				catch(InvalidFormatException e) {
+				}
+			}
+			return null;
+		}
+		removes updateFieldsFromReminder(Reminder reminder); 
+		adds private void updateFieldsFromReminder(Reminder reminder) throws Exception {
+			edtReminder.setText(reminder.getText());
+			edtDetails.setText(reminder.getDetails());
+			edtDateStart.setText(reminder.getDateStart());
+			edtHourStart.setText(reminder.getHourStart());
+			edtDateFinal.setText(reminder.getDateFinal());
+			edtHourFinal.setText(reminder.getHourFinal());
+		}
+	}
 }
