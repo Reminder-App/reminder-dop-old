@@ -8,6 +8,10 @@
 					<feature mandatory="true" name="Edit"/>
 					<feature mandatory="true" name="Delete"/>
 				</and>
+				<alt mandatory="true" name="Reminder Schedule">
+					<feature name="Date Range"/>
+					<feature name="Fixed Date"/>
+				</alt>
 				<alt name="Reminder Category">
 					<feature name="Manage Category"/>
 					<feature name="Static Category"/>
