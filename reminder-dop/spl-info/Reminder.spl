@@ -1,24 +1,57 @@
 SPL Reminder {
 
-	Features = {ManageReminder, ReminderCategory, ManageCategory, StaticCategory, Priority}
+	Features = {ManageReminder, ReminderCategory, ManageCategory, StaticCategory,
+	Priority, ReminderSchedule, DateRange, FixedDate, GoogleCalendar}
 
-	Deltas = {dManageReminder, dStaticCategory, dManageCategory, dPriority}
+	Deltas = {dManageReminder, dStaticCategory, dManageCategory, dPriority,
+	dGoogleCalendar, dDateRange}
 
 	Constraints {
-		ReminderCategory AND (ManageCategory OR StaticCategory);
+		ReminderCategory AND (ManageCategory XOR StaticCategory);
+		ReminderSchedule AND (DateRange XOR FixedDate);
 	}
 
 	Partitions {
-		{dManageReminder} when (ManageReminder);
-		{dManageReminder, dStaticCategory} when (StaticCategory);
-		{dManageReminder, dStaticCategory, dManageCategory} when (ManageCategory);
-		{dManageReminder, dPriority} when (Priority);
+		{dManageReminder} when (ManageReminder & FixedDate);
+		
+		{dManageReminder, dDateRange} when (ManageReminder & DateRange);
+
+		{dStaticCategory} when (StaticCategory);
+
+		{dStaticCategory, dManageCategory} when (ManageCategory);
+
+		{dPriority} when (Priority);
+
+		{dGoogleCalendar} when (GoogleCalendar);
 	}
 
 	Products {
-		Base = {ManageReminder};
-		StaticCategory = {ManageReminder, StaticCategory};
-		ManageCategory = {ManageReminder, ManageCategory};
-		Priority = {ManageReminder, Priority};
+		/* Products with Fixed Date */
+		/* 01 */ BaseFixedDate = {ManageReminder, FixedDate};
+		/* 02 */ BaseFixedDateStaticCategory = {ManageReminder, FixedDate,
+		StaticCategory};
+		/* 03 */ BaseFixedDateManageCategory = {ManageReminder, FixedDate,
+		ManageCategory};
+		/* 04 */ BaseFixedDatePriority = {ManageReminder, FixedDate, Priority};
+		/* 05 */ BaseFixedDateManageCategoryPriority = {ManageReminder, FixedDate,
+		ManageCategory, Priority};
+		/* 06 */ BaseFixedDateGoogleCalendar = {ManageReminder, FixedDate,
+		GoogleCalendar};
+		/* 07 */ BaseFixedDateManageCategoryPriorityGoogleCalendar = {ManageReminder,
+		FixedDate, ManageCategory, Priority, GoogleCalendar};
+
+		/* Products with Date Range */
+		/* 08 */ BaseDateRange = {ManageReminder, DateRange};
+		/* 09 */ BaseDateRangeStaticCategory = {ManageReminder, DateRange,
+		StaticCategory};
+		/* 10 */ BaseDateRangeManageCategory = {ManageReminder, DateRange,
+		ManageCategory};
+		/* 11 */ BaseDateRangePriority = {ManageReminder, DateRange, Priority};
+		/* 12 */ BaseDateRangeManageCategoryPriority = {ManageReminder, DateRange,
+		ManageCategory, Priority};
+		/* 13 */ BaseDateRangeGoogleCalendar = {ManageReminder, DateRange,
+		GoogleCalendar};
+		/* 14 */ BaseDateRangeManageCategoryPriorityGoogleCalendar = {ManageReminder, DateRange,
+		ManageCategory, Priority, GoogleCalendar};
 	}
 }
