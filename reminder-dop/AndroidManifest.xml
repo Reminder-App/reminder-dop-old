@@ -17,9 +17,37 @@
         android:icon="@drawable/icon"
         android:label="@string/app_name"
         android:theme="@style/Theme.Reminder" >
-        //#ifdef googleCalendar
         <activity
-            android:name="reminder.googlecalendar.br.unb.cic.reminders.ReminderMainActivity"
+            //#if (base && fixedDate) && !manageCategory && !staticCategory && !priority && !dateRange && !googleCalendar && !search
+            android:name="reminder.basefixeddate.br.unb.cic.reminders.ReminderMainActivity"
+            //#elif (base && fixedDate && staticCategory) && !manageCategory && !priority && !dateRange && !googleCalendar && !search
+            android:name="reminder.basefixeddatestaticcategory.br.unb.cic.reminders.ReminderMainActivity"
+            //#elif (base && fixedDate && manageCategory) && !staticCategory && !priority && !dateRange && !googleCalendar && !search
+            android:name="reminder.basefixeddatemanagecategory.br.unb.cic.reminders.ReminderMainActivity"
+            //#elif (base && fixedDate && manageCategory && priority) && !staticCategory && !dateRange && !googleCalendar && !search
+            android:name="reminder.basefixeddatepriority.br.unb.cic.reminders.ReminderMainActivity"
+            //#elif (base && fixedDate && priority) && !manageCategory && !staticCategory && !dateRange && !googleCalendar && !search
+            android:name="reminder.basefixeddatemanagecategorypriority.br.unb.cic.reminders.ReminderMainActivity"
+            //#elif (base && fixedDate && googleCalendar) && !manageCategory && !staticCategory && !dateRange && !priority && !search
+            android:name="reminder.basefixeddategooglecalendar.br.unb.cic.reminders.ReminderMainActivity"
+            //#elif (base && fixedDate && manageCategory && priority && googleCalendar) && !staticCategory && !dateRange && !search
+            android:name="reminder.basefixeddatemanagecategoryprioritygooglecalendar.br.unb.cic.reminders.ReminderMainActivity"
+
+            //#elif (base && dateRange) && !manageCategory && !staticCategory && !priority && !fixedDate && !googleCalendar && !search
+            android:name="reminder.basedaterange.br.unb.cic.reminders.ReminderMainActivity"
+            //#elif (base && dateRange && staticCategory) && !manageCategory && !priority && !fixedDate && !googleCalendar && !search
+            android:name="reminder.basedaterangestaticcategory.br.unb.cic.reminders.ReminderMainActivity"
+            //#elif (base && dateRange && manageCategory) && !staticCategory && !priority && !fixedDate && !googleCalendar && !search
+            android:name="reminder.basedaterangemanagecategory.br.unb.cic.reminders.ReminderMainActivity"
+            //#elif (base && dateRange && manageCategory && priority) && !staticCategory && !fixedDate && !googleCalendar && !search
+            android:name="reminder.basedaterangepriority.br.unb.cic.reminders.ReminderMainActivity"
+            //#elif (base && dateRange && priority) && !manageCategory && !staticCategory && !fixedDate && !googleCalendar && !search
+            android:name="reminder.basedaterangemanagecategorypriority.br.unb.cic.reminders.ReminderMainActivity"
+            //#elif (base && dateRange && googleCalendar) && !manageCategory && !staticCategory && !fixedDate && !priority && !search
+            android:name="reminder.basedaterangegooglecalendar.br.unb.cic.reminders.ReminderMainActivity"
+            //#elif (base && dateRange && manageCategory && priority && googleCalendar) && !staticCategory && !fixedDate && !search
+            android:name="reminder.basedaterangemanagecategoryprioritygooglecalendar.br.unb.cic.reminders.ReminderMainActivity"
+            //#endif
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="landscape" >
             <intent-filter>
@@ -29,175 +57,146 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="reminder.googlecalendar.br.unb.cic.reminders.view.AddReminderActivity"
+            //#if (base && fixedDate) && !manageCategory && !staticCategory && !priority && !dateRange && !googleCalendar && !search
+            android:name="reminder.basefixeddate.br.unb.cic.reminders.view.AddReminderActivity"
+            //#elif (base && fixedDate && staticCategory) && !manageCategory && !priority && !dateRange && !googleCalendar && !search
+            android:name="reminder.basefixeddatestaticcategory.br.unb.cic.reminders.view.AddReminderActivity"
+            //#elif (base && fixedDate && manageCategory) && !staticCategory && !priority && !dateRange && !googleCalendar && !search
+            android:name="reminder.basefixeddatemanagecategory.br.unb.cic.reminders.view.AddReminderActivity"
+            //#elif (base && fixedDate && manageCategory && priority) && !staticCategory && !dateRange && !googleCalendar && !search
+            android:name="reminder.basefixeddatepriority.br.unb.cic.reminders.view.AddReminderActivity"
+            //#elif (base && fixedDate && priority) && !manageCategory && !staticCategory && !dateRange && !googleCalendar && !search
+            android:name="reminder.basefixeddatemanagecategorypriority.br.unb.cic.reminders.view.AddReminderActivity"
+            //#elif (base && fixedDate && googleCalendar) && !manageCategory && !staticCategory && !dateRange && !priority && !search
+            android:name="reminder.basefixeddategooglecalendar.br.unb.cic.reminders.view.AddReminderActivity"
+            //#elif (base && fixedDate && manageCategory && priority && googleCalendar) && !staticCategory && !dateRange && !search
+            android:name="reminder.basefixeddatemanagecategoryprioritygooglecalendar.br.unb.cic.reminders.view.AddReminderActivity"
+
+            //#elif (base && dateRange) && !manageCategory && !staticCategory && !priority && !fixedDate && !googleCalendar && !search
+            android:name="reminder.basedaterange.br.unb.cic.reminders.view.AddReminderActivity"
+            //#elif (base && dateRange && staticCategory) && !manageCategory && !priority && !fixedDate && !googleCalendar && !search
+            android:name="reminder.basedaterangestaticcategory.br.unb.cic.reminders.view.AddReminderActivity"
+            //#elif (base && dateRange && manageCategory) && !staticCategory && !priority && !fixedDate && !googleCalendar && !search
+            android:name="reminder.basedaterangemanagecategory.br.unb.cic.reminders.view.AddReminderActivity"
+            //#elif (base && dateRange && manageCategory && priority) && !staticCategory && !fixedDate && !googleCalendar && !search
+            android:name="reminder.basedaterangepriority.br.unb.cic.reminders.view.AddReminderActivity"
+            //#elif (base && dateRange && priority) && !manageCategory && !staticCategory && !fixedDate && !googleCalendar && !search
+            android:name="reminder.basedaterangemanagecategorypriority.br.unb.cic.reminders.view.AddReminderActivity"
+            //#elif (base && dateRange && googleCalendar) && !manageCategory && !staticCategory && !fixedDate && !priority && !search
+            android:name="reminder.basedaterangegooglecalendar.br.unb.cic.reminders.view.AddReminderActivity"
+            //#elif (base && dateRange && manageCategory && priority && googleCalendar) && !staticCategory && !fixedDate && !search
+            android:name="reminder.basedaterangemanagecategoryprioritygooglecalendar.br.unb.cic.reminders.view.AddReminderActivity"
+            //#endif
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/title_activity_reminder_add"
             android:screenOrientation="landscape" >
         </activity>
         <activity
-            android:name="reminder.googlecalendar.br.unb.cic.reminders.view.EditReminderActivity"
+            //#if (base && fixedDate) && !manageCategory && !staticCategory && !priority && !dateRange && !googleCalendar && !search
+            android:name="reminder.basefixeddate.br.unb.cic.reminders.view.EditReminderActivity"
+            //#elif (base && fixedDate && staticCategory) && !manageCategory && !priority && !dateRange && !googleCalendar && !search
+            android:name="reminder.basefixeddatestaticcategory.br.unb.cic.reminders.view.EditReminderActivity"
+            //#elif (base && fixedDate && manageCategory) && !staticCategory && !priority && !dateRange && !googleCalendar && !search
+            android:name="reminder.basefixeddatemanagecategory.br.unb.cic.reminders.view.EditReminderActivity"
+            //#elif (base && fixedDate && manageCategory && priority) && !staticCategory && !dateRange && !googleCalendar && !search
+            android:name="reminder.basefixeddatepriority.br.unb.cic.reminders.view.EditReminderActivity"
+            //#elif (base && fixedDate && priority) && !manageCategory && !staticCategory && !dateRange && !googleCalendar && !search
+            android:name="reminder.basefixeddatemanagecategorypriority.br.unb.cic.reminders.view.EditReminderActivity"
+            //#elif (base && fixedDate && googleCalendar) && !manageCategory && !staticCategory && !dateRange && !priority && !search
+            android:name="reminder.basefixeddategooglecalendar.br.unb.cic.reminders.view.EditReminderActivity"
+            //#elif (base && fixedDate && manageCategory && priority && googleCalendar) && !staticCategory && !dateRange && !search
+            android:name="reminder.basefixeddatemanagecategoryprioritygooglecalendar.br.unb.cic.reminders.view.EditReminderActivity"
+
+            //#elif (base && dateRange) && !manageCategory && !staticCategory && !priority && !fixedDate && !googleCalendar && !search
+            android:name="reminder.basedaterange.br.unb.cic.reminders.view.EditReminderActivity"
+            //#elif (base && dateRange && staticCategory) && !manageCategory && !priority && !fixedDate && !googleCalendar && !search
+            android:name="reminder.basedaterangestaticcategory.br.unb.cic.reminders.view.EditReminderActivity"
+            //#elif (base && dateRange && manageCategory) && !staticCategory && !priority && !fixedDate && !googleCalendar && !search
+            android:name="reminder.basedaterangemanagecategory.br.unb.cic.reminders.view.EditReminderActivity"
+            //#elif (base && dateRange && manageCategory && priority) && !staticCategory && !fixedDate && !googleCalendar && !search
+            android:name="reminder.basedaterangepriority.br.unb.cic.reminders.view.EditReminderActivity"
+            //#elif (base && dateRange && priority) && !manageCategory && !staticCategory && !fixedDate && !googleCalendar && !search
+            android:name="reminder.basedaterangemanagecategorypriority.br.unb.cic.reminders.view.EditReminderActivity"
+            //#elif (base && dateRange && googleCalendar) && !manageCategory && !staticCategory && !fixedDate && !priority && !search
+            android:name="reminder.basedaterangegooglecalendar.br.unb.cic.reminders.view.EditReminderActivity"
+            //#elif (base && dateRange && manageCategory && priority && googleCalendar) && !staticCategory && !fixedDate && !search
+            android:name="reminder.basedaterangemanagecategoryprioritygooglecalendar.br.unb.cic.reminders.view.EditReminderActivity"
+            //#endif
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/title_activity_reminder_edit"
             android:screenOrientation="landscape" >
         </activity>
         <activity
-            android:name="reminder.googlecalendar.br.unb.cic.reminders.view.ExternalAddReminderActivity"
+            //#if (base && fixedDate) && !manageCategory && !staticCategory && !priority && !dateRange && !googleCalendar && !search
+            android:name="reminder.basefixeddate.br.unb.cic.reminders.view.ExternalAddReminderActivity"
+            //#elif (base && fixedDate && staticCategory) && !manageCategory && !priority && !dateRange && !googleCalendar && !search
+            android:name="reminder.basefixeddatestaticcategory.br.unb.cic.reminders.view.ExternalAddReminderActivity"
+            //#elif (base && fixedDate && manageCategory) && !staticCategory && !priority && !dateRange && !googleCalendar && !search
+            android:name="reminder.basefixeddatemanagecategory.br.unb.cic.reminders.view.ExternalAddReminderActivity"
+            //#elif (base && fixedDate && manageCategory && priority) && !staticCategory && !dateRange && !googleCalendar && !search
+            android:name="reminder.basefixeddatepriority.br.unb.cic.reminders.view.ExternalAddReminderActivity"
+            //#elif (base && fixedDate && priority) && !manageCategory && !staticCategory && !dateRange && !googleCalendar && !search
+            android:name="reminder.basefixeddatemanagecategorypriority.br.unb.cic.reminders.view.ExternalAddReminderActivity"
+            //#elif (base && fixedDate && googleCalendar) && !manageCategory && !staticCategory && !dateRange && !priority && !search
+            android:name="reminder.basefixeddategooglecalendar.br.unb.cic.reminders.view.ExternalAddReminderActivity"
+            //#elif (base && fixedDate && manageCategory && priority && googleCalendar) && !staticCategory && !dateRange && !search
+            android:name="reminder.basefixeddatemanagecategoryprioritygooglecalendar.br.unb.cic.reminders.view.ExternalAddReminderActivity"
+
+            //#elif (base && dateRange) && !manageCategory && !staticCategory && !priority && !fixedDate && !googleCalendar && !search
+            android:name="reminder.basedaterange.br.unb.cic.reminders.view.ExternalAddReminderActivity"
+            //#elif (base && dateRange && staticCategory) && !manageCategory && !priority && !fixedDate && !googleCalendar && !search
+            android:name="reminder.basedaterangestaticcategory.br.unb.cic.reminders.view.ExternalAddReminderActivity"
+            //#elif (base && dateRange && manageCategory) && !staticCategory && !priority && !fixedDate && !googleCalendar && !search
+            android:name="reminder.basedaterangemanagecategory.br.unb.cic.reminders.view.ExternalAddReminderActivity"
+            //#elif (base && dateRange && manageCategory && priority) && !staticCategory && !fixedDate && !googleCalendar && !search
+            android:name="reminder.basedaterangepriority.br.unb.cic.reminders.view.ExternalAddReminderActivity"
+            //#elif (base && dateRange && priority) && !manageCategory && !staticCategory && !fixedDate && !googleCalendar && !search
+            android:name="reminder.basedaterangemanagecategorypriority.br.unb.cic.reminders.view.ExternalAddReminderActivity"
+            //#elif (base && dateRange && googleCalendar) && !manageCategory && !staticCategory && !fixedDate && !priority && !search
+            android:name="reminder.basedaterangegooglecalendar.br.unb.cic.reminders.view.ExternalAddReminderActivity"
+            //#elif (base && dateRange && manageCategory && priority && googleCalendar) && !staticCategory && !fixedDate && !search
+            android:name="reminder.basedaterangemanagecategoryprioritygooglecalendar.br.unb.cic.reminders.view.ExternalAddReminderActivity"
+            //#endif
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/title_activity_reminder_edit"
             android:screenOrientation="landscape" >
             <intent-filter>
-                <action android:name="reminder.googlecalendar.br.unb.cic.reminders.ADD_REMINDER" />
+
+                //#if (base && fixedDate) && !manageCategory && !staticCategory && !priority && !dateRange && !googleCalendar && !search
+                <action android:name="reminder.basefixeddate.br.unb.cic.reminders.ADD_REMINDER" />
+                //#elif (base && fixedDate && staticCategory) && !manageCategory && !priority && !dateRange && !googleCalendar && !search
+                <action android:name="reminder.basefixeddatestaticcategory.br.unb.cic.reminders.ADD_REMINDER" />
+                //#elif (base && fixedDate && manageCategory) && !staticCategory && !priority && !dateRange && !googleCalendar && !search
+                <action android:name="reminder.basefixeddatemanagecategory.br.unb.cic.reminders.ADD_REMINDER" />
+                //#elif (base && fixedDate && manageCategory && priority) && !staticCategory && !dateRange && !googleCalendar && !search
+                <action android:name="reminder.basefixeddatepriority.br.unb.cic.reminders.ADD_REMINDER" />
+                //#elif (base && fixedDate && priority) && !manageCategory && !staticCategory && !dateRange && !googleCalendar && !search
+                <action android:name="reminder.basefixeddatemanagecategorypriority.br.unb.cic.reminders.ADD_REMINDER" />
+                //#elif (base && fixedDate && googleCalendar) && !manageCategory && !staticCategory && !dateRange && !priority && !search
+                <action android:name="reminder.basefixeddategooglecalendar.br.unb.cic.reminders.ADD_REMINDER" />
+                //#elif (base && fixedDate && manageCategory && priority && googleCalendar) && !staticCategory && !dateRange && !search
+                <action android:name="reminder.basefixeddatemanagecategoryprioritygooglecalendar.br.unb.cic.reminders.ADD_REMINDER" />
+
+                //#elif (base && dateRange) && !manageCategory && !staticCategory && !priority && !fixedDate && !googleCalendar && !search
+                <action android:name="reminder.basedaterange.br.unb.cic.reminders.ADD_REMINDER" />
+                //#elif (base && dateRange && staticCategory) && !manageCategory && !priority && !fixedDate && !googleCalendar && !search
+                <action android:name="reminder.basedaterangestaticcategory.br.unb.cic.reminders.ADD_REMINDER" />
+                //#elif (base && dateRange && manageCategory) && !staticCategory && !priority && !fixedDate && !googleCalendar && !search
+                <action android:name="reminder.basedaterangemanagecategory.br.unb.cic.reminders.ADD_REMINDER" />
+                //#elif (base && dateRange && manageCategory && priority) && !staticCategory && !fixedDate && !googleCalendar && !search
+                <action android:name="reminder.basedaterangepriority.br.unb.cic.reminders.ADD_REMINDER" />
+                //#elif (base && dateRange && priority) && !manageCategory && !staticCategory && !fixedDate && !googleCalendar && !search
+                <action android:name="reminder.basedaterangemanagecategorypriority.br.unb.cic.reminders.ADD_REMINDER" />
+                //#elif (base && dateRange && googleCalendar) && !manageCategory && !staticCategory && !fixedDate && !priority && !search
+                <action android:name="reminder.basedaterangegooglecalendar.br.unb.cic.reminders.ADD_REMINDER" />
+                //#elif (base && dateRange && manageCategory && priority && googleCalendar) && !staticCategory && !fixedDate && !search
+                <action android:name="reminder.basedaterangemanagecategoryprioritygooglecalendar.br.unb.cic.reminders.ADD_REMINDER" />
+                //#endif
 
                 <category android:name="android.intent.category.DEFAULT" />
 
                 <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
-        //#elifdef priority
-        <activity
-            android:name="reminder.priority.br.unb.cic.reminders.ReminderMainActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:screenOrientation="landscape" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name="reminder.priority.br.unb.cic.reminders.view.AddReminderActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:label="@string/title_activity_reminder_add"
-            android:screenOrientation="landscape" >
-        </activity>
-        <activity
-            android:name="reminder.priority.br.unb.cic.reminders.view.EditReminderActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:label="@string/title_activity_reminder_edit"
-            android:screenOrientation="landscape" >
-        </activity>
-        <activity
-            android:name="reminder.priority.br.unb.cic.reminders.view.ExternalAddReminderActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:label="@string/title_activity_reminder_edit"
-            android:screenOrientation="landscape" >
-            <intent-filter>
-                <action android:name="reminder.priority.br.unb.cic.reminders.ADD_REMINDER" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-
-                <data android:mimeType="text/plain" />
-            </intent-filter>
-        </activity>
-        //#elifdef manageCategory
-        <activity
-            android:name="reminder.managecategory.br.unb.cic.reminders.ReminderMainActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:screenOrientation="landscape" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name="reminder.managecategory.br.unb.cic.reminders.view.AddReminderActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:label="@string/title_activity_reminder_add"
-            android:screenOrientation="landscape" >
-        </activity>
-        <activity
-            android:name="reminder.managecategory.br.unb.cic.reminders.view.EditReminderActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:label="@string/title_activity_reminder_edit"
-            android:screenOrientation="landscape" >
-        </activity>
-        <activity
-            android:name="reminder.managecategory.br.unb.cic.reminders.view.ExternalAddReminderActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:label="@string/title_activity_reminder_edit"
-            android:screenOrientation="landscape" >
-            <intent-filter>
-                <action android:name="reminder.managecategory.br.unb.cic.reminders.ADD_REMINDER" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-
-                <data android:mimeType="text/plain" />
-            </intent-filter>
-        </activity>
-        //#elifdef staticCategory
-        <activity
-            android:name="reminder.staticcategory.br.unb.cic.reminders.ReminderMainActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:screenOrientation="landscape" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name="reminder.staticcategory.br.unb.cic.reminders.view.AddReminderActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:label="@string/title_activity_reminder_add"
-            android:screenOrientation="landscape" >
-        </activity>
-        <activity
-            android:name="reminder.staticcategory.br.unb.cic.reminders.view.EditReminderActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:label="@string/title_activity_reminder_edit"
-            android:screenOrientation="landscape" >
-        </activity>
-        <activity
-            android:name="reminder.staticcategory.br.unb.cic.reminders.view.ExternalAddReminderActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:label="@string/title_activity_reminder_edit"
-            android:screenOrientation="landscape" >
-            <intent-filter>
-                <action android:name="reminder.staticcategory.br.unb.cic.reminders.ADD_REMINDER" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-
-                <data android:mimeType="text/plain" />
-            </intent-filter>
-        </activity>
-        //#else
-        <activity
-            android:name="reminder.base.br.unb.cic.reminders.ReminderMainActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:screenOrientation="landscape" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name="reminder.base.br.unb.cic.reminders.view.AddReminderActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:label="@string/title_activity_reminder_add"
-            android:screenOrientation="landscape" >
-        </activity>
-        <activity
-            android:name="reminder.base.br.unb.cic.reminders.view.EditReminderActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:label="@string/title_activity_reminder_edit"
-            android:screenOrientation="landscape" >
-        </activity>
-        <activity
-            android:name="reminder.base.br.unb.cic.reminders.view.ExternalAddReminderActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:label="@string/title_activity_reminder_edit"
-            android:screenOrientation="landscape" >
-            <intent-filter>
-                <action android:name="reminder.base.br.unb.cic.reminders.ADD_REMINDER" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-
-                <data android:mimeType="text/plain" />
-            </intent-filter>
-        </activity>
-        //#endif
     </application>
-
 </manifest>
