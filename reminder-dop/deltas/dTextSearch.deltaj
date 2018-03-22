@@ -1,0 +1,68 @@
+delta dTextSearch {
+	modifies br.unb.cic.reminders.ReminderMainActivity {
+		adds import android.app.AlertDialog;
+		adds import android.content.Context;
+		adds import android.content.DialogInterface;
+		adds import android.widget.EditText;
+		adds import java.util.ArrayList;
+		removes createUI();
+		adds FragmentTransaction ft;
+		adds ReminderListFragment listReminderFragment;
+		adds public static String search = "";
+		adds private void createUI() {
+	         ft = getFragmentManager().beginTransaction();
+	         listReminderFragment = new ReminderListFragment();
+	        ft.add(R.id.listReminders, listReminderFragment);
+	        ft.commit();
+	    }
+	    removes onOptionsItemSelected(MenuItem item);
+	    adds @Override public boolean onOptionsItemSelected(MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.menu_addReminder:
+                    // app icon in action bar clicked; go home
+                    Intent reminderIntent = new Intent(getApplicationContext(), AddReminderActivity.class);
+                    startActivity(reminderIntent);
+                    return true;
+                case R.id.menu_searchReminder:
+                    searchReminderDialog(this);
+    
+                default:
+                    return super.onOptionsItemSelected(item);
+            }
+        }
+        adds public void searchReminderDialog(final Context context) {
+    
+            final EditText etBusca = new EditText(this);
+    
+    
+            new AlertDialog.Builder(this)
+                    .setTitle("Buscar")
+                    //.setMessage("Paste in the link of an image to moustachify!")
+                    .setView(etBusca)
+                    .setCancelable(true)
+                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+    
+                            ArrayList<String> categoriesShow =  new ArrayList<String>();
+                            categoriesShow.add("Todos");
+                            categoriesShow.add("Urgente");
+                            categoriesShow.add("Importante");
+                            categoriesShow.add("Sem Prioridade");
+                            String text = etBusca.getText().toString();
+                            ReminderMainActivity.search = text;
+                            listReminderFragment.updateListViewFilter(text);
+                        }
+    
+                    })
+                    .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            ReminderMainActivity.search = null;
+                            listReminderFragment.updateListView(null);
+                        }
+                    })
+                    .show();
+    
+    
+        }
+	}
+}
