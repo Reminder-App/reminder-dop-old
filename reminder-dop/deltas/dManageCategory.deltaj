@@ -512,6 +512,7 @@ delta dManageCategory {
 
 	}
 	modifies br.unb.cic.reminders.view.FilterListFragment {
+		adds import android.widget.AdapterView.AdapterContextMenuInfo;
 		adds import android.app.DialogFragment;
 		adds import android.view.MenuItem;
 		adds public void onCreateContextMenu(ContextMenu menu, View v,
