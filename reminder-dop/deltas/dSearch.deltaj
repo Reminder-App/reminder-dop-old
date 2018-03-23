@@ -36,25 +36,19 @@ delta dSearch {
     
     
             new AlertDialog.Builder(this)
-                    .setTitle("Buscar")
+                    .setTitle("Search for a reminder")
                     //.setMessage("Paste in the link of an image to moustachify!")
                     .setView(etBusca)
                     .setCancelable(true)
-                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    .setPositiveButton("Search", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int whichButton) {
-    
-                            ArrayList<String> categoriesShow =  new ArrayList<String>();
-                            categoriesShow.add("Todos");
-                            categoriesShow.add("Urgente");
-                            categoriesShow.add("Importante");
-                            categoriesShow.add("Sem Prioridade");
                             String text = etBusca.getText().toString();
                             ReminderMainActivity.search = text;
                             listReminderFragment.updateListViewFilter(text);
                         }
     
                     })
-                    .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int whichButton) {
                             ReminderMainActivity.search = null;
                             listReminderFragment.updateListView(null);
