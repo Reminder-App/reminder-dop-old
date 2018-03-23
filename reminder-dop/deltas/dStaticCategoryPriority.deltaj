@@ -255,4 +255,27 @@ delta dStaticCategoryPriority {
 			return super.onContextItemSelected(item);
 		}
 	}
+	modifies br.unb.cic.reminders.view.ReminderActivity {
+		removes createReminder();
+		adds private void createReminder() {
+			try {
+				reminder.setText(edtReminder.getText().toString());
+				reminder.setDetails(edtDetails.getText().toString());
+				reminder.setDate(dateToString());
+				reminder.setHour(timeToString());
+				reminder.setPriority(selectedPriority);
+				reminder.setCategory((Category) spinnerCategory.getSelectedItem());
+			} catch (InvalidTextException e) {
+				// This catch is handling both Reminder's Text and Details.
+				Toast.makeText(getApplicationContext(), "Texto inválido.", Toast.LENGTH_SHORT).show();
+			} catch (InvalidDateException e) {
+				Toast.makeText(getApplicationContext(), "Data inválida.", Toast.LENGTH_SHORT).show();
+			} catch (InvalidHourException e) {
+				Toast.makeText(getApplicationContext(), "Hora inválida.", Toast.LENGTH_SHORT).show();
+			} catch (Exception e) {
+				// this is an exceptional case that needs to be studied
+				Toast.makeText(getApplicationContext(), "Erro grave.", Toast.LENGTH_SHORT).show();
+			}
+		}
+	}
 }
