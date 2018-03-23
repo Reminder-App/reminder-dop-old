@@ -299,7 +299,7 @@
                  android:layout_height="wrap_content"
                  //#if (fixedDate) && (!priority && !category && !googleCalendar)
                  android:layout_below="@id/spinnerTime"
-                 //elif((fixedDate && googleCalendar) && (!priority && !category))
+                 //#elif ((fixedDate && googleCalendar) && (!priority && !category))
                  android:layout_below="@id/txtAddgCalendar"
                  //#elif (fixedDate && category) && (!priority && !googleCalendar)
                  android:layout_below="@id/spinnerCategories"
