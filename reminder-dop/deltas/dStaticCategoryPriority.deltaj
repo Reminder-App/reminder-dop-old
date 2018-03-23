@@ -14,4 +14,25 @@ delta dStaticCategoryPriority {
 		adds public static final String SELECT_REMINDERS_BY_CATEGORY = "SELECT PK, TEXT, DETAILS, FK_CATEGORY, DATE, HOUR, PRIORITY, DONE FROM REMINDER " 
 			+ "WHERE FK_CATEGORY = ?";
 	}
+	modifies br.unb.cic.reminders.model.cp.ReminderContentProvider {
+		removes insert(Uri uri, ContentValues values);
+		adds @Override public Uri insert(Uri uri, ContentValues values) {
+			try {
+				Reminder reminder = new Reminder();
+
+				Category category = cdao.findCategory(values.getAsString(category()));
+				reminder.setCategory(category);
+				reminder.setText(values.getAsString(text()));
+				reminder.setDate(values.getAsString(date()));
+				reminder.setHour(values.getAsString(hour()));
+
+				Long id = rdao.saveReminder(reminder);
+				getContext().getContentResolver().notifyChange(uri, null);
+				return Uri.parse(BASE_PATH + "/" + id);
+			} catch (DBException e) {
+				throw new RuntimeException(e.getLocalizedMessage());
+			}
+
+		}
+	}
 }
