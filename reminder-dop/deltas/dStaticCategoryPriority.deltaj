@@ -118,4 +118,10 @@ delta dStaticCategoryPriority {
 			return reminder;
 		}
 	}
+	modifies br.unb.cic.reminders.model.Reminder {
+		removes isValid();
+		adds public boolean isValid() {
+			return (text != null && category != null && date != null && hour != null && priority != null);
+		}
+	}
 }
