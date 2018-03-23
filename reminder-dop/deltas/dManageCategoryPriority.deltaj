@@ -139,4 +139,39 @@ delta dManageCategoryPriority {
 			return (text != null && category != null && date != null && hour != null && priority != null);
 		}
 	}
+	modifies br.unb.cic.reminders.view.EditReminderActivity {
+		removes initializeValues();
+		adds @Override protected void initializeValues() {
+			Intent intent = getIntent();
+
+			// Gets the information from the intent if it is an edit call
+			long reminderId = intent.getLongExtra("id", 0);
+			String text = intent.getStringExtra("text");
+			String details = intent.getStringExtra("details");
+			String categoryName = intent.getStringExtra("category_name");
+			String categoryId = intent.getStringExtra("category_id");
+			String date = intent.getStringExtra("date");
+			String hour = intent.getStringExtra("hour");
+			String priority = intent.getStringExtra("priority");
+
+			Category category = new Category();
+			category.setId(Long.parseLong(categoryId));
+			category.setName(categoryName);
+
+			reminder.setId(reminderId);
+			edtReminder.setText(text);
+			edtDetails.setText(details);
+			updateSpinnerDateHour(spinnerDate, date);
+			updateDateFromString(date);
+			updateSpinnerDateHour(spinnerTime, hour);
+			updateTimeFromString(hour);
+			spinnerPriority.setSelection(Priority.fromCode(Integer.parseInt(priority, 10)).getCode());
+			try {
+				spinnerCategory.setSelection(categoryToIndex(category));
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
 }
