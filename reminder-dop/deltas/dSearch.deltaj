@@ -1,4 +1,4 @@
-delta dTextSearch {
+delta dSearch {
 	modifies br.unb.cic.reminders.ReminderMainActivity {
 		adds import android.app.AlertDialog;
 		adds import android.content.Context;
