@@ -85,7 +85,8 @@
             android:background="#FFFFFF"
             android:divider="#EFEFEF"
             android:dividerHeight="1.5dp" />
-
+            
+        //#ifndef dateRange
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="20dp"
@@ -111,6 +112,6 @@
             android:background="#FFFFFF"
             android:divider="#EFEFEF"
             android:dividerHeight="1.5dp" />
+        //#endif
     </LinearLayout>
-
 </ScrollView>
