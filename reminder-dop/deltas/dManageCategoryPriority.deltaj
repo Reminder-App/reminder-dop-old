@@ -42,4 +42,67 @@ delta dManageCategoryPriority {
 
 		}
 	}
+	modifies br.unb.cic.reminders.view.ExternalAddReminderActivity {
+		removes setReminderFromIntent();
+		adds private void setReminderFromIntent() throws Exception {
+			Intent intent = getIntent();
+			String action = intent.getAction();
+			String type = intent.getType();
+	
+			// Gets the information from the intent if it is an edit call
+			if (action.equals("br.com.positivo.reminders.ADD_REMINDER") && "text/plain".equals(type)) {
+				String text = intent.getStringExtra("text");
+				String details = intent.getStringExtra("details");
+				String categoryName = intent.getStringExtra("category_name");
+				String date = intent.getStringExtra("date");
+				String hour = intent.getStringExtra("hour");
+				String priority = intent.getStringExtra("priority");
+	
+				List<Category> categories = Controller.instance(getApplicationContext()).listCategories();
+				for (Category c : categories) {
+					if (c.getName().equals(categoryName)) {
+						newCategory = c;
+						break;
+					}
+				}
+				if (newCategory == null) {
+					isNewCategory = true;
+					newCategory = new Category();
+					newCategory.setName(categoryName);
+				}
+				reminder.setText(text);
+				reminder.setDetails(details);
+				reminder.setDate(date);
+				reminder.setHour(hour);
+				reminder.setPriority(Priority.fromCode(Integer.parseInt(priority)));
+				reminder.setCategory(newCategory);
+			} else
+				reminder = null;
+	
+		}
+		removes initializeValues();
+		adds @Override protected void initializeValues() {
+	
+			if (!reminder.isValid())
+				return;
+	
+			edtReminder.setText(reminder.getText());
+			edtDetails.setText(reminder.getDetails());
+			updateSpinnerDateHour(spinnerDate, reminder.getDate());
+			updateDateFromString(reminder.getDate());
+			updateSpinnerDateHour(spinnerTime, reminder.getHour());
+			updateTimeFromString(reminder.getHour());
+			spinnerPriority.setSelection(reminder.getPriority());
+			try {
+				if (isNewCategory)
+					spinnerCategory.setSelection(spinnerCategory.getCount() - 2);
+				else
+					spinnerCategory.setSelection(categoryToIndex(reminder.getCategory()));
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	
+		}
+	}
 }
