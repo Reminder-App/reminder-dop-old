@@ -56,6 +56,6 @@ SPL Reminder {
 		GoogleCalendar};
 		/* 15 */ DateRangeManageCategoryPriorityGoogleCalendar = {ManageReminder,
 		DateRange, ManageCategory, Priority, GoogleCalendar};
-		/* 16 */ DateRangeDateSearch = {ManageReminder, DateRange, Search};
+		/* 16 */ DateRangeSearch = {ManageReminder, DateRange, Search};
 	}
 }
