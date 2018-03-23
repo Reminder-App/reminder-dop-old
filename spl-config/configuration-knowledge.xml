@@ -8,18 +8,11 @@
 		</transformation>
 		<transformation>
 			<name>preprocessFiles</name>
-			<args>AndroidManifest, ReminderMainActivity, ReminderAdd, Strings, ReminderRow</args>
+			<args>AndroidManifest, ReminderMainActivity, ReminderAdd, ReminderRow, RemindersListFragment, Strings</args>
 		</transformation>
 		<transformation>
 			<name>removeComponents</name>
 			<args>SPLInfoFolder, DeltasFolder</args>
-		</transformation>
-	</configuration>
-	<configuration>
-		<expression>Reminder Manage</expression>
-		<transformation>
-			<name>createBuildEntries</name>
-			<args>base</args>
 		</transformation>
 	</configuration>
 	<configuration>
