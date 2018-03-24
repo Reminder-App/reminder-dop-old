@@ -4,11 +4,12 @@ SPL Reminder {
 	Priority, ReminderSchedule, DateRange, FixedDate, GoogleCalendar, Search}
 
 	Deltas = {dManageReminder, dStaticCategory, dManageCategory, dPriority,
-	dGoogleCalendar, dDateRange, dSearch}
+	dStaticCategoryPriority, dManageCategoryPriority, dGoogleCalendar, dDateRange,
+	dSearch}
 
 	Constraints {
-		ReminderCategory AND (ManageCategory XOR StaticCategory);
-		ReminderSchedule AND (DateRange XOR FixedDate);
+		ReminderCategory & (ManageCategory ^ StaticCategory);
+		ReminderSchedule & (DateRange ^ FixedDate);
 	}
 
 	Partitions {
@@ -22,40 +23,56 @@ SPL Reminder {
 
 		{dStaticCategory, dManageCategory} when (ManageCategory);
 
+		{dStaticCategoryPriority} when (Priority & StaticCategory);
+		
+		{dManageCategoryPriority} when (Priority & ManageCategory);
+
 		{dGoogleCalendar} when (GoogleCalendar);
 
 		{dSearch} when (Search);
 	}
 
 	Products {
-		/* Products with Fixed Date */
-		/* 01 */ FixedDate = {ManageReminder, FixedDate};
-		/* 02 */ FixedDateStaticCategory = {ManageReminder, FixedDate,
+		/* Products with Fixed Date feature */
+		FixedDate = {ManageReminder, FixedDate};
+		FixedDateStaticCategory = {ManageReminder, FixedDate,
 		StaticCategory};
-		/* 03 */ FixedDateManageCategory = {ManageReminder, FixedDate,
+		FixedDateManageCategory = {ManageReminder, FixedDate,
 		ManageCategory};
-		/* 04 */ FixedDatePriority = {ManageReminder, FixedDate, Priority};
-		/* 05 */ FixedDateManageCategoryPriority = {ManageReminder, FixedDate,
+		FixedDatePriority = {ManageReminder, FixedDate, Priority};
+		FixedDateManageCategoryPriority = {ManageReminder, FixedDate,
 		ManageCategory, Priority};
-		/* 06 */ FixedDateGoogleCalendar = {ManageReminder, FixedDate,
+		FixedDateGoogleCalendar = {ManageReminder, FixedDate,
 		GoogleCalendar};
-		/* 07 */ FixedDateManageCategoryPriorityGoogleCalendar = {ManageReminder,
+		FixedDateManageCategoryPriorityGoogleCalendar = {ManageReminder,
 		FixedDate, ManageCategory, Priority, GoogleCalendar};
-		/* 08 */ FixedDateSearch = {ManageReminder, FixedDate, Search};
+		FixedDateSearch = {ManageReminder, FixedDate, Search};
+		FixedDateStaticCategoryPriority = {ManageReminder, FixedDate,
+		StaticCategory, Priority};
+		FixedDateManageCategoryPriorityGoogleCalendarSearch = {ManageReminder,
+		FixedDate, ManageCategory, Priority, GoogleCalendar, Search};
+		FixedDateStaticCategoryPriorityGoogleCalendarSearch = {ManageReminder,
+		FixedDate, StaticCategory, Priority, GoogleCalendar, Search};
 
-		/* Products with Date Range */
-		/* 09 */ DateRange = {ManageReminder, DateRange};
-		/* 10 */ DateRangeStaticCategory = {ManageReminder, DateRange,
+		/* Products with Date Range feature*/
+		DateRange = {ManageReminder, DateRange};
+		DateRangeStaticCategory = {ManageReminder, DateRange,
 		StaticCategory};
-		/* 11 */ DateRangeManageCategory = {ManageReminder, DateRange,
+		DateRangeManageCategory = {ManageReminder, DateRange,
 		ManageCategory};
-		/* 12 */ DateRangePriority = {ManageReminder, DateRange, Priority};
-		/* 13 */ DateRangeManageCategoryPriority = {ManageReminder, DateRange,
+		DateRangePriority = {ManageReminder, DateRange, Priority};
+		DateRangeManageCategoryPriority = {ManageReminder, DateRange,
 		ManageCategory, Priority};
-		/* 14 */ DateRangeGoogleCalendar = {ManageReminder, DateRange,
+		DateRangeGoogleCalendar = {ManageReminder, DateRange,
 		GoogleCalendar};
-		/* 15 */ DateRangeManageCategoryPriorityGoogleCalendar = {ManageReminder,
+		DateRangeManageCategoryPriorityGoogleCalendar = {ManageReminder,
 		DateRange, ManageCategory, Priority, GoogleCalendar};
-		/* 16 */ DateRangeSearch = {ManageReminder, DateRange, Search};
+		DateRangeSearch = {ManageReminder, DateRange, Search};
+		DateRangeStaticCategoryPriority = {ManageReminder, DateRange,
+		StaticCategory, Priority};
+		DateRangeManageCategoryPriorityGoogleCalendarSearch = {ManageReminder,
+		DateRange, ManageCategory, Priority, GoogleCalendar, Search};
+		DateRangeStaticCategoryPriorityGoogleCalendarSearch = {ManageReminder,
+		DateRange, StaticCategory, Priority, GoogleCalendar, Search};
 	}
 }
