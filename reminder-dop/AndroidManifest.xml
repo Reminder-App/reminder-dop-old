@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="br.unb.cic.reminders2"
-    android:versionCode="1"
-    android:versionName="0.0.1" >
+  package="br.unb.cic.reminders2"
+  android:versionCode="1"
+  android:versionName="0.0.1" >
 
-    <uses-sdk
-        android:minSdkVersion="14"
-        android:targetSdkVersion="16" />
+  <uses-sdk
+    android:minSdkVersion="14"
+    android:targetSdkVersion="16" />
 
     <uses-permission android:name="android.permission.READ_CALENDAR" />
     <uses-permission android:name="android.permission.WRITE_CALENDAR" />
@@ -14,209 +14,261 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-        android:icon="@drawable/icon"
-        android:label="@string/app_name"
-        android:theme="@style/Theme.Reminder" >
-        <activity
-            //#if (fixedDate) && !manageCategory && !staticCategory && !priority && !googleCalendar && !search
-            android:name="reminder.fixeddate.br.unb.cic.reminders.ReminderMainActivity"
-            //#elif (fixedDate && staticCategory) && !manageCategory && !priority && !googleCalendar && !search
-            android:name="reminder.fixeddatestaticcategory.br.unb.cic.reminders.ReminderMainActivity"
-            //#elif (fixedDate && manageCategory) && !staticCategory && !priority && !googleCalendar && !search
-            android:name="reminder.fixeddatemanagecategory.br.unb.cic.reminders.ReminderMainActivity"
-            //#elif (fixedDate && manageCategory && priority) && !staticCategory && !googleCalendar && !search
-            android:name="reminder.fixeddatepriority.br.unb.cic.reminders.ReminderMainActivity"
-            //#elif (fixedDate && priority) && !manageCategory && !staticCategory && !googleCalendar && !search
-            android:name="reminder.fixeddatemanagecategorypriority.br.unb.cic.reminders.ReminderMainActivity"
-            //#elif (fixedDate && googleCalendar) && !manageCategory && !staticCategory && !priority && !search
-            android:name="reminder.fixeddategooglecalendar.br.unb.cic.reminders.ReminderMainActivity"
-            //#elif (fixedDate && manageCategory && priority && googleCalendar) && !staticCategory && !search
-            android:name="reminder.fixeddatemanagecategoryprioritygooglecalendar.br.unb.cic.reminders.ReminderMainActivity"
-            //#elif (fixedDate && search) && !manageCategory && !staticCategory && !priority && !googleCalendar
-            android:name="reminder.fixeddatesearch.br.unb.cic.reminders.ReminderMainActivity"
+      android:icon="@drawable/icon"
+      android:label="@string/app_name"
+      android:theme="@style/Theme.Reminder" >
+      <activity
+        //#if (fixedDate) && !manageCategory && !staticCategory && !priority && !googleCalendar && !search
+        android:name="reminder.fixeddate.br.unb.cic.reminders.ReminderMainActivity"
+        //#elif (fixedDate && staticCategory) && !manageCategory && !priority && !googleCalendar && !search
+        android:name="reminder.fixeddatestaticcategory.br.unb.cic.reminders.ReminderMainActivity"
+        //#elif (fixedDate && manageCategory) && !staticCategory && !priority && !googleCalendar && !search
+        android:name="reminder.fixeddatemanagecategory.br.unb.cic.reminders.ReminderMainActivity"
+        //#elif (fixedDate && manageCategory && priority) && !staticCategory && !googleCalendar && !search
+        android:name="reminder.fixeddatemanagecategorypriority.br.unb.cic.reminders.ReminderMainActivity"
+        //#elif (fixedDate && staticCategory && priority) && !manageCategory && !googleCalendar && !search
+        android:name="reminder.fixeddatestaticcategorypriority.br.unb.cic.reminders.ReminderMainActivity"
+        //#elif (fixedDate && priority) && !manageCategory && !staticCategory && !googleCalendar && !search
+        android:name="reminder.fixeddatepriority.br.unb.cic.reminders.ReminderMainActivity"
+        //#elif (fixedDate && googleCalendar) && !manageCategory && !staticCategory && !priority && !search
+        android:name="reminder.fixeddategooglecalendar.br.unb.cic.reminders.ReminderMainActivity"
+        //#elif (fixedDate && manageCategory && priority && googleCalendar) && !staticCategory && !search
+        android:name="reminder.fixeddatemanagecategoryprioritygooglecalendar.br.unb.cic.reminders.ReminderMainActivity"
+        //#elif (fixedDate && manageCategory && priority && googleCalendar && search) && !staticCategory
+        android:name="reminder.fixeddatemanagecategoryprioritygooglecalendarsearch.br.unb.cic.reminders.ReminderMainActivity"
+        //#elif (fixedDate && staticCategory && priority && googleCalendar && search) && !manageCategory
+        android:name="reminder.fixeddatestaticcategoryprioritygooglecalendarsearch.br.unb.cic.reminders.ReminderMainActivity"
+        //#elif (fixedDate && search) && !manageCategory && !staticCategory && !priority && !googleCalendar
+        android:name="reminder.fixeddatesearch.br.unb.cic.reminders.ReminderMainActivity"
 
-            //#elif (dateRange) && !manageCategory && !staticCategory && !priority && !googleCalendar && !search
-            android:name="reminder.daterange.br.unb.cic.reminders.ReminderMainActivity"
-            //#elif (dateRange && staticCategory) && !manageCategory && !priority && !googleCalendar && !search
-            android:name="reminder.daterangestaticcategory.br.unb.cic.reminders.ReminderMainActivity"
-            //#elif (dateRange && manageCategory) && !staticCategory && !priority && !googleCalendar && !search
-            android:name="reminder.daterangemanagecategory.br.unb.cic.reminders.ReminderMainActivity"
-            //#elif (dateRange && manageCategory && priority) && !staticCategory && !googleCalendar && !search
-            android:name="reminder.daterangepriority.br.unb.cic.reminders.ReminderMainActivity"
-            //#elif (dateRange && priority) && !manageCategory && !staticCategory && !googleCalendar && !search
-            android:name="reminder.daterangemanagecategorypriority.br.unb.cic.reminders.ReminderMainActivity"
-            //#elif (dateRange && googleCalendar) && !manageCategory && !staticCategory && !priority && !search
-            android:name="reminder.daterangegooglecalendar.br.unb.cic.reminders.ReminderMainActivity"
-            //#elif (dateRange && manageCategory && priority && googleCalendar) && !staticCategory && !search
-            android:name="reminder.daterangemanagecategoryprioritygooglecalendar.br.unb.cic.reminders.ReminderMainActivity"
-            //#elif (dateRange && search) && !manageCategory && !staticCategory && !priority && !googleCalendar
-            android:name="reminder.daterangesearch.br.unb.cic.reminders.ReminderMainActivity"
-            //#endif
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:screenOrientation="landscape" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        //#elif (dateRange) && !manageCategory && !staticCategory && !priority && !googleCalendar && !search
+        android:name="reminder.daterange.br.unb.cic.reminders.ReminderMainActivity"
+        //#elif (dateRange && staticCategory) && !manageCategory && !priority && !googleCalendar && !search
+        android:name="reminder.daterangestaticcategory.br.unb.cic.reminders.ReminderMainActivity"
+        //#elif (dateRange && manageCategory) && !staticCategory && !priority && !googleCalendar && !search
+        android:name="reminder.daterangemanagecategory.br.unb.cic.reminders.ReminderMainActivity"
+        //#elif (dateRange && manageCategory && priority) && !staticCategory && !googleCalendar && !search
+        android:name="reminder.daterangemanagecategorypriority.br.unb.cic.reminders.ReminderMainActivity"
+        //#elif (dateRange && staticCategory && priority) && !manageCategory && !googleCalendar && !search
+        android:name="reminder.daterangestaticcategorypriority.br.unb.cic.reminders.ReminderMainActivity"
+        //#elif (dateRange && priority) && !manageCategory && !staticCategory && !googleCalendar && !search
+        android:name="reminder.daterangepriority.br.unb.cic.reminders.ReminderMainActivity"
+        //#elif (dateRange && googleCalendar) && !manageCategory && !staticCategory && !priority && !search
+        android:name="reminder.daterangegooglecalendar.br.unb.cic.reminders.ReminderMainActivity"
+        //#elif (dateRange && manageCategory && priority && googleCalendar) && !staticCategory && !search
+        android:name="reminder.daterangemanagecategoryprioritygooglecalendar.br.unb.cic.reminders.ReminderMainActivity"
+        //#elif (dateRange && manageCategory && priority && googleCalendar && search) && !staticCategory
+        android:name="reminder.daterangemanagecategoryprioritygooglecalendarsearch.br.unb.cic.reminders.ReminderMainActivity"
+        //#elif (dateRange && staticCategory && priority && googleCalendar && search) && !manageCategory
+        android:name="reminder.daterangestaticcategoryprioritygooglecalendarsearch.br.unb.cic.reminders.ReminderMainActivity"
+        //#elif (dateRange && search) && !manageCategory && !staticCategory && !priority && !googleCalendar
+        android:name="reminder.daterangesearch.br.unb.cic.reminders.ReminderMainActivity"
+        //#endif
+        android:configChanges="keyboardHidden|orientation|screenSize"
+        android:screenOrientation="landscape" >
+        <intent-filter>
+          <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-            //#if (fixedDate) && !manageCategory && !staticCategory && !priority && !googleCalendar && !search
-            android:name="reminder.fixeddate.br.unb.cic.reminders.view.AddReminderActivity"
-            //#elif (fixedDate && staticCategory) && !manageCategory && !priority && !googleCalendar && !search
-            android:name="reminder.fixeddatestaticcategory.br.unb.cic.reminders.view.AddReminderActivity"
-            //#elif (fixedDate && manageCategory) && !staticCategory && !priority && !googleCalendar && !search
-            android:name="reminder.fixeddatemanagecategory.br.unb.cic.reminders.view.AddReminderActivity"
-            //#elif (fixedDate && manageCategory && priority) && !staticCategory && !googleCalendar && !search
-            android:name="reminder.fixeddatepriority.br.unb.cic.reminders.view.AddReminderActivity"
-            //#elif (fixedDate && priority) && !manageCategory && !staticCategory && !googleCalendar && !search
-            android:name="reminder.fixeddatemanagecategorypriority.br.unb.cic.reminders.view.AddReminderActivity"
-            //#elif (fixedDate && googleCalendar) && !manageCategory && !staticCategory && !priority && !search
-            android:name="reminder.fixeddategooglecalendar.br.unb.cic.reminders.view.AddReminderActivity"
-            //#elif (fixedDate && manageCategory && priority && googleCalendar) && !staticCategory && !search
-            android:name="reminder.fixeddatemanagecategoryprioritygooglecalendar.br.unb.cic.reminders.view.AddReminderActivity"
-            //#elif (fixedDate && search) && !manageCategory && !staticCategory && !priority && !googleCalendar
-            android:name="reminder.fixeddatesearch.br.unb.cic.reminders.view.AddReminderActivity"
+          <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+      </activity>
+      <activity
+        //#if (fixedDate) && !manageCategory && !staticCategory && !priority && !googleCalendar && !search
+        android:name="reminder.fixeddate.br.unb.cic.reminders.view.AddReminderActivity"
+        //#elif (fixedDate && staticCategory) && !manageCategory && !priority && !googleCalendar && !search
+        android:name="reminder.fixeddatestaticcategory.br.unb.cic.reminders.view.AddReminderActivity"
+        //#elif (fixedDate && manageCategory) && !staticCategory && !priority && !googleCalendar && !search
+        android:name="reminder.fixeddatemanagecategory.br.unb.cic.reminders.view.AddReminderActivity"
+        //#elif (fixedDate && manageCategory && priority) && !staticCategory && !googleCalendar && !search
+        android:name="reminder.fixeddatemanagecategorypriority.br.unb.cic.reminders.view.AddReminderActivity"
+        //#elif (fixedDate && staticCategory && priority) && !manageCategory && !googleCalendar && !search
+        android:name="reminder.fixeddatestaticcategorypriority.br.unb.cic.reminders.view.AddReminderActivity"
+        //#elif (fixedDate && priority) && !manageCategory && !staticCategory && !googleCalendar && !search
+        android:name="reminder.fixeddatepriority.br.unb.cic.reminders.view.AddReminderActivity"
+        //#elif (fixedDate && googleCalendar) && !manageCategory && !staticCategory && !priority && !search
+        android:name="reminder.fixeddategooglecalendar.br.unb.cic.reminders.view.AddReminderActivity"
+        //#elif (fixedDate && manageCategory && priority && googleCalendar) && !staticCategory && !search
+        android:name="reminder.fixeddatemanagecategoryprioritygooglecalendar.br.unb.cic.reminders.view.AddReminderActivity"
+        //#elif (fixedDate && manageCategory && priority && googleCalendar && search) && !staticCategory
+        android:name="reminder.fixeddatemanagecategoryprioritygooglecalendarsearch.br.unb.cic.reminders.view.AddReminderActivity"
+        //#elif (fixedDate && staticCategory && priority && googleCalendar && search) && !manageCategory
+        android:name="reminder.fixeddatestaticcategoryprioritygooglecalendarsearch.br.unb.cic.reminders.view.AddReminderActivity"
+        //#elif (fixedDate && search) && !manageCategory && !staticCategory && !priority && !googleCalendar
+        android:name="reminder.fixeddatesearch.br.unb.cic.reminders.view.AddReminderActivity"
 
-            //#elif (dateRange) && !manageCategory && !staticCategory && !priority && !googleCalendar && !search
-            android:name="reminder.daterange.br.unb.cic.reminders.view.AddReminderActivity"
-            //#elif (dateRange && staticCategory) && !manageCategory && !priority && !googleCalendar && !search
-            android:name="reminder.daterangestaticcategory.br.unb.cic.reminders.view.AddReminderActivity"
-            //#elif (dateRange && manageCategory) && !staticCategory && !priority && !googleCalendar && !search
-            android:name="reminder.daterangemanagecategory.br.unb.cic.reminders.view.AddReminderActivity"
-            //#elif (dateRange && manageCategory && priority) && !staticCategory && !googleCalendar && !search
-            android:name="reminder.daterangepriority.br.unb.cic.reminders.view.AddReminderActivity"
-            //#elif (dateRange && priority) && !manageCategory && !staticCategory && !googleCalendar && !search
-            android:name="reminder.daterangemanagecategorypriority.br.unb.cic.reminders.view.AddReminderActivity"
-            //#elif (dateRange && googleCalendar) && !manageCategory && !staticCategory && !priority && !search
-            android:name="reminder.daterangegooglecalendar.br.unb.cic.reminders.view.AddReminderActivity"
-            //#elif (dateRange && manageCategory && priority && googleCalendar) && !staticCategory && !search
-            android:name="reminder.daterangemanagecategoryprioritygooglecalendar.br.unb.cic.reminders.view.AddReminderActivity"
-            //#elif (dateRange && search) && !manageCategory && !staticCategory && !priority && !googleCalendar
-            android:name="reminder.daterangesearch.br.unb.cic.reminders.view.AddReminderActivity"
-            //#endif
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:label="@string/title_activity_reminder_add"
-            android:screenOrientation="landscape" >
-        </activity>
-        <activity
-            //#if (fixedDate) && !manageCategory && !staticCategory && !priority && !googleCalendar && !search
-            android:name="reminder.fixeddate.br.unb.cic.reminders.view.EditReminderActivity"
-            //#elif (fixedDate && staticCategory) && !manageCategory && !priority && !googleCalendar && !search
-            android:name="reminder.fixeddatestaticcategory.br.unb.cic.reminders.view.EditReminderActivity"
-            //#elif (fixedDate && manageCategory) && !staticCategory && !priority && !googleCalendar && !search
-            android:name="reminder.fixeddatemanagecategory.br.unb.cic.reminders.view.EditReminderActivity"
-            //#elif (fixedDate && manageCategory && priority) && !staticCategory && !googleCalendar && !search
-            android:name="reminder.fixeddatepriority.br.unb.cic.reminders.view.EditReminderActivity"
-            //#elif (fixedDate && priority) && !manageCategory && !staticCategory && !googleCalendar && !search
-            android:name="reminder.fixeddatemanagecategorypriority.br.unb.cic.reminders.view.EditReminderActivity"
-            //#elif (fixedDate && googleCalendar) && !manageCategory && !staticCategory && !priority && !search
-            android:name="reminder.fixeddategooglecalendar.br.unb.cic.reminders.view.EditReminderActivity"
-            //#elif (fixedDate && manageCategory && priority && googleCalendar) && !staticCategory && !search
-            android:name="reminder.fixeddatemanagecategoryprioritygooglecalendar.br.unb.cic.reminders.view.EditReminderActivity"
-            //#elif (fixedDate && search) && !manageCategory && !staticCategory && !priority && !googleCalendar
-            android:name="reminder.fixeddatesearch.br.unb.cic.reminders.view.EditReminderActivity"
+        //#elif (dateRange) && !manageCategory && !staticCategory && !priority && !googleCalendar && !search
+        android:name="reminder.daterange.br.unb.cic.reminders.view.AddReminderActivity"
+        //#elif (dateRange && staticCategory) && !manageCategory && !priority && !googleCalendar && !search
+        android:name="reminder.daterangestaticcategory.br.unb.cic.reminders.view.AddReminderActivity"
+        //#elif (dateRange && manageCategory) && !staticCategory && !priority && !googleCalendar && !search
+        android:name="reminder.daterangemanagecategory.br.unb.cic.reminders.view.AddReminderActivity"
+        //#elif (dateRange && manageCategory && priority) && !staticCategory && !googleCalendar && !search
+        android:name="reminder.daterangemanagecategorypriority.br.unb.cic.reminders.view.AddReminderActivity"
+        //#elif (dateRange && staticCategory && priority) && !manageCategory && !googleCalendar && !search
+        android:name="reminder.daterangestaticcategorypriority.br.unb.cic.reminders.view.AddReminderActivity"
+        //#elif (dateRange && priority) && !manageCategory && !staticCategory && !googleCalendar && !search
+        android:name="reminder.daterangepriority.br.unb.cic.reminders.view.AddReminderActivity"
+        //#elif (dateRange && googleCalendar) && !manageCategory && !staticCategory && !priority && !search
+        android:name="reminder.daterangegooglecalendar.br.unb.cic.reminders.view.AddReminderActivity"
+        //#elif (dateRange && manageCategory && priority && googleCalendar) && !staticCategory && !search
+        android:name="reminder.daterangemanagecategoryprioritygooglecalendar.br.unb.cic.reminders.view.AddReminderActivity"
+        //#elif (dateRange && manageCategory && priority && googleCalendar && search) && !staticCategory
+        android:name="reminder.daterangemanagecategoryprioritygooglecalendarsearch.br.unb.cic.reminders.view.AddReminderActivity"
+        //#elif (dateRange && staticCategory && priority && googleCalendar && search) && !manageCategory
+        android:name="reminder.daterangestaticcategoryprioritygooglecalendarsearch.br.unb.cic.reminders.view.AddReminderActivity"
+        //#elif (dateRange && search) && !manageCategory && !staticCategory && !priority && !googleCalendar
+        android:name="reminder.daterangesearch.br.unb.cic.reminders.view.AddReminderActivity"
+        //#endif
+        android:configChanges="keyboardHidden|orientation|screenSize"
+        android:label="@string/title_activity_reminder_add"
+        android:screenOrientation="landscape" >
+      </activity>
+      <activity
+        //#if (fixedDate) && !manageCategory && !staticCategory && !priority && !googleCalendar && !search
+        android:name="reminder.fixeddate.br.unb.cic.reminders.view.EditReminderActivity"
+        //#elif (fixedDate && staticCategory) && !manageCategory && !priority && !googleCalendar && !search
+        android:name="reminder.fixeddatestaticcategory.br.unb.cic.reminders.view.EditReminderActivity"
+        //#elif (fixedDate && manageCategory) && !staticCategory && !priority && !googleCalendar && !search
+        android:name="reminder.fixeddatemanagecategory.br.unb.cic.reminders.view.EditReminderActivity"
+        //#elif (fixedDate && manageCategory && priority) && !staticCategory && !googleCalendar && !search
+        android:name="reminder.fixeddatemanagecategorypriority.br.unb.cic.reminders.view.EditReminderActivity"
+        //#elif (fixedDate && staticCategory && priority) && !manageCategory && !googleCalendar && !search
+        android:name="reminder.fixeddatestaticcategorypriority.br.unb.cic.reminders.view.EditReminderActivity"
+        //#elif (fixedDate && priority) && !manageCategory && !staticCategory && !googleCalendar && !search
+        android:name="reminder.fixeddatepriority.br.unb.cic.reminders.view.EditReminderActivity"
+        //#elif (fixedDate && googleCalendar) && !manageCategory && !staticCategory && !priority && !search
+        android:name="reminder.fixeddategooglecalendar.br.unb.cic.reminders.view.EditReminderActivity"
+        //#elif (fixedDate && manageCategory && priority && googleCalendar) && !staticCategory && !search
+        android:name="reminder.fixeddatemanagecategoryprioritygooglecalendar.br.unb.cic.reminders.view.EditReminderActivity"
+        //#elif (fixedDate && manageCategory && priority && googleCalendar && search) && !staticCategory
+        android:name="reminder.fixeddatemanagecategoryprioritygooglecalendarsearch.br.unb.cic.reminders.view.EditReminderActivity"
+        //#elif (fixedDate && staticCategory && priority && googleCalendar && search) && !manageCategory
+        android:name="reminder.fixeddatestaticcategoryprioritygooglecalendarsearch.br.unb.cic.reminders.view.EditReminderActivity"
+        //#elif (fixedDate && search) && !manageCategory && !staticCategory && !priority && !googleCalendar
+        android:name="reminder.fixeddatesearch.br.unb.cic.reminders.view.EditReminderActivity"
 
-            //#elif (dateRange) && !manageCategory && !staticCategory && !priority && !googleCalendar && !search
-            android:name="reminder.daterange.br.unb.cic.reminders.view.EditReminderActivity"
-            //#elif (dateRange && staticCategory) && !manageCategory && !priority && !googleCalendar && !search
-            android:name="reminder.daterangestaticcategory.br.unb.cic.reminders.view.EditReminderActivity"
-            //#elif (dateRange && manageCategory) && !staticCategory && !priority && !googleCalendar && !search
-            android:name="reminder.daterangemanagecategory.br.unb.cic.reminders.view.EditReminderActivity"
-            //#elif (dateRange && manageCategory && priority) && !staticCategory && !googleCalendar && !search
-            android:name="reminder.daterangepriority.br.unb.cic.reminders.view.EditReminderActivity"
-            //#elif (dateRange && priority) && !manageCategory && !staticCategory && !googleCalendar && !search
-            android:name="reminder.daterangemanagecategorypriority.br.unb.cic.reminders.view.EditReminderActivity"
-            //#elif (dateRange && googleCalendar) && !manageCategory && !staticCategory && !priority && !search
-            android:name="reminder.daterangegooglecalendar.br.unb.cic.reminders.view.EditReminderActivity"
-            //#elif (dateRange && manageCategory && priority && googleCalendar) && !staticCategory && !search
-            android:name="reminder.daterangemanagecategoryprioritygooglecalendar.br.unb.cic.reminders.view.EditReminderActivity"
-            //#elif (dateRange && search) && !manageCategory && !staticCategory && !priority && !googleCalendar
-            android:name="reminder.daterangesearch.br.unb.cic.reminders.view.EditReminderActivity"
-            //#endif
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:label="@string/title_activity_reminder_edit"
-            android:screenOrientation="landscape" >
-        </activity>
-        <activity
-            //#if (fixedDate) && !manageCategory && !staticCategory && !priority && !googleCalendar && !search
-            android:name="reminder.fixeddate.br.unb.cic.reminders.view.ExternalAddReminderActivity"
-            //#elif (fixedDate && staticCategory) && !manageCategory && !priority && !googleCalendar && !search
-            android:name="reminder.fixeddatestaticcategory.br.unb.cic.reminders.view.ExternalAddReminderActivity"
-            //#elif (fixedDate && manageCategory) && !staticCategory && !priority && !googleCalendar && !search
-            android:name="reminder.fixeddatemanagecategory.br.unb.cic.reminders.view.ExternalAddReminderActivity"
-            //#elif (fixedDate && manageCategory && priority) && !staticCategory && !googleCalendar && !search
-            android:name="reminder.fixeddatepriority.br.unb.cic.reminders.view.ExternalAddReminderActivity"
-            //#elif (fixedDate && priority) && !manageCategory && !staticCategory && !googleCalendar && !search
-            android:name="reminder.fixeddatemanagecategorypriority.br.unb.cic.reminders.view.ExternalAddReminderActivity"
-            //#elif (fixedDate && googleCalendar) && !manageCategory && !staticCategory && !priority && !search
-            android:name="reminder.fixeddategooglecalendar.br.unb.cic.reminders.view.ExternalAddReminderActivity"
-            //#elif (fixedDate && manageCategory && priority && googleCalendar) && !staticCategory && !search
-            android:name="reminder.fixeddatemanagecategoryprioritygooglecalendar.br.unb.cic.reminders.view.ExternalAddReminderActivity"
-            //#elif (fixedDate && search) && !manageCategory && !staticCategory && !priority && !googleCalendar
-            android:name="reminder.fixeddatesearch.br.unb.cic.reminders.view.ExternalAddReminderActivity"
+        //#elif (dateRange) && !manageCategory && !staticCategory && !priority && !googleCalendar && !search
+        android:name="reminder.daterange.br.unb.cic.reminders.view.EditReminderActivity"
+        //#elif (dateRange && staticCategory) && !manageCategory && !priority && !googleCalendar && !search
+        android:name="reminder.daterangestaticcategory.br.unb.cic.reminders.view.EditReminderActivity"
+        //#elif (dateRange && manageCategory) && !staticCategory && !priority && !googleCalendar && !search
+        android:name="reminder.daterangemanagecategory.br.unb.cic.reminders.view.EditReminderActivity"
+        //#elif (dateRange && manageCategory && priority) && !staticCategory && !googleCalendar && !search
+        android:name="reminder.daterangemanagecategorypriority.br.unb.cic.reminders.view.EditReminderActivity"
+        //#elif (dateRange && staticCategory && priority) && !manageCategory && !googleCalendar && !search
+        android:name="reminder.daterangestaticcategorypriority.br.unb.cic.reminders.view.EditReminderActivity"
+        //#elif (dateRange && priority) && !manageCategory && !staticCategory && !googleCalendar && !search
+        android:name="reminder.daterangepriority.br.unb.cic.reminders.view.EditReminderActivity"
+        //#elif (dateRange && googleCalendar) && !manageCategory && !staticCategory && !priority && !search
+        android:name="reminder.daterangegooglecalendar.br.unb.cic.reminders.view.EditReminderActivity"
+        //#elif (dateRange && manageCategory && priority && googleCalendar) && !staticCategory && !search
+        android:name="reminder.daterangemanagecategoryprioritygooglecalendar.br.unb.cic.reminders.view.EditReminderActivity"
+        //#elif (dateRange && manageCategory && priority && googleCalendar && search) && !staticCategory
+        android:name="reminder.daterangemanagecategoryprioritygooglecalendarsearch.br.unb.cic.reminders.view.EditReminderActivity"
+        //#elif (dateRange && staticCategory && priority && googleCalendar && search) && !manageCategory
+        android:name="reminder.daterangestaticcategoryprioritygooglecalendarsearch.br.unb.cic.reminders.view.EditReminderActivity"
+        //#elif (dateRange && search) && !manageCategory && !staticCategory && !priority && !googleCalendar
+        android:name="reminder.daterangesearch.br.unb.cic.reminders.view.EditReminderActivity"
+        //#endif
+        android:configChanges="keyboardHidden|orientation|screenSize"
+        android:label="@string/title_activity_reminder_edit"
+        android:screenOrientation="landscape" >
+      </activity>
+      <activity
+        //#if (fixedDate) && !manageCategory && !staticCategory && !priority && !googleCalendar && !search
+        android:name="reminder.fixeddate.br.unb.cic.reminders.view.ExternalAddReminderActivity"
+        //#elif (fixedDate && staticCategory) && !manageCategory && !priority && !googleCalendar && !search
+        android:name="reminder.fixeddatestaticcategory.br.unb.cic.reminders.view.ExternalAddReminderActivity"
+        //#elif (fixedDate && manageCategory) && !staticCategory && !priority && !googleCalendar && !search
+        android:name="reminder.fixeddatemanagecategory.br.unb.cic.reminders.view.ExternalAddReminderActivity"
+        //#elif (fixedDate && manageCategory && priority) && !staticCategory && !googleCalendar && !search
+        android:name="reminder.fixeddatemanagecategorypriority.br.unb.cic.reminders.view.ExternalAddReminderActivity"
+        //#elif (fixedDate && priority) && !manageCategory && !staticCategory && !googleCalendar && !search
+        android:name="reminder.fixeddatepriority.br.unb.cic.reminders.view.ExternalAddReminderActivity"
+        //#elif (fixedDate && googleCalendar) && !manageCategory && !staticCategory && !priority && !search
+        android:name="reminder.fixeddategooglecalendar.br.unb.cic.reminders.view.ExternalAddReminderActivity"
+        //#elif (fixedDate && manageCategory && priority && googleCalendar) && !staticCategory && !search
+        android:name="reminder.fixeddatemanagecategoryprioritygooglecalendar.br.unb.cic.reminders.view.ExternalAddReminderActivity"
+        //#elif (fixedDate && manageCategory && priority && googleCalendar && search) && !staticCategory
+        android:name="reminder.fixeddatemanagecategoryprioritygooglecalendarsearch.br.unb.cic.reminders.view.ExternalAddReminderActivity"
+        //#elif (fixedDate && staticCategory && priority && googleCalendar && search) && !manageCategory
+        android:name="reminder.fixeddatestaticcategoryprioritygooglecalendarsearch.br.unb.cic.reminders.view.ExternalAddReminderActivity"
+        //#elif (fixedDate && search) && !manageCategory && !staticCategory && !priority && !googleCalendar
+        android:name="reminder.fixeddatesearch.br.unb.cic.reminders.view.ExternalAddReminderActivity"
 
-            //#elif (dateRange) && !manageCategory && !staticCategory && !priority && !googleCalendar && !search
-            android:name="reminder.daterange.br.unb.cic.reminders.view.ExternalAddReminderActivity"
-            //#elif (dateRange && staticCategory) && !manageCategory && !priority && !googleCalendar && !search
-            android:name="reminder.daterangestaticcategory.br.unb.cic.reminders.view.ExternalAddReminderActivity"
-            //#elif (dateRange && manageCategory) && !staticCategory && !priority && !googleCalendar && !search
-            android:name="reminder.daterangemanagecategory.br.unb.cic.reminders.view.ExternalAddReminderActivity"
-            //#elif (dateRange && manageCategory && priority) && !staticCategory && !googleCalendar && !search
-            android:name="reminder.daterangepriority.br.unb.cic.reminders.view.ExternalAddReminderActivity"
-            //#elif (dateRange && priority) && !manageCategory && !staticCategory && !googleCalendar && !search
-            android:name="reminder.daterangemanagecategorypriority.br.unb.cic.reminders.view.ExternalAddReminderActivity"
-            //#elif (dateRange && googleCalendar) && !manageCategory && !staticCategory && !priority && !search
-            android:name="reminder.daterangegooglecalendar.br.unb.cic.reminders.view.ExternalAddReminderActivity"
-            //#elif (dateRange && manageCategory && priority && googleCalendar) && !staticCategory && !search
-            android:name="reminder.daterangemanagecategoryprioritygooglecalendar.br.unb.cic.reminders.view.ExternalAddReminderActivity"
-            //#elif (dateRange && search) && !manageCategory && !staticCategory && !priority && !googleCalendar
-            android:name="reminder.daterangesearch.br.unb.cic.reminders.view.ExternalAddReminderActivity"
-            //#endif
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:label="@string/title_activity_reminder_edit"
-            android:screenOrientation="landscape" >
-            <intent-filter>
+        //#elif (dateRange) && !manageCategory && !staticCategory && !priority && !googleCalendar && !search
+        android:name="reminder.daterange.br.unb.cic.reminders.view.ExternalAddReminderActivity"
+        //#elif (dateRange && staticCategory) && !manageCategory && !priority && !googleCalendar && !search
+        android:name="reminder.daterangestaticcategory.br.unb.cic.reminders.view.ExternalAddReminderActivity"
+        //#elif (dateRange && manageCategory) && !staticCategory && !priority && !googleCalendar && !search
+        android:name="reminder.daterangemanagecategory.br.unb.cic.reminders.view.ExternalAddReminderActivity"
+        //#elif (dateRange && manageCategory && priority) && !staticCategory && !googleCalendar && !search
+        android:name="reminder.daterangemanagecategorypriority.br.unb.cic.reminders.view.ExternalAddReminderActivity"
+        //#elif (dateRange && priority) && !manageCategory && !staticCategory && !googleCalendar && !search
+        android:name="reminder.daterangepriority.br.unb.cic.reminders.view.ExternalAddReminderActivity"
+        //#elif (dateRange && googleCalendar) && !manageCategory && !staticCategory && !priority && !search
+        android:name="reminder.daterangegooglecalendar.br.unb.cic.reminders.view.ExternalAddReminderActivity"
+        //#elif (dateRange && manageCategory && priority && googleCalendar) && !staticCategory && !search
+        android:name="reminder.daterangemanagecategoryprioritygooglecalendar.br.unb.cic.reminders.view.ExternalAddReminderActivity"
+        //#elif (dateRange && manageCategory && priority && googleCalendar && search) && !staticCategory
+        android:name="reminder.daterangemanagecategoryprioritygooglecalendarsearch.br.unb.cic.reminders.view.ExternalAddReminderActivity"
+        //#elif (dateRange && staticCategory && priority && googleCalendar && search) && !manageCategory
+        android:name="reminder.daterangestaticcategoryprioritygooglecalendarsearch.br.unb.cic.reminders.view.ExternalAddReminderActivity"
+        //#elif (dateRange && search) && !manageCategory && !staticCategory && !priority && !googleCalendar
+        android:name="reminder.daterangesearch.br.unb.cic.reminders.view.ExternalAddReminderActivity"
+        //#endif
+        android:configChanges="keyboardHidden|orientation|screenSize"
+        android:label="@string/title_activity_reminder_edit"
+        android:screenOrientation="landscape" >
+        <intent-filter>
 
-                //#if (fixedDate) && !manageCategory && !staticCategory && !priority && !googleCalendar && !search
-                <action android:name="reminder.fixeddate.br.unb.cic.reminders.ADD_REMINDER" />
-                //#elif (fixedDate && staticCategory) && !manageCategory && !priority && !googleCalendar && !search
-                <action android:name="reminder.fixeddatestaticcategory.br.unb.cic.reminders.ADD_REMINDER" />
-                //#elif (fixedDate && manageCategory) && !staticCategory && !priority && !googleCalendar && !search
-                <action android:name="reminder.fixeddatemanagecategory.br.unb.cic.reminders.ADD_REMINDER" />
-                //#elif (fixedDate && manageCategory && priority) && !staticCategory && !googleCalendar && !search
-                <action android:name="reminder.fixeddatepriority.br.unb.cic.reminders.ADD_REMINDER" />
-                //#elif (fixedDate && priority) && !manageCategory && !staticCategory && !googleCalendar && !search
-                <action android:name="reminder.fixeddatemanagecategorypriority.br.unb.cic.reminders.ADD_REMINDER" />
-                //#elif (fixedDate && googleCalendar) && !manageCategory && !staticCategory && !priority && !search
-                <action android:name="reminder.fixeddategooglecalendar.br.unb.cic.reminders.ADD_REMINDER" />
-                //#elif (fixedDate && manageCategory && priority && googleCalendar) && !staticCategory && !search
-                <action android:name="reminder.fixeddatemanagecategoryprioritygooglecalendar.br.unb.cic.reminders.ADD_REMINDER" />
-                //#elif (fixedDate && search) && !manageCategory && !staticCategory && !priority && !googleCalendar
-                <action android:name="reminder.fixeddatesearch.br.unb.cic.reminders.ADD_REMINDER" />
+          //#if (fixedDate) && !manageCategory && !staticCategory && !priority && !googleCalendar && !search
+          <action android:name="reminder.fixeddate.br.unb.cic.reminders.ADD_REMINDER" />
+          //#elif (fixedDate && staticCategory) && !manageCategory && !priority && !googleCalendar && !search
+          <action android:name="reminder.fixeddatestaticcategory.br.unb.cic.reminders.ADD_REMINDER" />
+          //#elif (fixedDate && manageCategory) && !staticCategory && !priority && !googleCalendar && !search
+          <action android:name="reminder.fixeddatemanagecategory.br.unb.cic.reminders.ADD_REMINDER" />
+          //#elif (fixedDate && manageCategory && priority) && !staticCategory && !googleCalendar && !search
+          <action android:name="reminder.fixeddatemanagecategorypriority.br.unb.cic.reminders.ADD_REMINDER" />
+          //#elif (fixedDate && staticCategory && priority) && !manageCategory && !googleCalendar && !search
+          <action android:name="reminder.fixeddatestaticcategorypriority.br.unb.cic.reminders.ADD_REMINDER" />
+          //#elif (fixedDate && priority) && !manageCategory && !staticCategory && !googleCalendar && !search
+          <action android:name="reminder.fixeddatepriority.br.unb.cic.reminders.ADD_REMINDER" />
+          //#elif (fixedDate && googleCalendar) && !manageCategory && !staticCategory && !priority && !search
+          <action android:name="reminder.fixeddategooglecalendar.br.unb.cic.reminders.ADD_REMINDER" />
+          //#elif (fixedDate && manageCategory && priority && googleCalendar) && !staticCategory && !search
+          <action android:name="reminder.fixeddatemanagecategoryprioritygooglecalendar.br.unb.cic.reminders.ADD_REMINDER" />
+          //#elif (fixedDate && manageCategory && priority && googleCalendar && search) && !staticCategory
+          <action android:name="reminder.fixeddatemanagecategoryprioritygooglecalendarsearch.br.unb.cic.reminders.ADD_REMINDER" />
+          //#elif (fixedDate && staticCategory && priority && googleCalendar && search) && !manageCategory
+          <action android:name="reminder.fixeddatestaticcategoryprioritygooglecalendarsearch.br.unb.cic.reminders.ADD_REMINDER" />
+          //#elif (fixedDate && search) && !manageCategory && !staticCategory && !priority && !googleCalendar
+          <action android:name="reminder.fixeddatesearch.br.unb.cic.reminders.ADD_REMINDER" />
 
-                //#elif (dateRange) && !manageCategory && !staticCategory && !priority && !googleCalendar && !search
-                <action android:name="reminder.daterange.br.unb.cic.reminders.ADD_REMINDER" />
-                //#elif (dateRange && staticCategory) && !manageCategory && !priority && !googleCalendar && !search
-                <action android:name="reminder.daterangestaticcategory.br.unb.cic.reminders.ADD_REMINDER" />
-                //#elif (dateRange && manageCategory) && !staticCategory && !priority && !googleCalendar && !search
-                <action android:name="reminder.daterangemanagecategory.br.unb.cic.reminders.ADD_REMINDER" />
-                //#elif (dateRange && manageCategory && priority) && !staticCategory && !googleCalendar && !search
-                <action android:name="reminder.daterangepriority.br.unb.cic.reminders.ADD_REMINDER" />
-                //#elif (dateRange && priority) && !manageCategory && !staticCategory && !googleCalendar && !search
-                <action android:name="reminder.daterangemanagecategorypriority.br.unb.cic.reminders.ADD_REMINDER" />
-                //#elif (dateRange && googleCalendar) && !manageCategory && !staticCategory && !priority && !search
-                <action android:name="reminder.daterangegooglecalendar.br.unb.cic.reminders.ADD_REMINDER" />
-                //#elif (dateRange && manageCategory && priority && googleCalendar) && !staticCategory && !search
-                <action android:name="reminder.daterangemanagecategoryprioritygooglecalendar.br.unb.cic.reminders.ADD_REMINDER" />
-                //#elif (dateRange && search) && !manageCategory && !staticCategory && !priority && !googleCalendar
-                <action android:name="reminder.daterangesearch.br.unb.cic.reminders.ADD_REMINDER" />
-                //#endif
+          //#elif (dateRange) && !manageCategory && !staticCategory && !priority && !googleCalendar && !search
+          <action android:name="reminder.daterange.br.unb.cic.reminders.ADD_REMINDER" />
+          //#elif (dateRange && staticCategory) && !manageCategory && !priority && !googleCalendar && !search
+          <action android:name="reminder.daterangestaticcategory.br.unb.cic.reminders.ADD_REMINDER" />
+          //#elif (dateRange && manageCategory) && !staticCategory && !priority && !googleCalendar && !search
+          <action android:name="reminder.daterangemanagecategory.br.unb.cic.reminders.ADD_REMINDER" />
+          //#elif (dateRange && manageCategory && priority) && !staticCategory && !googleCalendar && !search
+          <action android:name="reminder.daterangemanagecategorypriority.br.unb.cic.reminders.ADD_REMINDER" />
+          //#elif (dateRange && staticCategory && priority) && !manageCategory && !googleCalendar && !search
+          <action android:name="reminder.daterangestaticcategorypriority.br.unb.cic.reminders.ADD_REMINDER" />
+          //#elif (dateRange && priority) && !manageCategory && !staticCategory && !googleCalendar && !search
+          <action android:name="reminder.daterangepriority.br.unb.cic.reminders.ADD_REMINDER" />
+          //#elif (dateRange && googleCalendar) && !manageCategory && !staticCategory && !priority && !search
+          <action android:name="reminder.daterangegooglecalendar.br.unb.cic.reminders.ADD_REMINDER" />
+          //#elif (dateRange && manageCategory && priority && googleCalendar) && !staticCategory && !search
+          <action android:name="reminder.daterangemanagecategoryprioritygooglecalendar.br.unb.cic.reminders.ADD_REMINDER" />
+          //#elif (dateRange && search) && !manageCategory && !staticCategory && !priority && !googleCalendar
+          <action android:name="reminder.daterangesearch.br.unb.cic.reminders.ADD_REMINDER" />
+          //#endif
 
-                <category android:name="android.intent.category.DEFAULT" />
+          <category android:name="android.intent.category.DEFAULT" />
 
-                <data android:mimeType="text/plain" />
-            </intent-filter>
-        </activity>
+          <data android:mimeType="text/plain" />
+        </intent-filter>
+      </activity>
     </application>
-</manifest>
+  </manifest>
