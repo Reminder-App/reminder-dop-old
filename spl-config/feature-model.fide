@@ -2,7 +2,7 @@
 	<featureModel chosenLayoutAlgorithm="1">
 		<struct>
 			<and mandatory="true" name="Reminder App">
-				<and mandatory="true" name="Reminder Manage">
+				<and mandatory="true" name="Manage Reminder">
 					<feature mandatory="true" name="View"/>
 					<feature mandatory="true" name="Create"/>
 					<feature mandatory="true" name="Edit"/>
