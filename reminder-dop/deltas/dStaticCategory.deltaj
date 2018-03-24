@@ -1078,19 +1078,19 @@ delta dStaticCategory {
 				reminder.setCategory((Category) spinnerCategory.getSelectedItem());
 			}
 			catch(InvalidTextException e) {
-				Toast.makeText(getApplicationContext(), "Texto invalido.",
+				Toast.makeText(getApplicationContext(), "Invalid text.",
 					Toast.LENGTH_SHORT).show();
 			}
 			catch(InvalidDateException e) {
-				Toast.makeText(getApplicationContext(), "Data invalida.",
+				Toast.makeText(getApplicationContext(), "Invalid date.",
 					Toast.LENGTH_SHORT).show();
 			}
 			catch(InvalidHourException e) {
-				Toast.makeText(getApplicationContext(), "Hora invalida.",
+				Toast.makeText(getApplicationContext(), "Invalid time.",
 					Toast.LENGTH_SHORT).show();
 			}
 			catch(Exception e) {
-				Toast.makeText(getApplicationContext(), "Erro grave.",
+				Toast.makeText(getApplicationContext(), "Serious error.",
 					Toast.LENGTH_SHORT).show();
 			}
 		}
@@ -1154,11 +1154,11 @@ delta dStaticCategory {
 				reminder.setHour(edtHour.getText().toString());
 				reminder.setCategory(selectedCategory);
 			} catch (InvalidTextException e) {
-				Toast.makeText(getApplicationContext(), "Texto invalido.", Toast.LENGTH_SHORT).show();
+				Toast.makeText(getApplicationContext(), "Invalid text.", Toast.LENGTH_SHORT).show();
 			} catch (InvalidDateException e) {
-				Toast.makeText(getApplicationContext(), "Data invalida.", Toast.LENGTH_SHORT).show();
+				Toast.makeText(getApplicationContext(), "Invalid date.", Toast.LENGTH_SHORT).show();
 			} catch (InvalidHourException e) {
-				Toast.makeText(getApplicationContext(), "Hora invalida.", Toast.LENGTH_SHORT).show();
+				Toast.makeText(getApplicationContext(), "Invalid time.", Toast.LENGTH_SHORT).show();
 			}
 			return reminder;
 		}

@@ -12,16 +12,16 @@ delta dDateRange {
 		removes setHour(String hour);
 		adds public String getDateStart() {
 			return dateStart;
-		}	
+		}
 		adds public void setDateStart(String dateStart) {
-			
+
 			if (dateStart == null) throw new InvalidDateException(dateStart);
 			if (!(dateStart == null || dateStart.equals("")) && !checkFormat(dateStart, Patterns.DATE_PATTERN)) {
 				throw new InvalidDateException(dateStart);
 			}
 			this.dateStart = dateStart;
 		}
-	
+
 		adds public String getHourStart() {
 			return hourStart;
 		}
@@ -32,12 +32,12 @@ delta dDateRange {
 			}
 			this.hourStart = hourStart;
 		}
-		
+
 		adds public String getDateFinal() {
 			return dateFinal;
 		}
 		adds public void setDateFinal(String dateFinal) {
-			
+
 			if (dateFinal == null) throw new InvalidDateException(dateFinal);
 			if (!(dateFinal == null || dateFinal.equals("")) && !checkFormat(dateFinal, Patterns.DATE_PATTERN)) {
 				throw new InvalidDateException(dateFinal);
@@ -56,7 +56,7 @@ delta dDateRange {
 		}
 		removes isValid();
 		adds public boolean isValid() {
-			return (text != null && dateStart != null && hourStart != null 
+			return (text != null && dateStart != null && hourStart != null
 					&& dateFinal != null && hourFinal != null);
 		}
 	}
@@ -65,13 +65,13 @@ delta dDateRange {
 		removes hour();
 		adds public static final String dateStart() {
 			return DBConstants.REMINDER_INITIAL_DATE_COLUMN;
-		}	
+		}
 		adds public static final String hourStart() {
 			return DBConstants.REMINDER_INITIAL_HOUR_COLUMN;
-		}		
+		}
 		adds public static final String dateFinal() {
 			return DBConstants.REMINDER_FINAL_DATE_COLUMN;
-		}	
+		}
 		adds public static final String hourFinal() {
 			return DBConstants.REMINDER_FINAL_HOUR_COLUMN;
 		}
@@ -143,7 +143,7 @@ delta dDateRange {
 			Intent intent = getIntent();
 			String action = intent.getAction();
 			String type = intent.getType();
-	
+
 			// Gets the information from the intent if it is an edit call
 			if (action.equals("br.com.positivo.reminders.ADD_REMINDER") && "text/plain".equals(type)) {
 				String text = intent.getStringExtra("text");
@@ -159,7 +159,7 @@ delta dDateRange {
 				reminder.setDateFinal(dateFinal);
 				reminder.setHourFinal(hourFinal);
 			} else
-				reminder = null;	
+				reminder = null;
 		}
 		removes initializeValues();
 		adds @Override protected void initializeValues() {
@@ -193,7 +193,7 @@ delta dDateRange {
 			spinnerTimeStart = getSpinnerTimeStart();
 			spinnerDateFinal = getSpinnerDateFinal();
 			spinnerTimeFinal = getSpinnerTimeFinal();
-	
+
 		}
 		removes createReminder();
 		adds private void createReminder() {
@@ -206,19 +206,19 @@ delta dDateRange {
 				reminder.setHourFinal(timeToString(timeFinal));
 			}
 			catch(InvalidTextException e) {
-				Toast.makeText(getApplicationContext(), "Texto inv�lido.",
+				Toast.makeText(getApplicationContext(), "Invalid text.",
 					Toast.LENGTH_SHORT).show();
 			}
 			catch(InvalidDateException e) {
-				Toast.makeText(getApplicationContext(), "Data inv�lida.",
+				Toast.makeText(getApplicationContext(), "Invalid date.",
 					Toast.LENGTH_SHORT).show();
 			}
 			catch(InvalidHourException e) {
-				Toast.makeText(getApplicationContext(), "Hora inv�lida.",
+				Toast.makeText(getApplicationContext(), "Invalid time.",
 					Toast.LENGTH_SHORT).show();
 			}
 			catch(Exception e) {
-				Toast.makeText(getApplicationContext(), "Erro grave.",
+				Toast.makeText(getApplicationContext(), "Serious error.",
 					Toast.LENGTH_SHORT).show();
 			}
 		}
@@ -262,7 +262,7 @@ delta dDateRange {
 				}
 
 			});
-			
+
 			spinnerDateFinal.setOnTouchListener(new View.OnTouchListener() {
 				public boolean onTouch(View v, MotionEvent event) {
 					spinnerDateFinal = getSpinnerDateFinal();
@@ -303,25 +303,25 @@ delta dDateRange {
 		}
 		removes addListenerToSpinnerTime();
 		adds private void addListenerToSpinnerTime() {
-	
+
 			spinnerTimeStart.setOnTouchListener(new View.OnTouchListener() {
 				public boolean onTouch(View v, MotionEvent event) {
 					spinnerTimeStart = getSpinnerTimeStart();
 					return false;
 				}
 			});
-	
+
 			spinnerTimeStart.setOnKeyListener(new View.OnKeyListener() {
 				public boolean onKey(View v, int keyCode, KeyEvent event) {
 					spinnerTimeStart = getSpinnerTimeStart();
 					return false;
 				}
 			});
-	
+
 			spinnerTimeStart.setOnItemSelectedListener(new OnItemSelectedListener() {
-	
+
 				public void onItemSelected(AdapterView<? extends Object> parent, View view, int pos, long id) {
-	
+
 					switch (pos) {
 					case 0:
 						timeStart = null;
@@ -335,30 +335,30 @@ delta dDateRange {
 					default:
 					}
 				}
-	
+
 				public void onNothingSelected(AdapterView<? extends Object> arg0) {
 					// Well, do nothing...
 				}
 			});
-			
+
 			spinnerTimeFinal.setOnTouchListener(new View.OnTouchListener() {
 				public boolean onTouch(View v, MotionEvent event) {
 					spinnerTimeFinal = getSpinnerTimeFinal();
 					return false;
 				}
 			});
-	
+
 			spinnerTimeFinal.setOnKeyListener(new View.OnKeyListener() {
 				public boolean onKey(View v, int keyCode, KeyEvent event) {
 					spinnerTimeFinal = getSpinnerTimeFinal();
 					return false;
 				}
 			});
-	
+
 			spinnerTimeFinal.setOnItemSelectedListener(new OnItemSelectedListener() {
-	
+
 				public void onItemSelected(AdapterView<? extends Object> parent, View view, int pos, long id) {
-	
+
 					switch (pos) {
 					case 0:
 						timeFinal = null;
@@ -372,12 +372,12 @@ delta dDateRange {
 					default:
 					}
 				}
-	
+
 				public void onNothingSelected(AdapterView<? extends Object> arg0) {
 					// Well, do nothing...
 				}
 			});
-	
+
 		}
 		removes  dateToString();
 		adds private String dateToString(Calendar date) {
@@ -450,7 +450,7 @@ delta dDateRange {
 				timeStart.set(Calendar.MINUTE, minute);
 				timeStart.set(Calendar.HOUR_OF_DAY, hour);
 			}
-	
+
 		}
 		removes getSpinnerDate();
 		removes getSpinnerTime();
@@ -483,7 +483,7 @@ delta dDateRange {
 
 			return spinner;
 		}
-		
+
 		adds private Spinner getSpinnerDateFinal() {
 			Spinner spinner = (Spinner) findViewById(R.id.spinnerDateFinal);
 
@@ -530,15 +530,15 @@ delta dDateRange {
 				reminder.setHourFinal(edtHourFinal.getText().toString());
 			}
 			catch(InvalidTextException e) {
-				Toast.makeText(getApplicationContext(), "Texto invalido.",
+				Toast.makeText(getApplicationContext(), "Invalid text.",
 					Toast.LENGTH_SHORT).show();
 			}
 			catch(InvalidDateException e) {
-				Toast.makeText(getApplicationContext(), "Data invalida.",
+				Toast.makeText(getApplicationContext(), "Invalid date.",
 					Toast.LENGTH_SHORT).show();
 			}
 			catch(InvalidHourException e) {
-				Toast.makeText(getApplicationContext(), "Hora invalida.",
+				Toast.makeText(getApplicationContext(), "Invalid time.",
 					Toast.LENGTH_SHORT).show();
 			}
 			return reminder;
@@ -594,7 +594,7 @@ delta dDateRange {
 			}
 			return null;
 		}
-		removes updateFieldsFromReminder(Reminder reminder); 
+		removes updateFieldsFromReminder(Reminder reminder);
 		adds private void updateFieldsFromReminder(Reminder reminder) throws Exception {
 			edtReminder.setText(reminder.getText());
 			edtDetails.setText(reminder.getDetails());
@@ -607,21 +607,21 @@ delta dDateRange {
 	modifies br.unb.cic.reminders.view.ReminderArrayAdapter {
 		removes getDateFirst(int position);
 		adds private String getDateFirst(int position) {
-	
+
 			if (getItem(position).getDateFinal() == null) {
 				return "";
 			}
-	
+
 			String months[] = { "JAN", "FEV", "MAR", "ABR", "MAI", "JUN", "JUL", "AGO", "SET", "OUT", "NOV", "DEZ" };
 			String week[] = { "", "DOM", "SEG", "TER", "QUA", "QUI", "SEX", "SAB" };
-	
+
 			// Today and thatDay Calendars being initialized
 			Calendar today = Calendar.getInstance();
 			GregorianCalendar thatDay = new GregorianCalendar();
 			thatDay.set(Integer.parseInt(getItem(position).getDateFinal().substring(6, 10)), // year
 					Integer.parseInt(getItem(position).getDateFinal().substring(3, 5)) - 1, // month
 					Integer.parseInt(getItem(position).getDateFinal().substring(0, 2)));// day
-	
+
 			// switch based on the row type
 			switch (rowType) {
 			case LATE:
@@ -632,15 +632,15 @@ delta dDateRange {
 				else
 					return "Há " + days + " dias";
 				// break;
-	
+
 			case TODAY:
 				return getDatesHour(position);
 			// break;
-	
+
 			case NEXT_DAYS:
 				diff = thatDay.getTimeInMillis() - today.getTimeInMillis();
 				days = diff / (24*60*60*1000);
-	
+
 				if (days == 1) {
 					return getDatesHour(position);
 				} else if (days < 6) {
@@ -648,18 +648,18 @@ delta dDateRange {
 				} else {
 					return thatDay.get(Calendar.DAY_OF_MONTH) + " " + months[thatDay.get(Calendar.MONTH)];
 				}
-	
+
 				// break;
-	
+
 			default:
 				break;
 			}
-	
+
 			return getItem(position).getDateFinal();
 		}
 		removes getDateSecond(int position);
 		adds private String getDateSecond(int position) {
-	
+
 			switch (rowType) {
 			case LATE:
 				return getDatesHour(position);
@@ -674,10 +674,10 @@ delta dDateRange {
 				thatDay.set(Integer.parseInt(getItem(position).getDateFinal().substring(6, 10)), // year
 						Integer.parseInt(getItem(position).getDateFinal().substring(3, 5)) - 1, // month
 						Integer.parseInt(getItem(position).getDateFinal().substring(0, 2)));// day
-	
+
 				long diff = thatDay.getTimeInMillis() - today.getTimeInMillis();
 				long days = diff / (24*60*60*1000);
-	
+
 				if (days == 1)
 					return "amanha";
 				else
@@ -686,16 +686,16 @@ delta dDateRange {
 			default:
 				break;
 			}
-	
+
 			return getItem(position).getHourFinal();
 		}
 		removes getDatesHour(int position);
 		adds private String getDatesHour(int position) {
-	
+
 			if (getItem(position).getHourFinal() == null) {
 				return "";
 			}
-	
+
 			if (getItem(position).getHourFinal().substring(3, 5) != "00")
 				return getItem(position).getHourFinal().substring(0, 2) + "h" + getItem(position).getHourFinal().substring(3, 5);
 			else
@@ -720,11 +720,11 @@ delta dDateRange {
 		adds @Override public boolean onContextItemSelected(MenuItem item) {
 			if (item.getGroupId() == R.id.context_menu_reminder) { // Used to verify
 				// if it is the right context_menu
-	
+
 				// Gets the item position and gets the reminder in that position:
 				AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 				Reminder reminder = (Reminder) contextMenuAdapter.getItem(info.position);
-	
+
 				// Switch between the options in the context menu(Edit, Delete and
 				// Share)
 				switch (item.getItemId()) {
@@ -754,7 +754,7 @@ delta dDateRange {
 					default:
 						return super.onContextItemSelected(item);
 				}
-	
+
 			}
 			return super.onContextItemSelected(item);
 		}
@@ -763,17 +763,17 @@ delta dDateRange {
 			if (filter == null)
 				filter = new AllRemindersFilter(getActivity());
 			adapter = new ReminderArrayAdapter(getActivity().getApplicationContext(), filter.getReminderList());
-	
+
 			// Divide the adapter in 4 possibilities of dates(Late, Today, Next Days
 			// and No Date)
 			// and distribute it to each responsible ListView:
 			ReminderArrayAdapter adapterLate, adapterToday, adapterNextDays;
-	
+
 			Reminder r = new Reminder();
 			List<Reminder> remindersLate = new ArrayList<Reminder>();
 			List<Reminder> remindersToday = new ArrayList<Reminder>();
 			List<Reminder> remindersNextDays = new ArrayList<Reminder>();
-	
+
 			// Runs through the adapter and divides to the correspondent adapter
 			for (int i = 0; i < adapter.getCount(); ++i) {
 				r = adapter.getItem(i);
@@ -784,7 +784,7 @@ delta dDateRange {
 					String dayFinal = r.getDateFinal().substring(0, 2);
 					String monthFinal = r.getDateFinal().substring(3, 5);
 					String yearFinal = r.getDateFinal().substring(6, 10);
-	
+
 					Calendar cal = Calendar.getInstance();
 					GregorianCalendar gc = new GregorianCalendar();
 					GregorianCalendar gc2 = new GregorianCalendar();
@@ -811,9 +811,9 @@ delta dDateRange {
 						remindersToday.add(r);
 					else
 						remindersNextDays.add(r);
-				} 
+				}
 			}
-	
+
 			// Creates each adapter:
 			adapterLate = new ReminderArrayAdapter(getActivity().getApplicationContext(), remindersLate,
 					Color.rgb(0xED, 0x1C, 0x24), ReminderArrayAdapter.LATE);
@@ -821,7 +821,7 @@ delta dDateRange {
 					Color.rgb(0x33, 0xB5, 0xE5), ReminderArrayAdapter.TODAY);
 			adapterNextDays = new ReminderArrayAdapter(getActivity().getApplicationContext(), remindersNextDays,
 					Color.rgb(0x99, 0x99, 0x99), ReminderArrayAdapter.NEXT_DAYS);
-	
+
 			// Apply the adapters and rearrange the ListViews to its contents size:
 			lvReminderLate.setAdapter(adapterLate);
 			Utility.setListViewHeightBasedOnChildren(lvReminderLate);
@@ -835,7 +835,7 @@ delta dDateRange {
 		removes initializeValues();
 		adds @Override protected void initializeValues() {
 			Intent intent = getIntent();
-	
+
 			// Gets the information from the intent if it is an edit call
 			long reminderId = intent.getLongExtra("id", 0);
 			String text = intent.getStringExtra("text");
@@ -844,7 +844,7 @@ delta dDateRange {
 			String hourStart = intent.getStringExtra("hourStart");
 			String dateFinal = intent.getStringExtra("dateFinal");
 			String hourFinal = intent.getStringExtra("hourFinal");
-	
+
 			reminder.setId(reminderId);
 			edtReminder.setText(text);
 			edtDetails.setText(details);

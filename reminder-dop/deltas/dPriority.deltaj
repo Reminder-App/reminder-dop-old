@@ -7,7 +7,7 @@ delta dPriority {
 		removes getView(int position, View convertView, ViewGroup parent);
 		adds @Override public View getView(int position, View convertView, ViewGroup parent) {
 			LinearLayout filterRow;
-	
+
 			// Inflate the view
 			if (convertView == null) {
 				filterRow = new LinearLayout(getContext());
@@ -18,13 +18,13 @@ delta dPriority {
 			} else {
 				filterRow = (LinearLayout) convertView;
 			}
-	
+
 			TextView tvFilter = (TextView) filterRow.findViewById(R.id.row_categoryName);
 			tvFilter.setText(getItem(position).getName());
-	
+
 			TextView tvNumReminders = (TextView) filterRow.findViewById(R.id.row_categoryCounter);
 			tvNumReminders.setText(Integer.toString(getItem(position).getNumReminders()));
-	
+
 			return filterRow;
 		}
 	}
@@ -43,10 +43,10 @@ delta dPriority {
 	}
 	adds {
 		package br.unb.cic.reminders.view;
-		
+
 		import java.util.ArrayList;
 		import java.util.List;
-		
+
 		import android.app.Fragment;
 		import android.os.Bundle;
 		import android.util.Log;
@@ -67,42 +67,42 @@ delta dPriority {
 		import br.unb.cic.reminders.controller.ReminderFilter;
 		import br.unb.cic.reminders.model.Priority;
 		import br.unb.cic.reminders2.R;
-		
+
 		/**
 		* A list fragment that holds the list of categories.
 		*
 		* @author rbonifacio
 		*/
 		public class FilterListFragment extends Fragment implements OnItemClickListener {
-		
+
 		private static final String CURRENT_FILTER_KEY = "current_filter";
-		
+
 		private static String TAG = "filter fragment list";
-		
+
 		private int currentFilterIndex;
-		
+
 		private List<FiltersListChangeListener> listeners;
-		
+
 		private FiltersListChangeListener filtersChangeListener;
-		
+
 		private int currentFilterId;
 		// Used to list the filters.
 		private ReminderFilterArrayAdapter adapter;
 		private View view;
-		
+
 		private Button btAddCategory;
 		private ListView lvFilters;
-		
+
 		@Override
 		public void onActivityCreated(Bundle savedInstanceState) {
 			super.onActivityCreated(savedInstanceState);
-		
+
 			// this way, we could retrieve the selected filter
 			// after an orientation change.
 			if (savedInstanceState != null) {
 				currentFilterIndex = savedInstanceState.getInt(CURRENT_FILTER_KEY);
 			}
-		
+
 			/*
 			 * categoryList = new ArrayList<String>();
 			 *
@@ -116,12 +116,12 @@ delta dPriority {
 			 * thisListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 			 * thisListView.setBackgroundColor(Color.WHITE);
 			 */
-		
+
 			currentFilterId = 0;
-		
+
 			adapter = null;
 		}
-		
+
 		/**
 		 * Creates the view.
 		 */
@@ -131,7 +131,7 @@ delta dPriority {
 			createUI();
 			return view;
 		}
-		
+
 		/**
 		 * When resumed updates the filters list view.
 		 */
@@ -140,20 +140,20 @@ delta dPriority {
 			super.onResume();
 			updateListView();
 		}
-		
+
 		/**
 		 * Creates the context menu where shows the Edit and Delete options.
 		 */
 		// @Override
 		public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
 			super.onCreateContextMenu(menu, v, menuInfo);
-		
+
 			menu.setHeaderTitle(R.string.context_menu_category_title);
-		
+
 			MenuInflater inflater = getActivity().getMenuInflater();
 			inflater.inflate(R.menu.category_list_fragment_context_menu, menu);
 		}
-		
+
 		/**
 		 * Provides each action based in the chosen option(Edit or Delete).
 		 **/
@@ -181,24 +181,24 @@ delta dPriority {
 		 *
 		 * } return super.onContextItemSelected(item); }
 		 */
-		
+
 		public void addListener(FiltersListChangeListener filter) {
 			if (listeners == null)
 				listeners = new ArrayList<FiltersListChangeListener>();
 			listeners.add(filter);
 		}
-		
+
 		public void notifyListeners(ReminderFilter filter) {
 			for (FiltersListChangeListener c : listeners) {
 				c.onSelectedFilterChanged(filter);
 			}
 		}
-		
+
 		/**
 		 * Creates the User Interface.
 		 **/
 		private void createUI() {
-		
+
 			// Button to add a Category:
 			// btAddCategory = (Button) view.findViewById(R.id.btAddCategory);
 			// btAddCategory.setOnClickListener(new OnClickListener() {
@@ -210,26 +210,26 @@ delta dPriority {
 			// + R.string.dialog_addcategory_title);
 			// }
 			// });
-		
+
 			// List of filters
 			lvFilters = (ListView) view.findViewById(R.id.listCategories);
 			lvFilters.setOnItemClickListener(this);
 			registerForContextMenu(lvFilters);
 			updateListView();
 		}
-		
+
 		/**
 		 * Used to populate the list view with the current filters and other
 		 * filters.
 		 */
 		private void updateListView() {
-		
+
 			List<ReminderFilter> filters = new ArrayList<ReminderFilter>();
-		
+
 			// Add the allReminders to the filter list
 			AllRemindersFilter allRemindersFilter = new AllRemindersFilter(getActivity());
 			filters.add(allRemindersFilter);
-		
+
 			// Add the priorities to the filter list
 			PriorityFilter highPriorityFilter = new PriorityFilter(Priority.HIGH, getActivity());
 			filters.add(highPriorityFilter);
@@ -237,22 +237,22 @@ delta dPriority {
 			filters.add(normalPriorityFilter);
 			PriorityFilter lowPriorityFilter = new PriorityFilter(Priority.LOW, getActivity());
 			filters.add(lowPriorityFilter);
-		
+
 			adapter = new ReminderFilterArrayAdapter(getActivity().getApplicationContext(), filters);
-		
+
 			lvFilters.setAdapter(adapter);
 		}
-		
+
 		public void onItemClick(AdapterView<? extends Object> adapterView, View view, int position, long id) {
 			notifyListeners(adapter.getItem(position));
-		
+
 		}
-		
+
 		public void onNothingSelected(AdapterView<? extends Object> arg0) {
 			// TODO Auto-generated method stub
-		
+
 		}
-		
+
 		}
 	}
 	modifies br.unb.cic.reminders.model.db.DBConstants {
@@ -261,38 +261,38 @@ delta dPriority {
 			"CREATE TABLE REMINDER ( " + "PK INTEGER PRIMARY KEY AUTOINCREMENT, " + "TEXT VARCHAR(50) NOT NULL,"
 					+ "DETAILS VARCHAR(50) NULL," + "DATE CHAR(10) NULL,"
 					+ "HOUR CHAR(5) NULL," + "PRIORITY INTEGER NOT NULL," + "DONE INTEGER NOT NULL);", };
-	
+
 		removes SELECT_REMINDERS;
 		adds public static final String SELECT_REMINDERS = "SELECT PK, TEXT, DETAILS, DATE, HOUR, PRIORITY, DONE FROM REMINDER";
-	
+
 		adds public static String REMINDER_PRIORITY_COLUMN = "PRIORITY";
 	}
 	adds {
 		package br.unb.cic.reminders.controller;
-		
+
 		import android.content.Context;
 		import br.unb.cic.reminders.model.Priority;
 		import br.unb.cic.reminders.model.Reminder;
-		
+
 		public class PriorityFilter extends ReminderFilter {
-		
+
 			private Priority priority;
-		
+
 			public PriorityFilter(Priority priority, Context context) {
 				super(context);
 				this.priority = priority;
 			}
-		
+
 			@Override
 			protected boolean selectReminder(Reminder r) {
 				return r.getPriority() == priority.getCode();
 			}
-		
+
 			@Override
 			public String getName() {
 				return priority.toString();
 			}
-		
+
 		}
 	}
 	modifies br.unb.cic.reminders.model.db.DefaultReminderDAO {
@@ -325,23 +325,23 @@ delta dPriority {
 	}
 	adds {
 		package br.unb.cic.reminders.model;
-		
+
 		public enum Priority {
-		
-			LOW(0, "Sem Prioridade"), NORMAL(1, "Importante"), HIGH(2, "Urgente");
-		
+
+			LOW(0, "No Priority"), NORMAL(1, "Important"), HIGH(2, "Urgent");
+
 			int code;
 			String description;
-		
+
 			private Priority(int code, String description) {
 				this.code = code;
 				this.description = description;
 			}
-		
+
 			public int getCode() {
 				return code;
 			}
-		
+
 			static public Priority fromCode(int code) {
 				for (Priority p : Priority.values()) {
 					if (p.getCode() == code) {
@@ -350,12 +350,12 @@ delta dPriority {
 				}
 				throw new IllegalArgumentException();
 			}
-		
+
 			@Override
 			public String toString() {
 				return description;
 			}
-		
+
 		}
 	}
 	modifies br.unb.cic.reminders.model.Reminder {
@@ -532,7 +532,7 @@ delta dPriority {
 				public void onItemSelected(AdapterView<? extends Object> parent, View view, int pos, long id) {
 					selectedPriority = (Priority) parent.getItemAtPosition(pos);
 				}
-	
+
 				public void onNothingSelected(AdapterView<? extends Object> parent) {
 					// well... do nothing
 				}
@@ -548,35 +548,35 @@ delta dPriority {
 				reminder.setPriority(selectedPriority);
 			}
 			catch(InvalidTextException e) {
-				Toast.makeText(getApplicationContext(), "Texto inv�lido.",
+				Toast.makeText(getApplicationContext(), "Invalid text.",
 					Toast.LENGTH_SHORT).show();
 			}
 			catch(InvalidDateException e) {
-				Toast.makeText(getApplicationContext(), "Data inv�lida.",
+				Toast.makeText(getApplicationContext(), "Invalid date.",
 					Toast.LENGTH_SHORT).show();
 			}
 			catch(InvalidHourException e) {
-				Toast.makeText(getApplicationContext(), "Hora inv�lida.",
+				Toast.makeText(getApplicationContext(), "Invalid time.",
 					Toast.LENGTH_SHORT).show();
 			}
 			catch(Exception e) {
-				Toast.makeText(getApplicationContext(), "Erro grave.",
+				Toast.makeText(getApplicationContext(), "Serious error.",
 					Toast.LENGTH_SHORT).show();
 			}
 		}
 		adds private Spinner getSpinnerPriority() {
 			Spinner spinner = (Spinner) findViewById(R.id.spinnerPriorities);
-	
+
 			SpinnerAdapterGenerator<Priority> adapterPriorityGenerator = new SpinnerAdapterGenerator<Priority>();
-	
+
 			List<Priority> priorityValues = Arrays.asList(Priority.values());
-	
+
 			ArrayAdapter<Priority> priorityArrayAdapter = adapterPriorityGenerator.getSpinnerAdapter(priorityValues, this);
-	
+
 			spinner.setAdapter(priorityArrayAdapter);
-	
+
 			spinner.setSelection(Priority.NORMAL.getCode());
-	
+
 			return spinner;
 		}
 	}
@@ -593,7 +593,7 @@ delta dPriority {
 				public void onItemSelected(AdapterView<? extends Object> parent, View view, int pos, long id) {
 					selectedPriority = (Priority) parent.getItemAtPosition(pos);
 				}
-	
+
 				public void onNothingSelected(AdapterView<? extends Object> parent) {
 					// well... do nothing
 				}
@@ -610,15 +610,15 @@ delta dPriority {
 				reminder.setPriority(selectedPriority);
 			}
 			catch(InvalidTextException e) {
-				Toast.makeText(getApplicationContext(), "Texto invalido.",
+				Toast.makeText(getApplicationContext(), "Invalid text.",
 					Toast.LENGTH_SHORT).show();
 			}
 			catch(InvalidDateException e) {
-				Toast.makeText(getApplicationContext(), "Data invalida.",
+				Toast.makeText(getApplicationContext(), "Invalid date.",
 					Toast.LENGTH_SHORT).show();
 			}
 			catch(InvalidHourException e) {
-				Toast.makeText(getApplicationContext(), "Hora invalida.",
+				Toast.makeText(getApplicationContext(), "Invalid time.",
 					Toast.LENGTH_SHORT).show();
 			}
 			return reminder;

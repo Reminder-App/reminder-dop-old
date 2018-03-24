@@ -1,12 +1,12 @@
 delta dGoogleCalendar {
 	adds {
 		package br.unb.cic.reminders.calendar;
-		
+
 		import java.text.ParseException;
 		import java.util.Calendar;
 		import java.util.Date;
 		import java.util.TimeZone;
-		
+
 		import util.DateFormat;
 		import android.content.ContentResolver;
 		import android.content.ContentValues;
@@ -16,7 +16,7 @@ delta dGoogleCalendar {
 		import android.provider.CalendarContract.Events;
 		import br.unb.cic.reminders.model.CalendarNotFoundException;
 		import br.unb.cic.reminders.model.Reminder;
-		
+
 		public class CalendarEventCreator {
 			private String userAccount, timeZone, accountName, displayName;
 			private long calendarID;
@@ -30,7 +30,7 @@ delta dGoogleCalendar {
 					Calendars.OWNER_ACCOUNT, // 3
 					Calendars.CALENDAR_TIME_ZONE // 4
 			};
-		
+
 			private void initializer() {
 				haveMainCalendar = false;
 				userAccount = null;
@@ -39,7 +39,7 @@ delta dGoogleCalendar {
 				timeZone = TimeZone.getDefault().getID();
 				calendarID = -1;
 			}
-		
+
 			/*
 			 * Search for the first gmail account TODO:support multiple google accounts
 			 * on the same device
@@ -47,7 +47,7 @@ delta dGoogleCalendar {
 			private void getUserMainCalendar(Context ctx) {
 				ContentResolver cr = ctx.getContentResolver();
 				initializer();
-		
+
 				Cursor cur = null;
 				cur = cr.query(Calendars.CONTENT_URI, COLUMNS, null, null, null);
 				while (cur.moveToNext()) {
@@ -61,7 +61,7 @@ delta dGoogleCalendar {
 					}
 				}
 			}
-		
+
 			/*
 			 * Receive a reminder and a context. With those two, create a new entry in
 			 * google calendar TODO: correctly input the start time of the event TODO:
@@ -71,27 +71,27 @@ delta dGoogleCalendar {
 				long startMilliseconds, endmilliseconds;
 				Calendar calEnd;
 				startMilliseconds = endmilliseconds = 0;
-		
+
 				getUserMainCalendar(ctx);
-		
+
 				if (haveMainCalendar) {
 					ContentResolver cr = ctx.getContentResolver();
 					calEnd = Calendar.getInstance();
 					Date date = DateFormat.dateFormater(reminder.getDate() + " " + reminder.getHour());
 					calEnd.setTime(date);
-		
+
 					startMilliseconds = calEnd.getTimeInMillis() - 100000;
 					endmilliseconds = calEnd.getTimeInMillis();
-		
+
 					ContentValues values = new ContentValues();
-		
+
 					values.put(Events.DTSTART, startMilliseconds);
 					values.put(Events.DTEND, endmilliseconds);
 					values.put(Events.TITLE, reminder.getText());
 					values.put(Events.DESCRIPTION, reminder.getCategory().getName() + " - Reminder App");
 					values.put(Events.CALENDAR_ID, calendarID);
 					values.put(Events.EVENT_TIMEZONE, timeZone);
-		
+
 					cr.insert(Events.CONTENT_URI, values);
 				} else {
 					throw new CalendarNotFoundException();
@@ -106,7 +106,7 @@ delta dGoogleCalendar {
 		adds private CheckBox cbCalendar;
 
 		// implementar cbCalendar!!!
-		
+
 		modifies initializeFields() {
 			cbCalendar = (CheckBox) findViewById(R.id.cbCalendar);
 			original();
@@ -124,30 +124,30 @@ delta dGoogleCalendar {
 				}
 			}
 			catch(InvalidTextException e) {
-				Toast.makeText(getApplicationContext(), "Texto invalido.",
+				Toast.makeText(getApplicationContext(), "Invalid text.",
 					Toast.LENGTH_SHORT).show();
 			}
 			catch(InvalidDateException e) {
-				Toast.makeText(getApplicationContext(), "Data invalida.",
+				Toast.makeText(getApplicationContext(), "Invalid date.",
 					Toast.LENGTH_SHORT).show();
 			}
 			catch(InvalidHourException e) {
-				Toast.makeText(getApplicationContext(), "Hora invalida.",
+				Toast.makeText(getApplicationContext(), "Invalid time.",
 					Toast.LENGTH_SHORT).show();
 			}
 			catch(Exception e) {
-				Toast.makeText(getApplicationContext(), "Erro grave.",
+				Toast.makeText(getApplicationContext(), "Serious error.",
 					Toast.LENGTH_SHORT).show();
 			}
 		}
 	}
 	adds {
 		package br.unb.cic.reminders.model;
-		
+
 		public class CalendarNotFoundException extends RuntimeException {
-		
+
 			private static final long serialVersionUID = -3121418618753940886L;
-		
+
 			public CalendarNotFoundException() {
 				super("Google Account Not Found");
 			}

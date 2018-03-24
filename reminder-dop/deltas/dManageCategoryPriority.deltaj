@@ -282,14 +282,14 @@ delta dManageCategoryPriority {
 				reminder.setCategory((Category) spinnerCategory.getSelectedItem());
 			} catch (InvalidTextException e) {
 				// This catch is handling both Reminder's Text and Details.
-				Toast.makeText(getApplicationContext(), "Texto inválido.", Toast.LENGTH_SHORT).show();
+				Toast.makeText(getApplicationContext(), "Invalid text.", Toast.LENGTH_SHORT).show();
 			} catch (InvalidDateException e) {
-				Toast.makeText(getApplicationContext(), "Data inválida.", Toast.LENGTH_SHORT).show();
+				Toast.makeText(getApplicationContext(), "Invalid date.", Toast.LENGTH_SHORT).show();
 			} catch (InvalidHourException e) {
-				Toast.makeText(getApplicationContext(), "Hora inválida.", Toast.LENGTH_SHORT).show();
+				Toast.makeText(getApplicationContext(), "Invalid time.", Toast.LENGTH_SHORT).show();
 			} catch (Exception e) {
 				// this is an exceptional case that needs to be studied
-				Toast.makeText(getApplicationContext(), "Erro grave.", Toast.LENGTH_SHORT).show();
+				Toast.makeText(getApplicationContext(), "Serious error.", Toast.LENGTH_SHORT).show();
 			}
 		}
 	}
@@ -309,11 +309,11 @@ delta dManageCategoryPriority {
 				reminder.setCategory(selectedCategory);
 				reminder.setPriority(selectedPriority);
 			} catch (InvalidTextException e) {
-				Toast.makeText(getApplicationContext(), "Texto invalido.", Toast.LENGTH_SHORT).show();
+				Toast.makeText(getApplicationContext(), "Invalid text.", Toast.LENGTH_SHORT).show();
 			} catch (InvalidDateException e) {
-				Toast.makeText(getApplicationContext(), "Data invalida.", Toast.LENGTH_SHORT).show();
+				Toast.makeText(getApplicationContext(), "Invalid date.", Toast.LENGTH_SHORT).show();
 			} catch (InvalidHourException e) {
-				Toast.makeText(getApplicationContext(), "Hora invalida.", Toast.LENGTH_SHORT).show();
+				Toast.makeText(getApplicationContext(), "Invalid time.", Toast.LENGTH_SHORT).show();
 			}
 			return reminder;
 		}
