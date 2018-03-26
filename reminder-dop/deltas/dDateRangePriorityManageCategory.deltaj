@@ -143,4 +143,52 @@ delta dDateRangePriorityManageCategory {
 	
 		}
 	}
+	modifies br.unb.cic.reminders.view.ReminderActivity {
+		removes initializeFields_original0();
+		removes initializeFields_original4();
+		removes initializeFields();
+		adds private void initializeFields() {
+			btnSave = (Button) findViewById(R.id.btnSave);
+			btnCancel = (Button) findViewById(R.id.btnCancel);
+			edtReminder = (EditText) findViewById(R.id.edtReminder);
+			edtDetails = (EditText) findViewById(R.id.edtDetails);
+			spinnerDateStart = getSpinnerDateStart();
+			spinnerTimeStart = getSpinnerTimeStart();
+			spinnerDateFinal = getSpinnerDateFinal();
+			spinnerTimeFinal = getSpinnerTimeFinal();
+			// edtDate = (EditText) findViewById(R.id.selectedDate);
+			// edtTime = (EditText) findViewById(R.id.selectedTime);
+			spinnerPriority = getSpinnerPriority();
+			try {
+				spinnerCategory = getSpinnerCategory();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	
+		}
+		removes createReminder();
+		adds private void createReminder() {
+			try {
+				reminder.setText(edtReminder.getText().toString());
+				reminder.setDetails(edtDetails.getText().toString());
+				reminder.setDateStart(dateToString(dateStart));
+				reminder.setHourStart(timeToString(timeStart));
+				reminder.setDateFinal(dateToString(dateFinal));
+				reminder.setHourFinal(timeToString(timeFinal));
+				reminder.setPriority(selectedPriority);
+				reminder.setCategory((Category) spinnerCategory.getSelectedItem());
+			} catch (InvalidTextException e) {
+				// This catch is handling both Reminder's Text and Details.
+				Toast.makeText(getApplicationContext(), "Texto inválido.", Toast.LENGTH_SHORT).show();
+			} catch (InvalidDateException e) {
+				Toast.makeText(getApplicationContext(), "Data inválida.", Toast.LENGTH_SHORT).show();
+			} catch (InvalidHourException e) {
+				Toast.makeText(getApplicationContext(), "Hora inválida.", Toast.LENGTH_SHORT).show();
+			} catch (Exception e) {
+				// this is an exceptional case that needs to be studied
+				Toast.makeText(getApplicationContext(), "Erro grave.", Toast.LENGTH_SHORT).show();
+			}
+		}
+	}
 }
