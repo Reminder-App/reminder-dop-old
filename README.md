@@ -4,13 +4,13 @@ This project integrated the *Positivo Challenge*, a research and development pro
 ### Features
 The features present in this release are:
 
-![Feature Model](https://i.imgur.com/bP7gvCr.png)
+![Feature Model](https://i.imgur.com/NMbezl9.png)
 
 
 # Steps to Generate a Product
 To run this project it is necessary to use the Eclipse IDE - we are using the [Eclipse Neon for Android Developers](https://www.eclipse.org/downloads/packages/eclipse-android-developers/neonm6). For the project to work, make sure that you have the following components installed:
 
-* Open the Eclipse IDE and go to **Help -> Install New Software** and install the [DeltaJ 1.5](https://www.tu-braunschweig.de/isf/research/deltas/) plugin: https://www.isf.cs.tu-bs.de/cms/research/deltas/downloads/plug-in/
+* Open the Eclipse IDE and go to **Help -> Install New Software** and install the [DeltaJ 1.5](https://www.tu-braunschweig.de/isf/research/deltas/) plugin: https://www.isf.cs.tu-bs.de/cms/research/deltas/downloads/plug-in/;
 
 * Install and configure the [Hepheatus](https://github.com/hephaestus-pl/hephaestus-base);
 
@@ -18,7 +18,7 @@ In order for the final product to be generated, the following steps must be perf
 
 ### First Step
 
-This first step is to generate the java source code for the desired product. It is important to note that importing this project into the Eclipse IDE will contain errors due to the preprocessing directives present in the *.xml* files that corresponds to the graphical interface of the Reminder app - this part will be handled in the **Second Step**.
+This first step is to generate the java source code for the desired product. It is important to note that importing this project into the Eclipse IDE will contain errors due to the preprocessing directives present in the *.xml* files that corresponds to the graphical interface of the Reminder App - this part will be handled in the **Second Step**.
 
 1. With the DeltaJ plugin installed, import the project into the Eclipse IDE: <br />
 1.1. **File -> Import -> Existing Android Code Into Workspace**. **IMPORTANT**: After the import, ignore the errors in the product line, because we first used Eclipse to generate the java source code;
