@@ -346,4 +346,11 @@ delta dDateRangePriotity {
 			spinnerPriority.setSelection(Priority.fromCode(Integer.parseInt(priority, 10)).getCode());
 		}
 	}
+	modifies br.unb.cic.reminders.model.Reminder {
+		removes isValid();
+		adds public boolean isValid() {
+			return (text != null && dateStart != null && hourStart != null
+					&& dateFinal != null && hourFinal != null && priority != null);
+		}
+	}
 }
