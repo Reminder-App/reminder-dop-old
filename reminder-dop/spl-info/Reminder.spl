@@ -8,13 +8,14 @@ SPL Reminder {
 	dSearch}
 
 	Constraints {
-		ReminderCategory & (ManageCategory ^ StaticCategory);
+		ManageReminder & ReminderSchedule | ReminderCategory | Priority | GoogleCalendar | Search;
 		ReminderSchedule & (DateRange ^ FixedDate);
+		ReminderCategory & (ManageCategory ^ StaticCategory);		
 	}
 
 	Partitions {
 		{dManageReminder} when (ManageReminder & FixedDate);
-
+		
 		{dManageReminder, dDateRange} when (ManageReminder & DateRange);
 
 		{dPriority} when (Priority);
@@ -26,53 +27,63 @@ SPL Reminder {
 		{dStaticCategoryPriority} when (Priority & StaticCategory);
 		
 		{dManageCategoryPriority} when (Priority & ManageCategory);
+		
+		{dSearch} when (Search);
 
 		{dGoogleCalendar} when (GoogleCalendar);
-
-		{dSearch} when (Search);
 	}
 
 	Products {
 		/* Products with Fixed Date feature */
-		FixedDate = {ManageReminder, FixedDate};
-		FixedDateStaticCategory = {ManageReminder, FixedDate,
-		StaticCategory};
-		FixedDateManageCategory = {ManageReminder, FixedDate,
-		ManageCategory};
-		FixedDatePriority = {ManageReminder, FixedDate, Priority};
-		FixedDateManageCategoryPriority = {ManageReminder, FixedDate,
-		ManageCategory, Priority};
-		FixedDateGoogleCalendar = {ManageReminder, FixedDate,
-		GoogleCalendar};
-		FixedDateManageCategoryPriorityGoogleCalendar = {ManageReminder,
-		FixedDate, ManageCategory, Priority, GoogleCalendar};
-		FixedDateSearch = {ManageReminder, FixedDate, Search};
-		FixedDateStaticCategoryPriority = {ManageReminder, FixedDate,
-		StaticCategory, Priority};
-		FixedDateManageCategoryPriorityGoogleCalendarSearch = {ManageReminder,
-		FixedDate, ManageCategory, Priority, GoogleCalendar, Search};
-		FixedDateStaticCategoryPriorityGoogleCalendarSearch = {ManageReminder,
-		FixedDate, StaticCategory, Priority, GoogleCalendar, Search};
-
-		/* Products with Date Range feature*/
-		DateRange = {ManageReminder, DateRange};
-		DateRangeStaticCategory = {ManageReminder, DateRange,
-		StaticCategory};
-		DateRangeManageCategory = {ManageReminder, DateRange,
-		ManageCategory};
-		DateRangePriority = {ManageReminder, DateRange, Priority};
-		DateRangeManageCategoryPriority = {ManageReminder, DateRange,
-		ManageCategory, Priority};
-		DateRangeGoogleCalendar = {ManageReminder, DateRange,
-		GoogleCalendar};
-		DateRangeManageCategoryPriorityGoogleCalendar = {ManageReminder,
-		DateRange, ManageCategory, Priority, GoogleCalendar};
-		DateRangeSearch = {ManageReminder, DateRange, Search};
-		DateRangeStaticCategoryPriority = {ManageReminder, DateRange,
-		StaticCategory, Priority};
-		DateRangeManageCategoryPriorityGoogleCalendarSearch = {ManageReminder,
-		DateRange, ManageCategory, Priority, GoogleCalendar, Search};
-		DateRangeStaticCategoryPriorityGoogleCalendarSearch = {ManageReminder,
-		DateRange, StaticCategory, Priority, GoogleCalendar, Search};
+		FixedDate={ManageReminder,FixedDate};
+		FixedDateGoogleCalendar={ManageReminder,FixedDate,GoogleCalendar};
+		FixedDateGoogleCalendarSearch={ManageReminder,FixedDate,GoogleCalendar,Search};
+		FixedDateManageCategory={ManageReminder,FixedDate,ManageCategory};
+		FixedDateManageCategoryGoogleCalendar={ManageReminder,FixedDate,ManageCategory,GoogleCalendar};
+		FixedDateManageCategoryGoogleCalendarSearch={ManageReminder,FixedDate,ManageCategory,GoogleCalendar,Search};
+		FixedDateManageCategorySearch={ManageReminder,FixedDate,ManageCategory,Search};
+		FixedDatePriority={ManageReminder,FixedDate,Priority};
+		FixedDatePriorityGoogleCalendar={ManageReminder,FixedDate,Priority,GoogleCalendar};
+		FixedDatePriorityGoogleCalendarSearch={ManageReminder,FixedDate,Priority,GoogleCalendar,Search};
+		FixedDatePriorityManageCategory={ManageReminder,FixedDate,Priority,ManageCategory};
+		FixedDatePriorityManageCategoryGoogleCalendar={ManageReminder,FixedDate,Priority,ManageCategory,GoogleCalendar};
+		FixedDatePriorityManageCategoryGoogleCalendarSearch={ManageReminder,FixedDate,Priority,ManageCategory,GoogleCalendar,Search};
+		FixedDatePriorityManageCategorySearch={ManageReminder,FixedDate,Priority,ManageCategory,Search};
+		FixedDatePrioritySearch={ManageReminder,FixedDate,Priority,Search};
+		FixedDatePriorityStaticCategory={ManageReminder,FixedDate,Priority,StaticCategory};
+		FixedDatePriorityStaticCategoryGoogleCalendar={ManageReminder,FixedDate,Priority,StaticCategory,GoogleCalendar};
+		FixedDatePriorityStaticCategoryGoogleCalendarSearch={ManageReminder,FixedDate,Priority,StaticCategory,GoogleCalendar,Search};
+		FixedDatePriorityStaticCategorySearch={ManageReminder,FixedDate,Priority,StaticCategory,Search};
+		FixedDateSearch={ManageReminder,FixedDate,Search};
+		FixedDateStaticCategory={ManageReminder,FixedDate,StaticCategory};
+		FixedDateStaticCategoryGoogleCalendar={ManageReminder,FixedDate,StaticCategory,GoogleCalendar};
+		FixedDateStaticCategoryGoogleCalendarSearch={ManageReminder,FixedDate,StaticCategory,GoogleCalendar,Search};
+		FixedDateStaticCategorySearch={ManageReminder,FixedDate,StaticCategory,Search};
+		
+		/* Products with Date Range feature */
+		DateRange={ManageReminder,DateRange};
+		DateRangeGoogleCalendar={ManageReminder,DateRange,GoogleCalendar};
+		DateRangeGoogleCalendarSearch={ManageReminder,DateRange,GoogleCalendar,Search};
+		DateRangeManageCategory={ManageReminder,DateRange,ManageCategory};
+		DateRangeManageCategoryGoogleCalendar={ManageReminder,DateRange,ManageCategory,GoogleCalendar};
+		DateRangeManageCategoryGoogleCalendarSearch={ManageReminder,DateRange,ManageCategory,GoogleCalendar,Search};
+		DateRangeManageCategorySearch={ManageReminder,DateRange,ManageCategory,Search};
+		DateRangePriority={ManageReminder,DateRange,Priority};
+		DateRangePriorityGoogleCalendar={ManageReminder,DateRange,Priority,GoogleCalendar};
+		DateRangePriorityGoogleCalendarSearch={ManageReminder,DateRange,Priority,GoogleCalendar,Search};
+		DateRangePriorityManageCategory={ManageReminder,DateRange,Priority,ManageCategory};
+		DateRangePriorityManageCategoryGoogleCalendar={ManageReminder,DateRange,Priority,ManageCategory,GoogleCalendar};
+		DateRangePriorityManageCategoryGoogleCalendarSearch={ManageReminder,DateRange,Priority,ManageCategory,GoogleCalendar,Search};
+		DateRangePriorityManageCategorySearch={ManageReminder,DateRange,Priority,ManageCategory,Search};
+		DateRangePrioritySearch={ManageReminder,DateRange,Priority,Search};
+		DateRangePriorityStaticCategory={ManageReminder,DateRange,Priority,StaticCategory};
+		DateRangePriorityStaticCategoryGoogleCalendar={ManageReminder,DateRange,Priority,StaticCategory,GoogleCalendar};
+		DateRangePriorityStaticCategoryGoogleCalendarSearch={ManageReminder,DateRange,Priority,StaticCategory,GoogleCalendar,Search};
+		DateRangePriorityStaticCategorySearch={ManageReminder,DateRange,Priority,StaticCategory,Search};
+		DateRangeSearch={ManageReminder,DateRange,Search};
+		DateRangeStaticCategory={ManageReminder,DateRange,StaticCategory};
+		DateRangeStaticCategoryGoogleCalendar={ManageReminder,DateRange,StaticCategory,GoogleCalendar};
+		DateRangeStaticCategoryGoogleCalendarSearch={ManageReminder,DateRange,StaticCategory,GoogleCalendar,Search};
+		DateRangeStaticCategorySearch={ManageReminder,DateRange,StaticCategory,Search};
 	}
 }
