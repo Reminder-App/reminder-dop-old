@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<featureModel>
+		<properties/>
+		<struct>
+			<and mandatory="true" name="Reminder App">
+				<and mandatory="true" name="Manage Reminder">
+					<feature mandatory="true" name="View"/>
+					<feature mandatory="true" name="Create"/>
+					<feature mandatory="true" name="Edit"/>
+					<feature mandatory="true" name="Delete"/>
+				</and>
+				<alt abstract="true" name="Reminder Category">
+					<feature name="Manage Category"/>
+					<feature name="Static Category"/>
+				</alt>
+				<feature name="Reminder Priority"/>
+				<feature name="Google Calendar"/>
+				<feature name="Search"/>
+			</and>
+		</struct>
+		<constraints/>
+		<calculations Auto="true" Constraints="true" Features="true" Redundant="true" Tautology="true"/>
+		<comments/>
+		<featureOrder userDefined="false"/>
+	</featureModel>
