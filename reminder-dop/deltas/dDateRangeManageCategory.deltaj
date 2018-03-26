@@ -405,4 +405,11 @@ delta dDateRangeManageCategory {
 			}
 		}
 	}
+	modifies br.unb.cic.reminders.model.Reminder {
+		removes isValid();
+		adds public boolean isValid() {
+			return (text != null && category != null && dateStart != null && hourStart != null
+					&& dateFinal != null && hourFinal != null);
+		}
+	}
 }
