@@ -56,4 +56,51 @@ delta dDateRangePriotity {
 			return reminder;
 		}
 	}
+	modifies br.unb.cic.reminders.view.ExternalAddReminderActivity {
+		removes setReminderFromIntent();
+		adds private void setReminderFromIntent() throws Exception {
+			Intent intent = getIntent();
+			String action = intent.getAction();
+			String type = intent.getType();
+	
+			// Gets the information from the intent if it is an edit call
+			if (action.equals("br.com.positivo.reminders.ADD_REMINDER") && "text/plain".equals(type)) {
+				String text = intent.getStringExtra("text");
+				String details = intent.getStringExtra("details");
+				String dateStart = intent.getStringExtra("dateStart");
+				String hourStart = intent.getStringExtra("hourStart");
+				String dateFinal = intent.getStringExtra("dateFinal");
+				String hourFinal = intent.getStringExtra("hourFinal");
+				String priority = intent.getStringExtra("priority");
+				reminder.setText(text);
+				reminder.setDetails(details);
+				reminder.setDateStart(dateStart);
+				reminder.setHourStart(hourStart);
+				reminder.setDateFinal(dateFinal);
+				reminder.setHourFinal(hourFinal);
+				reminder.setPriority(Priority.fromCode(Integer.parseInt(priority)));
+			} else
+				reminder = null;
+	
+		}
+		removes initializeValues();
+		adds @Override protected void initializeValues() {
+	
+			if (!reminder.isValid())
+				return;
+	
+			edtReminder.setText(reminder.getText());
+			edtDetails.setText(reminder.getDetails());
+			updateSpinnerDateHour(spinnerDateStart, reminder.getDateStart());
+			updateDateFromString(reminder.getDateStart(), false);
+			updateSpinnerDateHour(spinnerTimeStart, reminder.getHourStart());
+			updateTimeFromString(reminder.getHourStart(), false);
+			updateSpinnerDateHour(spinnerDateStart, reminder.getDateFinal());
+			updateDateFromString(reminder.getDateFinal(), true);
+			updateSpinnerDateHour(spinnerTimeStart, reminder.getHourFinal());
+			updateTimeFromString(reminder.getHourFinal(), true);
+			spinnerPriority.setSelection(reminder.getPriority());
+	
+		}
+	}
 }
