@@ -2289,12 +2289,20 @@ delta dManageReminder {
 				long reminderId = intent.getLongExtra("id", 0);
 				String text = intent.getStringExtra("text");
 				String details = intent.getStringExtra("details");
-				String date = intent.getStringExtra("date");
-				String hour = intent.getStringExtra("hour");
 
 				reminder.setId(reminderId);
 				edtReminder.setText(text);
 				edtDetails.setText(details);
+				try {
+					initializeValues(intent);				
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+
+			private void initializeValues(Intent intent) throws Exception {
+				String date = intent.getStringExtra("date");
+				String hour = intent.getStringExtra("hour");
 				updateSpinnerDateHour(spinnerDate, date);
 				updateDateFromString(date);
 				updateSpinnerDateHour(spinnerTime, hour);
