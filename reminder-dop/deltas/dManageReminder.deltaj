@@ -2356,15 +2356,20 @@ delta dManageReminder {
 				if (action.equals("br.com.positivo.reminders.ADD_REMINDER") && "text/plain".equals(type)) {
 					String text = intent.getStringExtra("text");
 					String details = intent.getStringExtra("details");
-					String date = intent.getStringExtra("date");
-					String hour = intent.getStringExtra("hour");
+					
 					reminder.setText(text);
 					reminder.setDetails(details);
-					reminder.setDate(date);
-					reminder.setHour(hour);
+					reminderFromIntent(intent);
 				} else
 					reminder = null;
 
+			}
+
+			private void reminderFromIntent(Intent intent) throws Exception {
+				String date = intent.getStringExtra("date");
+				String hour = intent.getStringExtra("hour");
+				reminder.setDate(date);
+				reminder.setHour(hour);
 			}
 
 			@Override
@@ -2375,11 +2380,18 @@ delta dManageReminder {
 
 				edtReminder.setText(reminder.getText());
 				edtDetails.setText(reminder.getDetails());
+				try {
+					initialize();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+
+			private void initialize() throws Exception {
 				updateSpinnerDateHour(spinnerDate, reminder.getDate());
 				updateDateFromString(reminder.getDate());
 				updateSpinnerDateHour(spinnerTime, reminder.getHour());
 				updateTimeFromString(reminder.getHour());
-
 			}
 
 			@Override
