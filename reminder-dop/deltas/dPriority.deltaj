@@ -367,35 +367,13 @@ delta dPriority {
 	}
 	modifies br.unb.cic.reminders.view.ExternalAddReminderActivity {
 		adds import br.unb.cic.reminders.model.Priority;
-		removes setReminderFromIntent();
-		adds private void setReminderFromIntent() throws Exception {
-			Intent intent = getIntent();
-			String action = intent.getAction();
-			String type = intent.getType();
-			if(action.equals("br.com.positivo.reminders.ADD_REMINDER") &&
-				"text/plain".equals(type)) {
-				String text = intent.getStringExtra("text");
-				String details = intent.getStringExtra("details");
-				String date = intent.getStringExtra("date");
-				String hour = intent.getStringExtra("hour");
-				String priority = intent.getStringExtra("priority");
-				reminder.setText(text);
-				reminder.setDetails(details);
-				reminder.setDate(date);
-				reminder.setHour(hour);
-				reminder.setPriority(Priority.fromCode(Integer.parseInt(priority)));
-			}
-			else reminder = null;
+		modifies reminderFromIntent(Intent intent) {
+			original(intent);
+			String priority = intent.getStringExtra("priority");
+			reminder.setPriority(Priority.fromCode(Integer.parseInt(priority)));
 		}
-		removes initializeValues();
-		adds @Override protected void initializeValues() {
-			if(! reminder.isValid()) return;
-			edtReminder.setText(reminder.getText());
-			edtDetails.setText(reminder.getDetails());
-			updateSpinnerDateHour(spinnerDate, reminder.getDate());
-			updateDateFromString(reminder.getDate());
-			updateSpinnerDateHour(spinnerTime, reminder.getHour());
-			updateTimeFromString(reminder.getHour());
+		modifies initialize() {
+			original();
 			spinnerPriority.setSelection(reminder.getPriority());
 		}
 	}
