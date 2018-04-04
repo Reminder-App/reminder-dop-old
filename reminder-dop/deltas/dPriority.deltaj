@@ -359,22 +359,9 @@ delta dPriority {
 	}
 	modifies br.unb.cic.reminders.view.EditReminderActivity {
 		adds import br.unb.cic.reminders.model.Priority;
-		removes initializeValues();
-		adds @Override protected void initializeValues() {
-			Intent intent = getIntent();
-			long reminderId = intent.getLongExtra("id", 0);
-			String text = intent.getStringExtra("text");
-			String details = intent.getStringExtra("details");
-			String date = intent.getStringExtra("date");
-			String hour = intent.getStringExtra("hour");
+		modifies initializeValues(Intent intent) {
+			original(intent);
 			String priority = intent.getStringExtra("priority");
-			reminder.setId(reminderId);
-			edtReminder.setText(text);
-			edtDetails.setText(details);
-			updateSpinnerDateHour(spinnerDate, date);
-			updateDateFromString(date);
-			updateSpinnerDateHour(spinnerTime, hour);
-			updateTimeFromString(hour);
 			spinnerPriority.setSelection(Priority.fromCode(Integer.parseInt(priority, 10)).getCode());
 		}
 	}
