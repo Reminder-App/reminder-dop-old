@@ -1033,10 +1033,9 @@ delta dManageReminder {
 				 */
 				Reminder reminder = new Reminder();
 				try {
+					reminder = createReminderAux();
 					reminder.setText(edtReminder.getText().toString());
 					reminder.setDetails(edtDetails.getText().toString());
-					reminder.setDate(edtDate.getText().toString());
-					reminder.setHour(edtHour.getText().toString());
 				} catch (InvalidTextException e) {
 					Toast.makeText(getApplicationContext(), "Invalid text.", Toast.LENGTH_SHORT).show();
 				} catch (InvalidDateException e) {
@@ -1044,6 +1043,13 @@ delta dManageReminder {
 				} catch (InvalidHourException e) {
 					Toast.makeText(getApplicationContext(), "Invalid time.", Toast.LENGTH_SHORT).show();
 				}
+				return reminder;
+			}
+
+			private Reminder createReminderAux() {
+				Reminder reminder = new Reminder();
+				reminder.setDate(edtDate.getText().toString());
+				reminder.setHour(edtHour.getText().toString());
 				return reminder;
 			}
 
@@ -1063,16 +1069,21 @@ delta dManageReminder {
 				if (Intent.ACTION_SEND.equals(action) && "text/plain".equals(type)) {
 					previewReminderId = intent.getLongExtra("id", 0);
 					String text = intent.getStringExtra("text");
-					String date = intent.getStringExtra("date");
-					String hour = intent.getStringExtra("hour");
-
-					reminder = new Reminder();
+					
+					reminder = createReminderExisting(intent);
 					reminder.setText(text);
-					reminder.setDate(date);
-					reminder.setHour(hour);
 					reminder.setId(previewReminderId);
 				}
 
+				return reminder;
+			}
+
+			private Reminder createReminderExisting(Intent intent) {
+				Reminder reminder = new Reminder();
+				String date = intent.getStringExtra("date");
+				String hour = intent.getStringExtra("hour");
+				reminder.setDate(date);
+				reminder.setHour(hour);
 				return reminder;
 			}
 
@@ -1103,8 +1114,6 @@ delta dManageReminder {
 					try {
 						String text = intent.getStringExtra("text");
 						String details = intent.getStringExtra("details");
-						String date = intent.getStringExtra("date");
-						String hour = intent.getStringExtra("hour");
 
 						/*
 						 * Code below just validates the data supplied, since validation
@@ -1112,13 +1121,9 @@ delta dManageReminder {
 						 */
 
 						// Would we better apply validations here?
-						Reminder reminder = new Reminder();
+						Reminder reminder = createReminderIntent(intent);
 						reminder.setText(text);
 						reminder.setDetails(details);
-
-						reminder.setDate(date);
-						reminder.setHour(hour);
-
 						/*
 						 * Upon here, all validations were applied and we have a valid
 						 * reminder. So, we return it.
@@ -1136,6 +1141,15 @@ delta dManageReminder {
 				 * reminder could not be derived, we simply return "null".
 				 */
 				return null;
+			}
+
+			private Reminder createReminderIntent(Intent intent) {
+				Reminder reminder = new Reminder();
+				String date = intent.getStringExtra("date");
+				String hour = intent.getStringExtra("hour");
+				reminder.setDate(date);
+				reminder.setHour(hour);
+				return reminder;
 			}
 
 			/*
