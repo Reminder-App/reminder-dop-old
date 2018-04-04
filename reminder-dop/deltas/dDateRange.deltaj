@@ -119,7 +119,7 @@ delta dDateRange {
 	}
 	modifies br.unb.cic.reminders.view.ExternalAddReminderActivity {
 		removes reminderFromIntent(Intent intent);
-		adds private void reminderFromIntent(Intent intent) {
+		adds private void reminderFromIntent(Intent intent) throws Exception {
 			String dateStart = intent.getStringExtra("dateStart");
 			String hourStart = intent.getStringExtra("hourStart");
 			String dateFinal = intent.getStringExtra("dateFinal");
