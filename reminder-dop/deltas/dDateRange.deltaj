@@ -463,81 +463,40 @@ delta dDateRange {
 		removes edtDate;
 		removes edtHour;
 		adds private EditText edtDateStart, edtHourStart, edtDateFinal, edtHourFinal;
-		removes createReminder();
-		adds private Reminder createReminder() {
+		removes createReminderAux();
+		adds private Reminder createReminderAux() {
 			Reminder reminder = new Reminder();
-			try {
-				reminder.setText(edtReminder.getText().toString());
-				reminder.setDetails(edtDetails.getText().toString());
-				reminder.setDateStart(edtDateStart.getText().toString());
-				reminder.setHourStart(edtHourStart.getText().toString());
-				reminder.setDateFinal(edtDateFinal.getText().toString());
-				reminder.setHourFinal(edtHourFinal.getText().toString());
-			}
-			catch(InvalidTextException e) {
-				Toast.makeText(getApplicationContext(), "Invalid text.",
-					Toast.LENGTH_SHORT).show();
-			}
-			catch(InvalidDateException e) {
-				Toast.makeText(getApplicationContext(), "Invalid date.",
-					Toast.LENGTH_SHORT).show();
-			}
-			catch(InvalidHourException e) {
-				Toast.makeText(getApplicationContext(), "Invalid time.",
-					Toast.LENGTH_SHORT).show();
-			}
+			reminder.setDateStart(edtDateStart.getText().toString());
+			reminder.setHourStart(edtHourStart.getText().toString());
+			reminder.setDateFinal(edtDateFinal.getText().toString());
+			reminder.setHourFinal(edtHourFinal.getText().toString());
 			return reminder;
 		}
-		removes getExistingReminder();
-		adds private Reminder getExistingReminder() {
-			Reminder reminder = null;
-			Intent intent = getIntent();
-			String action = intent.getAction();
-			String type = intent.getType();
-			if(Intent.ACTION_SEND.equals(action) && "text/plain".equals(type)) {
-				previewReminderId = intent.getLongExtra("id", 0);
-				String text = intent.getStringExtra("text");
-				String dateStart = intent.getStringExtra("dateStart");
-				String hourStart = intent.getStringExtra("hourStart");
-				String dateFinal = intent.getStringExtra("dateFinal");
-				String hourFinal = intent.getStringExtra("hourFinal");
-				reminder = new Reminder();
-				reminder.setText(text);
-				reminder.setDateStart(dateStart);
-				reminder.setHourStart(hourStart);
-				reminder.setDateFinal(dateFinal);
-				reminder.setHourFinal(hourFinal);
-				reminder.setId(previewReminderId);
-			}
+		removes createReminderExisting(Intent intent);
+		adds private Reminder createReminderExisting(Intent intent) {
+			Reminder reminder = new Reminder();
+			String dateStart = intent.getStringExtra("dateStart");
+			String hourStart = intent.getStringExtra("hourStart");
+			String dateFinal = intent.getStringExtra("dateFinal");
+			String hourFinal = intent.getStringExtra("hourFinal");
+			reminder.setDateStart(dateStart);
+			reminder.setHourStart(hourStart);
+			reminder.setDateFinal(dateFinal);
+			reminder.setHourFinal(hourFinal);
 			return reminder;
 		}
-		removes getReminderFromIntent();
-		adds private Reminder getReminderFromIntent() {
-			Intent intent = getIntent();
-			String action = intent.getAction();
-			String type = intent.getType();
-			if("br.com.positivo.reminders.ADD_REMINDER".equals(action) &&
-				"text/plain".equals(type)) {
-				try {
-					String text = intent.getStringExtra("text");
-					String details = intent.getStringExtra("details");
-					String dateStart = intent.getStringExtra("dateStart");
-					String hourStart = intent.getStringExtra("hourStart");
-					String dateFinal = intent.getStringExtra("dateFinal");
-					String hourFinal = intent.getStringExtra("hourFinal");
-					Reminder reminder = new Reminder();
-					reminder.setText(text);
-					reminder.setDetails(details);
-					reminder.setDateStart(dateStart);
-					reminder.setHourStart(hourStart);
-					reminder.setDateFinal(dateFinal);
-					reminder.setHourFinal(hourFinal);
-					return reminder;
-				}
-				catch(InvalidFormatException e) {
-				}
-			}
-			return null;
+		removes createReminderIntent(Intent intent);
+		adds private Reminder createReminderIntent(Intent intent) {
+			Reminder reminder = new Reminder();
+			String dateStart = intent.getStringExtra("dateStart");
+			String hourStart = intent.getStringExtra("hourStart");
+			String dateFinal = intent.getStringExtra("dateFinal");
+			String hourFinal = intent.getStringExtra("hourFinal");
+			reminder.setDateStart(dateStart);
+			reminder.setHourStart(hourStart);
+			reminder.setDateFinal(dateFinal);
+			reminder.setHourFinal(hourFinal);
+			return reminder;
 		}
 		removes updateFieldsFromReminder(Reminder reminder);
 		adds private void updateFieldsFromReminder(Reminder reminder) throws Exception {
