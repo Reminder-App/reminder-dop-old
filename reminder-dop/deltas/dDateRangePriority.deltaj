@@ -1,25 +1,4 @@
-delta dDateRangePriotity {
-	modifies br.unb.cic.reminders.model.cp.ReminderContentProvider {
-		removes insert(Uri uri, ContentValues values);
-		adds @Override public Uri insert(Uri uri, ContentValues values) {
-			try {
-				Reminder reminder = new Reminder();
-	
-				reminder.setText(values.getAsString(text()));
-				reminder.setDateStart(values.getAsString(dateStart()));
-				reminder.setHourStart(values.getAsString(hourStart()));
-				reminder.setDateFinal(values.getAsString(dateFinal()));
-				reminder.setHourFinal(values.getAsString(hourFinal()));
-	
-				Long id = rdao.saveReminder(reminder);
-				getContext().getContentResolver().notifyChange(uri, null);
-				return Uri.parse(BASE_PATH + "/" + id);
-			} catch (DBException e) {
-				throw new RuntimeException(e.getLocalizedMessage());
-			}
-	
-		}
-	}
+delta dDateRangePriority {
 	modifies br.unb.cic.reminders.model.db.DBConstants {
 		removes CREATE_TABLE_STATEMENTS;
 		adds public static String CREATE_TABLE_STATEMENTS = 
