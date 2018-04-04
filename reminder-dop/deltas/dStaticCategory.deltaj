@@ -678,48 +678,24 @@ delta dStaticCategory {
 	modifies br.unb.cic.reminders.view.ExternalAddReminderActivity {
 		adds import br.unb.cic.reminders.model.Category;
 		adds private Category newCategory = null;
-		removes setReminderFromIntent();
-		adds private void setReminderFromIntent() throws Exception {
-			Intent intent = getIntent();
-			String action = intent.getAction();
-			String type = intent.getType();
-			if(action.equals("br.com.positivo.reminders.ADD_REMINDER") &&
-				"text/plain".equals(type)) {
-				String text = intent.getStringExtra("text");
-				String details = intent.getStringExtra("details");
-				String categoryName = intent.getStringExtra("category_name");
-				String date = intent.getStringExtra("date");
-				String hour = intent.getStringExtra("hour");
-				List<Category> categories = Controller.instance(getApplicationContext()).listCategories();
-				for (Category c : categories) {
-					if (c.getName().equals(categoryName)) {
-						newCategory = c;
-						break;
-					}
+		adds private void setNewCategory(Intent intent) throws Exception {
+			String categoryName = intent.getStringExtra("category_name");
+			List<Category> categories = Controller.instance(getApplicationContext()).listCategories();
+			for (Category c : categories) {
+				if (c.getName().equals(categoryName)) {
+					newCategory = c;
+					break;
 				}
-				reminder.setText(text);
-				reminder.setDetails(details);
-				reminder.setDate(date);
-				reminder.setHour(hour);
-				reminder.setCategory(newCategory);
 			}
-			else reminder = null;
 		}
-		removes initializeValues();
- 		adds @Override protected void initializeValues() {
-			if(! reminder.isValid()) return;
-			edtReminder.setText(reminder.getText());
-			edtDetails.setText(reminder.getDetails());
-			updateSpinnerDateHour(spinnerDate, reminder.getDate());
-			updateDateFromString(reminder.getDate());
-			updateSpinnerDateHour(spinnerTime, reminder.getHour());
-			updateTimeFromString(reminder.getHour());
-			try {
-				spinnerCategory.setSelection(categoryToIndex(reminder.getCategory()));
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		modifies reminderFromIntent(Intent intent) {
+			original(intent);
+			setNewCategory(intent);
+			reminder.setCategory(newCategory);
+		}
+		modifies initialize() {
+			original();
+			spinnerCategory.setSelection(categoryToIndex(reminder.getCategory()));
 		}
 		adds @Override protected List<Category> getCategories() throws Exception {
 			List<Category> categories = super.getCategories();
