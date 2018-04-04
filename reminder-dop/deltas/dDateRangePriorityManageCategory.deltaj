@@ -10,11 +10,4 @@ delta dDateRangePriorityManageCategory {
 					+ "INITIAL_HOUR CHAR(5) NULL," + "FINAL_DATE CHAR(10) NOT NULL,"
 					+ "FINAL_HOUR CHAR(5) NULL," + "PRIORITY INTEGER NOT NULL," + "DONE INTEGER NOT NULL);", };
 	}
-	modifies br.unb.cic.reminders.model.Reminder {
-		removes isValid();
-		adds public boolean isValid() {
-			return (text != null && category != null && dateStart != null && hourStart != null
-					&& dateFinal != null && hourFinal != null && priority != null);
-		}
-	}
 }
