@@ -548,7 +548,7 @@ delta dManageCategory {
 
 			// We do not persist this! It's just to show the add category dialog.
 			Category temp = new Category();
-			temp.setName("+ Categoria");
+			temp.setName("+ Category");
 			adapter.add(temp);
 
 			spinner.setAdapter(adapter);
