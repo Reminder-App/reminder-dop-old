@@ -14,12 +14,6 @@ delta dStaticCategoryPriority {
 		adds public static final String SELECT_REMINDERS_BY_CATEGORY = "SELECT PK, TEXT, DETAILS, FK_CATEGORY, DATE, HOUR, PRIORITY, DONE FROM REMINDER " 
 			+ "WHERE FK_CATEGORY = ?";
 	}
-	modifies br.unb.cic.reminders.model.Reminder {
-		removes isValid();
-		adds public boolean isValid() {
-			return (text != null && category != null && date != null && hour != null && priority != null);
-		}
-	}
 	modifies br.unb.cic.reminders.view.EditReminderActivity {
 		removes initializeValues();
 		adds @Override protected void initializeValues() {
