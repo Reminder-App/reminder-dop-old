@@ -303,38 +303,14 @@ delta dManageCategory {
 	}
 	modifies br.unb.cic.reminders.view.ExternalAddReminderActivity {
 		adds private boolean isNewCategory = false;
-		removes setReminderFromIntent();
-		adds private void setReminderFromIntent() throws Exception {
-			Intent intent = getIntent();
-			String action = intent.getAction();
-			String type = intent.getType();
-			if(action.equals("br.com.positivo.reminders.ADD_REMINDER") &&
-				"text/plain".equals(type)) {
-				String text = intent.getStringExtra("text");
-				String details = intent.getStringExtra("details");
-				String categoryName = intent.getStringExtra("category_name");
-				String date = intent.getStringExtra("date");
-				String hour = intent.getStringExtra("hour");
-				List<Category> categories =
-				Controller.instance(getApplicationContext()).listCategories();
-				for(Category c : categories) {
-					if(c.getName().equals(categoryName)) {
-						newCategory = c;
-						break;
-					}
-				}
-				if(newCategory == null) {
-					isNewCategory = true;
-					newCategory = new Category();
-					newCategory.setName(categoryName);
-				}
-				reminder.setText(text);
-				reminder.setDetails(details);
-				reminder.setDate(date);
-				reminder.setHour(hour);
-				reminder.setCategory(newCategory);
+		modifies setNewCategory(Intent intent) {
+			original(intent);
+			String categoryName = intent.getStringExtra("category_name");
+			if(newCategory == null) {
+				isNewCategory = true;
+				newCategory = new Category();
+				newCategory.setName(categoryName);
 			}
-			else reminder = null;
 		}
 		removes persist(Reminder reminder);
 		adds @Override
@@ -355,25 +331,9 @@ delta dManageCategory {
 				e.printStackTrace();
 			}
 		}
-		removes initializeValues();
-		adds @Override
-		protected void initializeValues() {
-			if(! reminder.isValid()) return;
-			edtReminder.setText(reminder.getText());
-			edtDetails.setText(reminder.getDetails());
-			updateSpinnerDateHour(spinnerDate, reminder.getDate());
-			updateDateFromString(reminder.getDate());
-			updateSpinnerDateHour(spinnerTime, reminder.getHour());
-			updateTimeFromString(reminder.getHour());
-			try {
-				if(isNewCategory) spinnerCategory.setSelection(spinnerCategory.getCount() -
-					2);
-				else spinnerCategory.setSelection(categoryToIndex(reminder.getCategory()));
-			}
-			catch(Exception e) {
-			// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		modifies initialize() {
+			original();
+			if(isNewCategory) spinnerCategory.setSelection(spinnerCategory.getCount() - 2);
 		}
 		removes getCategories();
 		adds @Override
