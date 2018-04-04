@@ -180,22 +180,15 @@ delta dStaticCategory {
 			rdao = DefaultDBFactory.factory(getContext()).createReminderDAO();
 			return false;
 		}
-		removes insert(Uri uri, ContentValues values);
-		adds @Override public Uri insert(Uri uri, ContentValues values) {
-			try {
-				Reminder reminder = new Reminder();
-				Category category = cdao.findCategory(values.getAsString(category()));
-				reminder.setCategory(category);
-				reminder.setText(values.getAsString(text()));
-				reminder.setDate(values.getAsString(date()));
-				reminder.setHour(values.getAsString(hour()));
-				Long id = rdao.saveReminder(reminder);
-				getContext().getContentResolver().notifyChange(uri, null);
-				return Uri.parse(BASE_PATH + "/" + id);
-			}
-			catch(DBException e) {
-				throw new RuntimeException(e.getLocalizedMessage());
-			}
+		adds private Category createCategoryInsert(ContentValues values) throws DBException {
+			Category category = cdao.findCategory(values.getAsString(category()));
+			return category;
+		}
+		modifies createReminderInsert(ContentValues values) {
+			Reminder reminder = original(values);
+			Category category = createCategoryInsert(values);
+			reminder.setCategory(category);	
+			return reminder;
 		}
 	}
 	modifies br.unb.cic.reminders.model.db.DBFactory {
