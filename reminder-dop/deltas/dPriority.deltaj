@@ -353,9 +353,8 @@ delta dPriority {
 		adds public void setPriority(Priority priority) {
 			this.priority = priority;
 		}
-		removes isValid();
-		adds public boolean isValid() {
-			return(text != null && date != null && hour != null && priority != null);
+		modifies isValid() {
+			return(priority != null && original());
 		}
 	}
 	modifies br.unb.cic.reminders.view.EditReminderActivity {
