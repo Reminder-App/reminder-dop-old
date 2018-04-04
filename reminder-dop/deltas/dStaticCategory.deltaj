@@ -523,9 +523,8 @@ delta dStaticCategory {
 		adds public void setCategory(Category category) {
 			this.category = category;
 		}
-		removes isValid();
-		adds public boolean isValid() {
-			return(text != null && category != null && date != null && hour != null);
+		modifies isValid() {
+			return(category != null && original());
 		}
 	}
 	modifies br.unb.cic.reminders.ReminderMainActivity {
