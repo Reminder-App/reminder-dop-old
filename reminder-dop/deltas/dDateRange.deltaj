@@ -516,8 +516,8 @@ delta dDateRange {
 				return "";
 			}
 
-			String months[] = { "JAN", "FEV", "MAR", "ABR", "MAI", "JUN", "JUL", "AGO", "SET", "OUT", "NOV", "DEZ" };
-			String week[] = { "", "DOM", "SEG", "TER", "QUA", "QUI", "SEX", "SAB" };
+			String months[] = { "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC" };
+			String week[] = { "", "SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT" };
 
 			// Today and thatDay Calendars being initialized
 			Calendar today = Calendar.getInstance();
