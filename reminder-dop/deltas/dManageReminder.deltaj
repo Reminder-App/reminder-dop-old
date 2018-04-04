@@ -1617,12 +1617,10 @@ delta dManageReminder {
 					case R.id.edit:
 						// Passes the current reminder to be edited via Intent and
 						// Invokes edit method
-						Intent editIntent = new Intent(getActivity().getApplicationContext(), EditReminderActivity.class);
+						Intent editIntent = editIntent(reminder);
 						editIntent.putExtra("id", reminder.getId());
 						editIntent.putExtra("text", reminder.getText());
 						editIntent.putExtra("details", reminder.getDetails());
-						editIntent.putExtra("date", reminder.getDate());
-						editIntent.putExtra("hour", reminder.getHour());
 						startActivity(editIntent);
 						updateListView(null);
 						return true;
@@ -1641,6 +1639,13 @@ delta dManageReminder {
 
 				}
 				return super.onContextItemSelected(item);
+			}
+
+			private Intent editIntent(Reminder reminder) {
+				Intent editIntent = new Intent(getActivity().getApplicationContext(), EditReminderActivity.class);
+				editIntent.putExtra("date", reminder.getDate());
+				editIntent.putExtra("hour", reminder.getHour());
+				return editIntent;
 			}
 
 			/**
