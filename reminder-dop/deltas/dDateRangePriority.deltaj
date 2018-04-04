@@ -7,47 +7,6 @@ delta dDateRangePriority {
 					+ "INITIAL_HOUR CHAR(5) NULL," + "FINAL_DATE CHAR(10) NOT NULL,"
 					+ "FINAL_HOUR CHAR(5) NULL," + "PRIORITY INTEGER NOT NULL," + "DONE INTEGER NOT NULL);";
 	}
-	modifies br.unb.cic.reminders.view.ReminderActivity {
-		removes initializeFields_original0();
-		removes initializeFields_original4();
-		removes initializeFields();
-		adds private void initializeFields() {
-			btnSave = (Button) findViewById(R.id.btnSave);
-			btnCancel = (Button) findViewById(R.id.btnCancel);
-			edtReminder = (EditText) findViewById(R.id.edtReminder);
-			edtDetails = (EditText) findViewById(R.id.edtDetails);
-			spinnerDateStart = getSpinnerDateStart();
-			spinnerTimeStart = getSpinnerTimeStart();
-			spinnerDateFinal = getSpinnerDateFinal();
-			spinnerTimeFinal = getSpinnerTimeFinal();
-			// edtDate = (EditText) findViewById(R.id.selectedDate);
-			// edtTime = (EditText) findViewById(R.id.selectedTime);
-			spinnerPriority = getSpinnerPriority();
-	
-		}
-		removes createReminder();
-		adds private void createReminder() {
-			try {
-				reminder.setText(edtReminder.getText().toString());
-				reminder.setDetails(edtDetails.getText().toString());
-				reminder.setDateStart(dateToString(dateStart));
-				reminder.setHourStart(timeToString(timeStart));
-				reminder.setDateFinal(dateToString(dateFinal));
-				reminder.setHourFinal(timeToString(timeFinal));
-				reminder.setPriority(selectedPriority);
-			} catch (InvalidTextException e) {
-				// This catch is handling both Reminder's Text and Details.
-				Toast.makeText(getApplicationContext(), "Texto inválido.", Toast.LENGTH_SHORT).show();
-			} catch (InvalidDateException e) {
-				Toast.makeText(getApplicationContext(), "Data inválida.", Toast.LENGTH_SHORT).show();
-			} catch (InvalidHourException e) {
-				Toast.makeText(getApplicationContext(), "Hora inválida.", Toast.LENGTH_SHORT).show();
-			} catch (Exception e) {
-				// this is an exceptional case that needs to be studied
-				Toast.makeText(getApplicationContext(), "Erro grave.", Toast.LENGTH_SHORT).show();
-			}
-		}
-	}
 	modifies br.unb.cic.reminders.view.ReminderAddActivity {
 		removes updateFieldsFromReminder_original2(Reminder reminder);
 		removes updateFieldsFromReminder_original5(Reminder reminder);
