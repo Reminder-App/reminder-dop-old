@@ -776,20 +776,24 @@ delta dManageReminder {
 			private Reminder cursorToReminder(Cursor cursor) throws DBException {
 				Long pk = cursor.getLong(cursor.getColumnIndex(DBConstants.REMINDER_PK_COLUMN));
 				String text = cursor.getString(cursor.getColumnIndex(DBConstants.REMINDER_TEXT_COLUMN));
-				String details = cursor.getString(cursor.getColumnIndex(DBConstants.REMINDER_DETAILS_COLUMN));
-				String date = cursor.getString(cursor.getColumnIndex(DBConstants.REMINDER_DATE_COLUMN));
-				String hour = cursor.getString(cursor.getColumnIndex(DBConstants.REMINDER_HOUR_COLUMN));
+				String details = cursor.getString(cursor.getColumnIndex(DBConstants.REMINDER_DETAILS_COLUMN));				
 				int done = cursor.getInt(cursor.getColumnIndex(DBConstants.REMINDER_DONE_COLUMN));
 
-				Reminder reminder = new Reminder();
+				Reminder reminder = createReminderCursor(cursor);
 
 				reminder.setText(text);
 				reminder.setDetails(details);
-				reminder.setId(pk);
+				reminder.setId(pk);				
+				reminder.setDone(done);
+				return reminder;
+			}
+
+			private Reminder createReminderCursor(Cursor cursor) throws DBException {
+				Reminder reminder = new Reminder();
+				String date = cursor.getString(cursor.getColumnIndex(DBConstants.REMINDER_DATE_COLUMN));
+				String hour = cursor.getString(cursor.getColumnIndex(DBConstants.REMINDER_HOUR_COLUMN));
 				reminder.setDate(date);
 				reminder.setHour(hour);
-				reminder.setDone(done);
-
 				return reminder;
 			}
 
