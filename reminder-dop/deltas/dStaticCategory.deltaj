@@ -891,8 +891,15 @@ delta dStaticCategory {
 			 */
 			private void updateListView() {
 		
-				List<ReminderFilter> filters = new ArrayList<ReminderFilter>();
+				List<ReminderFilter> filters = listOfFilters();
+				adapter = new ReminderFilterArrayAdapter(getActivity().getApplicationContext(), filters);
 		
+				lvFilters.setAdapter(adapter);
+			}
+
+			private List<ReminderFilter> listOfFilters() {
+				List<ReminderFilter> filters = new ArrayList<ReminderFilter>();
+
 				// Add the allReminders to the filter list
 				AllRemindersFilter allRemindersFilter = new AllRemindersFilter(getActivity());
 				filters.add(allRemindersFilter);
@@ -922,10 +929,8 @@ delta dStaticCategory {
 					filter = new CategoryFilter(c, getActivity());
 					filters.add(filter);
 				}
-		
-				adapter = new ReminderFilterArrayAdapter(getActivity().getApplicationContext(), filters);
-		
-				lvFilters.setAdapter(adapter);
+
+				return filters;
 			}
 		
 			public void onItemClick(AdapterView<? extends Object> adapterView, View view, int position, long id) {
