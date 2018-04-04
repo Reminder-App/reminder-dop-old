@@ -103,29 +103,17 @@ delta dDateRange {
 		adds public static String REMINDER_FINAL_HOUR_COLUMN = "FINAL_HOUR";
 	}
 	modifies br.unb.cic.reminders.model.db.DefaultReminderDAO {
-		removes cursorToReminder(Cursor cursor);
-		adds private Reminder cursorToReminder(Cursor cursor) throws DBException {
-			Long pk =
-					cursor.getLong(cursor.getColumnIndex(DBConstants.REMINDER_PK_COLUMN));
-			String text =
-					cursor.getString(cursor.getColumnIndex(DBConstants.REMINDER_TEXT_COLUMN));
-			String details =
-					cursor.getString(cursor.getColumnIndex(DBConstants.REMINDER_DETAILS_COLUMN));
+		removes  createReminderCursor(Cursor cursor);
+		adds private Reminder createReminderCursor(Cursor cursor) throws DBException {
+			Reminder reminder = new Reminder();
 			String dateStart = cursor.getString(cursor.getColumnIndex(DBConstants.REMINDER_INITIAL_DATE_COLUMN));
 			String hourStart = cursor.getString(cursor.getColumnIndex(DBConstants.REMINDER_INITIAL_HOUR_COLUMN));
 			String dateFinal = cursor.getString(cursor.getColumnIndex(DBConstants.REMINDER_FINAL_DATE_COLUMN));
 			String hourFinal = cursor.getString(cursor.getColumnIndex(DBConstants.REMINDER_FINAL_HOUR_COLUMN));
-			int done =
-					cursor.getInt(cursor.getColumnIndex(DBConstants.REMINDER_DONE_COLUMN));
-			Reminder reminder = new Reminder();
-			reminder.setText(text);
-			reminder.setDetails(details);
 			reminder.setDateStart(dateStart);
 			reminder.setHourStart(hourStart);
 			reminder.setDateFinal(dateFinal);
 			reminder.setHourFinal(hourFinal);
-			reminder.setId(pk);
-			reminder.setDone(done);
 			return reminder;
 		}
 	}
