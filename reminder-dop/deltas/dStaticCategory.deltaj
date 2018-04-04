@@ -978,31 +978,9 @@ delta dStaticCategory {
 				}
 			});
 		}
-		removes createReminder();
-		adds private void createReminder() {
-			try {
-				reminder.setText(edtReminder.getText().toString());
-				reminder.setDetails(edtDetails.getText().toString());
-				reminder.setDate(dateToString());
-				reminder.setHour(timeToString());
-				reminder.setCategory((Category) spinnerCategory.getSelectedItem());
-			}
-			catch(InvalidTextException e) {
-				Toast.makeText(getApplicationContext(), "Invalid text.",
-					Toast.LENGTH_SHORT).show();
-			}
-			catch(InvalidDateException e) {
-				Toast.makeText(getApplicationContext(), "Invalid date.",
-					Toast.LENGTH_SHORT).show();
-			}
-			catch(InvalidHourException e) {
-				Toast.makeText(getApplicationContext(), "Invalid time.",
-					Toast.LENGTH_SHORT).show();
-			}
-			catch(Exception e) {
-				Toast.makeText(getApplicationContext(), "Serious error.",
-					Toast.LENGTH_SHORT).show();
-			}
+		modifies setValuesOnReminder() {
+			original();
+			reminder.setCategory((Category) spinnerCategory.getSelectedItem());
 		}
 		adds private Spinner getSpinnerCategory() throws Exception {
 			Spinner spinner = (Spinner) findViewById(R.id.spinnerCategories);
