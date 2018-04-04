@@ -145,14 +145,14 @@ delta dPriority {
 		 * Creates the context menu where shows the Edit and Delete options.
 		 */
 		// @Override
-		public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+		/*public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
 			super.onCreateContextMenu(menu, v, menuInfo);
 
 			menu.setHeaderTitle(R.string.context_menu_category_title);
 
 			MenuInflater inflater = getActivity().getMenuInflater();
 			inflater.inflate(R.menu.category_list_fragment_context_menu, menu);
-		}
+		}*/
 
 		/**
 		 * Provides each action based in the chosen option(Edit or Delete).
@@ -224,24 +224,30 @@ delta dPriority {
 		 */
 		private void updateListView() {
 
-			List<ReminderFilter> filters = new ArrayList<ReminderFilter>();
-
-			// Add the allReminders to the filter list
-			AllRemindersFilter allRemindersFilter = new AllRemindersFilter(getActivity());
-			filters.add(allRemindersFilter);
-
-			// Add the priorities to the filter list
-			PriorityFilter highPriorityFilter = new PriorityFilter(Priority.HIGH, getActivity());
-			filters.add(highPriorityFilter);
-			PriorityFilter normalPriorityFilter = new PriorityFilter(Priority.NORMAL, getActivity());
-			filters.add(normalPriorityFilter);
-			PriorityFilter lowPriorityFilter = new PriorityFilter(Priority.LOW, getActivity());
-			filters.add(lowPriorityFilter);
+			List<ReminderFilter> filters = listOfFilters();
 
 			adapter = new ReminderFilterArrayAdapter(getActivity().getApplicationContext(), filters);
 
 			lvFilters.setAdapter(adapter);
 		}
+
+		private List<ReminderFilter> listOfFilters() {
+				List<ReminderFilter> filters = new ArrayList<ReminderFilter>();
+
+				// Add the allReminders to the filter list
+				AllRemindersFilter allRemindersFilter = new AllRemindersFilter(getActivity());
+				filters.add(allRemindersFilter);
+		
+				// Add the priorities to the filter list
+				PriorityFilter highPriorityFilter = new PriorityFilter(Priority.HIGH, getActivity());
+				filters.add(highPriorityFilter);
+				PriorityFilter normalPriorityFilter = new PriorityFilter(Priority.NORMAL, getActivity());
+				filters.add(normalPriorityFilter);
+				PriorityFilter lowPriorityFilter = new PriorityFilter(Priority.LOW, getActivity());
+				filters.add(lowPriorityFilter);
+
+				return filters;
+			}
 
 		public void onItemClick(AdapterView<? extends Object> adapterView, View view, int position, long id) {
 			notifyListeners(adapter.getItem(position));
