@@ -88,7 +88,6 @@ delta dGoogleCalendar {
 					values.put(Events.DTSTART, startMilliseconds);
 					values.put(Events.DTEND, endmilliseconds);
 					values.put(Events.TITLE, reminder.getText());
-					values.put(Events.DESCRIPTION, reminder.getCategory().getName() + " - Reminder App");
 					values.put(Events.CALENDAR_ID, calendarID);
 					values.put(Events.EVENT_TIMEZONE, timeZone);
 
