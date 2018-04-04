@@ -12,11 +12,4 @@ delta dDateRangeManageCategory {
 		adds public static final String SELECT_REMINDERS_BY_CATEGORY = "SELECT * FROM REMINDER " 
 			+ "WHERE FK_CATEGORY = ?";
 	}
-	modifies br.unb.cic.reminders.model.Reminder {
-		removes isValid();
-		adds public boolean isValid() {
-			return (text != null && category != null && dateStart != null && hourStart != null
-					&& dateFinal != null && hourFinal != null);
-		}
-	}
 }
