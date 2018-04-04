@@ -75,22 +75,14 @@ delta dDateRange {
 		adds public static final String hourFinal() {
 			return DBConstants.REMINDER_FINAL_HOUR_COLUMN;
 		}
-		removes insert(Uri uri, ContentValues values);
-		adds @Override public Uri insert(Uri uri, ContentValues values) {
-			try {
-				Reminder reminder = new Reminder();
-				reminder.setText(values.getAsString(text()));
-				reminder.setDateStart(values.getAsString(dateStart()));
-				reminder.setHourStart(values.getAsString(hourStart()));
-				reminder.setDateFinal(values.getAsString(dateFinal()));
-				reminder.setHourFinal(values.getAsString(hourFinal()));
-				Long id = rdao.saveReminder(reminder);
-				getContext().getContentResolver().notifyChange(uri, null);
-				return Uri.parse(BASE_PATH + "/" + id);
-			}
-			catch(DBException e) {
-				throw new RuntimeException(e.getLocalizedMessage());
-			}
+		removes createReminderInsert(ContentValues values);
+		adds private Reminder createReminderInsert(ContentValues values) throws DBException {
+			Reminder reminder = new Reminder();
+			reminder.setDateStart(values.getAsString(dateStart()));
+			reminder.setHourStart(values.getAsString(hourStart()));
+			reminder.setDateFinal(values.getAsString(dateFinal()));
+			reminder.setHourFinal(values.getAsString(hourFinal()));
+			return reminder;
 		}
 	}
 	modifies br.unb.cic.reminders.model.db.DBConstants {
