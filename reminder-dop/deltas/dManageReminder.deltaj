@@ -2633,8 +2633,7 @@ delta dManageReminder {
 				try {
 					reminder.setText(edtReminder.getText().toString());
 					reminder.setDetails(edtDetails.getText().toString());
-					reminder.setDate(dateToString());
-					reminder.setHour(timeToString());
+					setValuesOnReminder();
 				} catch (InvalidTextException e) {
 					// This catch is handling both Reminder's Text and Details.
 					Toast.makeText(getApplicationContext(), "Invalid text.", Toast.LENGTH_SHORT).show();
@@ -2646,6 +2645,11 @@ delta dManageReminder {
 					// this is an exceptional case that needs to be studied
 					Toast.makeText(getApplicationContext(), "Serious error.", Toast.LENGTH_SHORT).show();
 				}
+			}
+
+			private void setValuesOnReminder() throws Exception {
+				reminder.setDate(dateToString());
+				reminder.setHour(timeToString());
 			}
 
 			private String dateToString() {
