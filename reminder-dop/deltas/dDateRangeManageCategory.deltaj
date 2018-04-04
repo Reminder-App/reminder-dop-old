@@ -12,45 +12,6 @@ delta dDateRangeManageCategory {
 		adds public static final String SELECT_REMINDERS_BY_CATEGORY = "SELECT * FROM REMINDER " 
 			+ "WHERE FK_CATEGORY = ?";
 	}
-	modifies br.unb.cic.reminders.view.EditReminderActivity {
-		removes initializeValues();
-		adds @Override protected void initializeValues() {
-			Intent intent = getIntent();
-	
-			// Gets the information from the intent if it is an edit call
-			long reminderId = intent.getLongExtra("id", 0);
-			String text = intent.getStringExtra("text");
-			String details = intent.getStringExtra("details");
-			String categoryName = intent.getStringExtra("category_name");
-			String categoryId = intent.getStringExtra("category_id");
-			String dateStart = intent.getStringExtra("dateStart");
-			String hourStart = intent.getStringExtra("hourStart");
-			String dateFinal = intent.getStringExtra("dateFinal");
-			String hourFinal = intent.getStringExtra("hourFinal");
-	
-			Category category = new Category();
-			category.setId(Long.parseLong(categoryId));
-			category.setName(categoryName);
-	
-			reminder.setId(reminderId);
-			edtReminder.setText(text);
-			edtDetails.setText(details);
-			updateSpinnerDateHour(spinnerDateStart, dateStart);
-			updateDateFromString(dateStart, false);
-			updateSpinnerDateHour(spinnerTimeStart, hourStart);
-			updateTimeFromString(hourStart, false);
-			updateSpinnerDateHour(spinnerDateFinal, dateFinal);
-			updateDateFromString(dateFinal, true);
-			updateSpinnerDateHour(spinnerTimeFinal, hourFinal);
-			updateTimeFromString(hourFinal, false);
-			try {
-				spinnerCategory.setSelection(categoryToIndex(category));
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-	}
 	modifies br.unb.cic.reminders.model.Reminder {
 		removes isValid();
 		adds public boolean isValid() {
