@@ -703,22 +703,12 @@ delta dDateRange {
 		}
 	}
 	modifies br.unb.cic.reminders.view.EditReminderActivity {
-		removes initializeValues();
-		adds @Override protected void initializeValues() {
-			Intent intent = getIntent();
-
-			// Gets the information from the intent if it is an edit call
-			long reminderId = intent.getLongExtra("id", 0);
-			String text = intent.getStringExtra("text");
-			String details = intent.getStringExtra("details");
+		removes initializeValues(Intent intent);
+		adds private void initializeValues(Intent intent) throws Exception {
 			String dateStart = intent.getStringExtra("dateStart");
 			String hourStart = intent.getStringExtra("hourStart");
 			String dateFinal = intent.getStringExtra("dateFinal");
 			String hourFinal = intent.getStringExtra("hourFinal");
-
-			reminder.setId(reminderId);
-			edtReminder.setText(text);
-			edtDetails.setText(details);
 			updateSpinnerDateHour(spinnerDateStart, dateStart);
 			updateDateFromString(dateStart, false);
 			updateSpinnerDateHour(spinnerTimeStart, hourStart);
