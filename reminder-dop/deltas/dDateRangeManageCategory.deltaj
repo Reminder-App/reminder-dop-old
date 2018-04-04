@@ -12,36 +12,6 @@ delta dDateRangeManageCategory {
 		adds public static final String SELECT_REMINDERS_BY_CATEGORY = "SELECT * FROM REMINDER " 
 			+ "WHERE FK_CATEGORY = ?";
 	}
-	modifies br.unb.cic.reminders.model.db.DefaultReminderDAO {
-		removes cursorToReminder(Cursor cursor);
-		adds private Reminder cursorToReminder(Cursor cursor) throws DBException {
-			Long pk = cursor.getLong(cursor.getColumnIndex(DBConstants.REMINDER_PK_COLUMN));
-			String text = cursor.getString(cursor.getColumnIndex(DBConstants.REMINDER_TEXT_COLUMN));
-			String details = cursor.getString(cursor.getColumnIndex(DBConstants.REMINDER_DETAILS_COLUMN));
-			String dateStart = cursor.getString(cursor.getColumnIndex(DBConstants.REMINDER_INITIAL_DATE_COLUMN));
-			String hourStart = cursor.getString(cursor.getColumnIndex(DBConstants.REMINDER_INITIAL_HOUR_COLUMN));
-			String dateFinal = cursor.getString(cursor.getColumnIndex(DBConstants.REMINDER_FINAL_DATE_COLUMN));
-			String hourFinal = cursor.getString(cursor.getColumnIndex(DBConstants.REMINDER_FINAL_HOUR_COLUMN));
-			int done = cursor.getInt(cursor.getColumnIndex(DBConstants.REMINDER_DONE_COLUMN));
-			Long categoryId = cursor.getLong(cursor.getColumnIndex(DBConstants.REMINDER_FK_CATEGORY_COLUMN));
-	
-			Category category = DBFactory.factory(context).createCategoryDAO().findCategoryById(categoryId);
-	
-			Reminder reminder = new Reminder();
-	
-			reminder.setText(text);
-			reminder.setDetails(details);
-			reminder.setId(pk);
-			reminder.setDateStart(dateStart);
-			reminder.setHourStart(hourStart);
-			reminder.setDateFinal(dateFinal);
-			reminder.setHourFinal(hourFinal);
-			reminder.setDone(done);
-			reminder.setCategory(category);
-	
-			return reminder;
-		}
-	}
 	modifies br.unb.cic.reminders.view.ExternalAddReminderActivity {
 		removes setReminderFromIntent();
 		adds private void setReminderFromIntent() throws Exception {
