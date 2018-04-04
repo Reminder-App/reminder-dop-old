@@ -303,29 +303,10 @@ delta dPriority {
 	}
 	modifies br.unb.cic.reminders.model.db.DefaultReminderDAO {
 		adds import br.unb.cic.reminders.model.Priority;
-		removes cursorToReminder(Cursor cursor);
-		adds private Reminder cursorToReminder(Cursor cursor) throws DBException {
-			Long pk =
-					cursor.getLong(cursor.getColumnIndex(DBConstants.REMINDER_PK_COLUMN));
-			String text =
-					cursor.getString(cursor.getColumnIndex(DBConstants.REMINDER_TEXT_COLUMN));
-			String details =
-					cursor.getString(cursor.getColumnIndex(DBConstants.REMINDER_DETAILS_COLUMN));
-			String date =
-					cursor.getString(cursor.getColumnIndex(DBConstants.REMINDER_DATE_COLUMN));
-			String hour =
-					cursor.getString(cursor.getColumnIndex(DBConstants.REMINDER_HOUR_COLUMN));
+		modifies createReminderCursor(Cursor cursor) {
+			Reminder reminder = original(cursor);
 			int priority = cursor.getInt(cursor.getColumnIndex(DBConstants.REMINDER_PRIORITY_COLUMN));
-			int done =
-					cursor.getInt(cursor.getColumnIndex(DBConstants.REMINDER_DONE_COLUMN));
-			Reminder reminder = new Reminder();
-			reminder.setText(text);
-			reminder.setDetails(details);
-			reminder.setId(pk);
-			reminder.setDate(date);
-			reminder.setHour(hour);
 			reminder.setPriority(Priority.fromCode(priority));
-			reminder.setDone(done);
 			return reminder;
 		}
 	}
