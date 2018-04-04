@@ -160,32 +160,12 @@ delta dDateRange {
 			spinnerTimeFinal = getSpinnerTimeFinal();
 
 		}
-		removes createReminder();
-		adds private void createReminder() {
-			try {
-				reminder.setText(edtReminder.getText().toString());
-				reminder.setDetails(edtDetails.getText().toString());
-				reminder.setDateStart(dateToString(dateStart));
-				reminder.setHourStart(timeToString(timeStart));
-				reminder.setDateFinal(dateToString(dateFinal));
-				reminder.setHourFinal(timeToString(timeFinal));
-			}
-			catch(InvalidTextException e) {
-				Toast.makeText(getApplicationContext(), "Invalid text.",
-					Toast.LENGTH_SHORT).show();
-			}
-			catch(InvalidDateException e) {
-				Toast.makeText(getApplicationContext(), "Invalid date.",
-					Toast.LENGTH_SHORT).show();
-			}
-			catch(InvalidHourException e) {
-				Toast.makeText(getApplicationContext(), "Invalid time.",
-					Toast.LENGTH_SHORT).show();
-			}
-			catch(Exception e) {
-				Toast.makeText(getApplicationContext(), "Serious error.",
-					Toast.LENGTH_SHORT).show();
-			}
+		removes setValuesOnReminder();
+		adds private void setValuesOnReminder() throws Exception {
+			reminder.setDateStart(dateToString(dateStart));
+			reminder.setHourStart(timeToString(timeStart));
+			reminder.setDateFinal(dateToString(dateFinal));
+			reminder.setHourFinal(timeToString(timeFinal));
 		}
 		removes addListenerToSpinnerDate();
 		adds private void addListenerToSpinnerDate() {
