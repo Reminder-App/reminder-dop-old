@@ -2187,12 +2187,10 @@ delta dManageReminder {
 			@Override
 			public Uri insert(Uri uri, ContentValues values) {
 				try {
-					Reminder reminder = new Reminder();
+					Reminder reminder = createReminderInsert(values);
 
 					reminder.setText(values.getAsString(text()));
-					reminder.setDate(values.getAsString(date()));
-					reminder.setHour(values.getAsString(hour()));
-
+			
 					Long id = rdao.saveReminder(reminder);
 					getContext().getContentResolver().notifyChange(uri, null);
 					return Uri.parse(BASE_PATH + "/" + id);
@@ -2200,6 +2198,13 @@ delta dManageReminder {
 					throw new RuntimeException(e.getLocalizedMessage());
 				}
 
+			}
+
+			private Reminder createReminderInsert(ContentValues values) throws DBException {
+				Reminder reminder = new Reminder();
+				reminder.setDate(values.getAsString(date()));
+				reminder.setHour(values.getAsString(hour()));
+				return reminder;
 			}
 
 			@Override
