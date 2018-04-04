@@ -1028,96 +1028,35 @@ delta dStaticCategory {
 				}
 			});
 		}
-		removes createReminder();
-		adds private Reminder createReminder() {
-			/*
-			 * Since view's not passing all the information yet (priority ...), we
-			 * instantiate a reminder initially passing only "text" and "date".
-			 */
-			Reminder reminder = new Reminder();
-			try {
-				reminder.setText(edtReminder.getText().toString());
-				reminder.setDetails(edtDetails.getText().toString());
-				reminder.setDate(edtDate.getText().toString());
-				reminder.setHour(edtHour.getText().toString());
-				reminder.setCategory(selectedCategory);
-			} catch (InvalidTextException e) {
-				Toast.makeText(getApplicationContext(), "Invalid text.", Toast.LENGTH_SHORT).show();
-			} catch (InvalidDateException e) {
-				Toast.makeText(getApplicationContext(), "Invalid date.", Toast.LENGTH_SHORT).show();
-			} catch (InvalidHourException e) {
-				Toast.makeText(getApplicationContext(), "Invalid time.", Toast.LENGTH_SHORT).show();
-			}
+		modifies createReminderAux() {
+			Reminder reminder =  original();
+			reminder.setCategory(selectedCategory);
 			return reminder;
 		}
-		removes getExistingReminder();
-		adds private Reminder getExistingReminder() {
-			Reminder reminder = null;
-			Intent intent = getIntent();
-			String action = intent.getAction();
-			String type = intent.getType();
-			if(Intent.ACTION_SEND.equals(action) && "text/plain".equals(type)) {
-				previewReminderId = intent.getLongExtra("id", 0);
-				String text = intent.getStringExtra("text");
-				String categoryName = intent.getStringExtra("category_name");
-				String categoryId = intent.getStringExtra("category_id");
-				String date = intent.getStringExtra("date");
-				String hour = intent.getStringExtra("hour");
-				reminder = new Reminder();
-				reminder.setText(text);
-				Category category = new Category();
-				category.setName(categoryName);
-				category.setId(Long.parseLong(categoryId));
-				reminder.setCategory(category);
-				reminder.setDate(date);
-				reminder.setHour(hour);
-				reminder.setId(previewReminderId);
-			}
+		modifies createReminderExisting(Intent intent) {
+			Reminder reminder = original(intent);
+			String categoryName = intent.getStringExtra("category_name");
+			String categoryId = intent.getStringExtra("category_id");Category category = new Category();
+			category.setName(categoryName);
+			category.setId(Long.parseLong(categoryId));
+			reminder.setCategory(category);
 			return reminder;
 		}
-		removes getReminderFromIntent();
-		adds private Reminder getReminderFromIntent() {
-			Intent intent = getIntent();
-			String action = intent.getAction();
-			String type = intent.getType();
-			if("br.com.positivo.reminders.ADD_REMINDER".equals(action) &&
-				"text/plain".equals(type)) {
-				try {
-					String text = intent.getStringExtra("text");
-					String details = intent.getStringExtra("details");
-					String category = intent.getStringExtra("category");
-					String date = intent.getStringExtra("date");
-					String hour = intent.getStringExtra("hour");
-					Reminder reminder = new Reminder();
-					reminder.setText(text);
-					reminder.setDetails(details);
-					Category auxCategory = new Category();
-					auxCategory.setName(category);
-					reminder.setCategory(auxCategory);
-					reminder.setDate(date);
-					reminder.setHour(hour);
-					return reminder;
-				}
-				catch(InvalidFormatException e) {
-				}
-			}
-			return null;
+		modifies createReminderIntent(Intent intent) {
+			Reminder reminder = original(intent);
+			String category = intent.getStringExtra("category");
+			Category auxCategory = new Category();
+			auxCategory.setName(category);
+			reminder.setCategory(auxCategory);
+			return reminder;
 		}
-		removes initialize(Reminder reminder);
-		adds private void initialize(Reminder reminder) {
+		modifies initialize(Reminder reminder) {
 			try {
-				edtReminder = ( EditText ) findViewById(R.id.edtReminder);
-				edtDetails = ( EditText ) findViewById(R.id.edtDetails);
 				spinnerCategory = getSpinnerCategory();
-				if(reminder != null) {
-					updateFieldsFromReminder(reminder);
-				}
-				btnSave = ( Button ) findViewById(R.id.btnSave);
-				btnCancel = ( Button ) findViewById(R.id.btnCancel);
-			}
-			catch(Exception e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
+			original(reminder);
 		}
 		modifies updateFieldsFromReminder(Reminder reminder) {
 			original(reminder);
