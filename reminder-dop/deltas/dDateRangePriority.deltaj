@@ -7,51 +7,6 @@ delta dDateRangePriority {
 					+ "INITIAL_HOUR CHAR(5) NULL," + "FINAL_DATE CHAR(10) NOT NULL,"
 					+ "FINAL_HOUR CHAR(5) NULL," + "PRIORITY INTEGER NOT NULL," + "DONE INTEGER NOT NULL);";
 	}
-	modifies br.unb.cic.reminders.view.ReminderListFragment {
-		removes onContextItemSelected(MenuItem item);
-		adds @Override public boolean onContextItemSelected(MenuItem item) {
-			if (item.getGroupId() == R.id.context_menu_reminder) { // Used to verify
-				// if it is the right context_menu
-	
-				// Gets the item position and gets the reminder in that position:
-				AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-				Reminder reminder = (Reminder) contextMenuAdapter.getItem(info.position);
-	
-				// Switch between the options in the context menu(Edit, Delete and
-				// Share)
-				switch (item.getItemId()) {
-				case R.id.edit:
-					// Passes the current reminder to be edited via Intent and
-					// Invokes edit method
-					Intent editIntent = new Intent(getActivity().getApplicationContext(), EditReminderActivity.class);
-					editIntent.putExtra("id", reminder.getId());
-					editIntent.putExtra("text", reminder.getText());
-					editIntent.putExtra("details", reminder.getDetails());
-					editIntent.putExtra("dateStart", reminder.getDateStart());
-					editIntent.putExtra("hourStart", reminder.getHourStart());
-					editIntent.putExtra("dateFinal", reminder.getDateFinal());
-					editIntent.putExtra("hourFinal", reminder.getHourFinal());
-					editIntent.putExtra("priority", Integer.toString(reminder.getPriority()));
-					startActivity(editIntent);
-					updateListView(null);
-					return true;
-				case R.id.delete:
-					// Invokes delete method
-					try {// Deletes from the bank;
-						Controller.instance(getActivity().getApplicationContext()).deleteReminder(reminder);
-					} catch (DBException e) {
-						Log.e(TAG, e.getMessage());
-					}
-					updateListView(null);
-					return true;
-				default:
-					return super.onContextItemSelected(item);
-				}
-	
-			}
-			return super.onContextItemSelected(item);
-		}
-	}
 	modifies br.unb.cic.reminders.view.EditReminderActivity {
 		removes initializeValues();
 		adds @Override protected void initializeValues() {
