@@ -66,13 +66,13 @@ delta dSearch {
                 updateReminders();
                 return reminders;
             }
-            List<Reminder> retorno = new ArrayList<Reminder>();
+            List<Reminder> values = new ArrayList<Reminder>();
             for  (Reminder item: this.reminders){
                 if(item.getText().contains(search)){
-                    retorno.add(item);
+                    values.add(item);
                 }
             }
-            return retorno;
+            return values;
         }
     }
     modifies br.unb.cic.reminders.view.ReminderListFragment {
