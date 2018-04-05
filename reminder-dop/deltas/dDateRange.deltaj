@@ -119,7 +119,7 @@ delta dDateRange {
 	}
 	modifies br.unb.cic.reminders.view.ExternalAddReminderActivity {
 		removes reminderFromIntent(Intent intent);
-		adds private void reminderFromIntent(Intent intent) {
+		adds private void reminderFromIntent(Intent intent) throws Exception {
 			String dateStart = intent.getStringExtra("dateStart");
 			String hourStart = intent.getStringExtra("hourStart");
 			String dateFinal = intent.getStringExtra("dateFinal");
@@ -406,8 +406,8 @@ delta dDateRange {
 
 			List<String> items = new ArrayList<String>();
 			// TODO: Move these to XML.
-			items.add("Sem data");
-			items.add("+ Selecionar");
+			items.add("No date");
+			items.add("+ Select");
 
 			spinner.setAdapter(adapterDateGenerator.getSpinnerAdapter(items, this));
 
@@ -421,8 +421,8 @@ delta dDateRange {
 
 			List<String> items = new ArrayList<String>();
 			// TODO: Move these to XML.
-			items.add("Sem horário");
-			items.add("+ Selecionar");
+			items.add("No time");
+			items.add("+ Select");
 
 			spinner.setAdapter(adapterTimeGenerator.getSpinnerAdapter(items, this));
 
@@ -436,8 +436,8 @@ delta dDateRange {
 
 			List<String> items = new ArrayList<String>();
 			// TODO: Move these to XML.
-			items.add("Sem data");
-			items.add("+ Selecionar");
+			items.add("No date");
+			items.add("+ Select");
 
 			spinner.setAdapter(adapterDateGenerator.getSpinnerAdapter(items, this));
 
@@ -451,8 +451,8 @@ delta dDateRange {
 
 			List<String> items = new ArrayList<String>();
 			// TODO: Move these to XML.
-			items.add("Sem horário");
-			items.add("+ Selecionar");
+			items.add("No time");
+			items.add("+ Select");
 
 			spinner.setAdapter(adapterTimeGenerator.getSpinnerAdapter(items, this));
 
@@ -532,9 +532,9 @@ delta dDateRange {
 				long diff = today.getTimeInMillis() - thatDay.getTimeInMillis();
 				long days = diff / (24*60*60*1000);
 				if (days == 1)
-					return "Ontem";
+						return "Yesterday";
 				else
-					return "Há " + days + " dias";
+					return days + " days ago";
 				// break;
 
 			case TODAY:
@@ -569,7 +569,7 @@ delta dDateRange {
 				return getDatesHour(position);
 			// break;
 			case TODAY:
-				return "hoje";
+				return "today";
 			// break;
 			case NEXT_DAYS:
 				// Today and thatDay Calendars being initialized
@@ -583,7 +583,7 @@ delta dDateRange {
 				long days = diff / (24*60*60*1000);
 
 				if (days == 1)
-					return "amanha";
+					return "tomorrow";
 				else
 					return getDatesHour(position);
 				// break;
