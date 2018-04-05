@@ -776,14 +776,14 @@ delta dManageReminder {
 			private Reminder cursorToReminder(Cursor cursor) throws DBException {
 				Long pk = cursor.getLong(cursor.getColumnIndex(DBConstants.REMINDER_PK_COLUMN));
 				String text = cursor.getString(cursor.getColumnIndex(DBConstants.REMINDER_TEXT_COLUMN));
-				String details = cursor.getString(cursor.getColumnIndex(DBConstants.REMINDER_DETAILS_COLUMN));				
+				String details = cursor.getString(cursor.getColumnIndex(DBConstants.REMINDER_DETAILS_COLUMN));
 				int done = cursor.getInt(cursor.getColumnIndex(DBConstants.REMINDER_DONE_COLUMN));
 
 				Reminder reminder = createReminderCursor(cursor);
 
 				reminder.setText(text);
 				reminder.setDetails(details);
-				reminder.setId(pk);				
+				reminder.setId(pk);
 				reminder.setDone(done);
 				return reminder;
 			}
@@ -1069,7 +1069,7 @@ delta dManageReminder {
 				if (Intent.ACTION_SEND.equals(action) && "text/plain".equals(type)) {
 					previewReminderId = intent.getLongExtra("id", 0);
 					String text = intent.getStringExtra("text");
-					
+
 					reminder = createReminderExisting(intent);
 					reminder.setText(text);
 					reminder.setId(previewReminderId);
@@ -2055,7 +2055,7 @@ delta dManageReminder {
 							+ "DETAILS VARCHAR(50) NULL," + "DATE CHAR(10) NULL,"
 							+ "HOUR CHAR(5) NULL," + "DONE INTEGER NOT NULL);", };
 
-			public static final String SELECT_REMINDERS = "SELECT PK, TEXT, DETAILS, DATE, HOUR, DONE FROM REMINDER";
+			public static final String SELECT_REMINDERS = "SELECT * FROM REMINDER";
 
 			public static String REMINDER_TABLE = "REMINDER";
 			public static String REMINDER_PK_COLUMN = "PK";
@@ -2190,7 +2190,7 @@ delta dManageReminder {
 					Reminder reminder = createReminderInsert(values);
 
 					reminder.setText(values.getAsString(text()));
-			
+
 					Long id = rdao.saveReminder(reminder);
 					getContext().getContentResolver().notifyChange(uri, null);
 					return Uri.parse(BASE_PATH + "/" + id);
@@ -2294,7 +2294,7 @@ delta dManageReminder {
 				edtReminder.setText(text);
 				edtDetails.setText(details);
 				try {
-					initializeValues(intent);				
+					initializeValues(intent);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -2356,7 +2356,7 @@ delta dManageReminder {
 				if (action.equals("br.com.positivo.reminders.ADD_REMINDER") && "text/plain".equals(type)) {
 					String text = intent.getStringExtra("text");
 					String details = intent.getStringExtra("details");
-					
+
 					reminder.setText(text);
 					reminder.setDetails(details);
 					reminderFromIntent(intent);
