@@ -237,7 +237,7 @@ delta dPriority {
 				// Add the allReminders to the filter list
 				AllRemindersFilter allRemindersFilter = new AllRemindersFilter(getActivity());
 				filters.add(allRemindersFilter);
-		
+
 				// Add the priorities to the filter list
 				PriorityFilter highPriorityFilter = new PriorityFilter(Priority.HIGH, getActivity());
 				filters.add(highPriorityFilter);
@@ -269,7 +269,7 @@ delta dPriority {
 					+ "HOUR CHAR(5) NULL," + "PRIORITY INTEGER NOT NULL," + "DONE INTEGER NOT NULL);", };
 
 		removes SELECT_REMINDERS;
-		adds public static final String SELECT_REMINDERS = "SELECT PK, TEXT, DETAILS, DATE, HOUR, PRIORITY, DONE FROM REMINDER";
+		adds public static final String SELECT_REMINDERS = "SELECT * FROM REMINDER";
 
 		adds public static String REMINDER_PRIORITY_COLUMN = "PRIORITY";
 	}
