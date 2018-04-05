@@ -2,7 +2,7 @@ delta dStaticCategory {
 	modifies br.unb.cic.reminders.model.db.DBConstants {
 		removes DROP_TABLE_STATEMENTS;
 		adds public static String DROP_TABLE_STATEMENTS[] = { "DROP TABLE IF EXISTS REMINDER", "DROP TABLE IF EXISTS CATEGORY" };
-		
+
 		removes CREATE_TABLE_STATEMENTS;
 		adds public static String CREATE_TABLE_STATEMENTS[] = { "CREATE TABLE CATEGORY("
 			+ "PK INTEGER PRIMARY KEY AUTOINCREMENT, " + "NAME VARCHAR(50) NOT NULL, " + "LOCKED INT NOT NULL);",
@@ -11,16 +11,16 @@ delta dStaticCategory {
 					+ "DETAILS VARCHAR(50) NULL,"
 					+ "FK_CATEGORY INTEGER NOT NULL REFERENCES CATEGORY ON DELETE CASCADE," + "DATE CHAR(10) NULL,"
 					+ "HOUR CHAR(5) NULL," + "DONE INTEGER NOT NULL);", };
-		
+
 		adds public static final String SELECT_CATEGORIES = "SELECT PK, NAME FROM CATEGORY";
 		adds public static final String SELECT_CATEGORY_BY_NAME = "SELECT PK, NAME FROM CATEGORY WHERE NAME = ?";
 		adds public static final String SELECT_CATEGORY_BY_ID = "SELECT PK, NAME FROM CATEGORY WHERE PK = ?";
-		
+
 		removes SELECT_REMINDERS;
-		adds public static final String SELECT_REMINDERS = "SELECT PK, TEXT, DETAILS, FK_CATEGORY, DATE, HOUR, DONE FROM REMINDER";
-		adds public static final String SELECT_REMINDERS_BY_CATEGORY = "SELECT PK, TEXT, DETAILS, FK_CATEGORY, DATE, HOUR, DONE FROM REMINDER WHERE FK_CATEGORY = ?";
+		adds public static final String SELECT_REMINDERS = "SELECT * FROM REMINDER";
+		adds public static final String SELECT_REMINDERS_BY_CATEGORY = "SELECT * REMINDER WHERE FK_CATEGORY = ?";
 		adds public static String DELETE_CATEGORIES = "DELETE FROM CATEGORY WHERE PK = ?";
-		
+
 		adds public static final String PREDEFINED_CATEGORIES[] = { "INSERT INTO CATEGORY VALUES (NULL,'College',1);",
 			"INSERT INTO CATEGORY VALUES (NULL,'Job',1);", "INSERT INTO CATEGORY VALUES (NULL,'Personal',1);" };
 
@@ -28,12 +28,12 @@ delta dStaticCategory {
 		adds public static String CATEGORY_PK_COLUMN = "PK";
 		adds public static String CATEGORY_NAME_COLUMN = "NAME";
 		adds public static String CATEGORY_LOCKED_COLUMN = "LOCKED";
-		
+
 		adds public static String REMINDER_FK_CATEGORY_COLUMN = "FK_CATEGORY";
 	}
 	modifies br.unb.cic.framework.persistence.GenericDAO {
 		adds import br.unb.cic.reminders.model.db.DefaultCategoryDAO;
-		
+
 		removes persist(T entity);
 		adds protected Long persist(T entity) throws DBInvalidEntityException, DBException {
 			try {
@@ -96,38 +96,38 @@ delta dStaticCategory {
 				dbHelper.close();
 			}
 		}
-				
+
 	}
 	adds {
 		package br.unb.cic.reminders.controller;
-		
+
 		import android.content.Context;
 		import br.unb.cic.reminders.model.Category;
 		import br.unb.cic.reminders.model.Reminder;
-		
+
 		public class CategoryFilter extends ReminderFilter {
-		
+
 			private Category category;
-		
+
 			public CategoryFilter(Category category, Context context) {
 				super(context);
 				this.category = category;
 			}
-		
+
 			@Override
 			protected boolean selectReminder(Reminder r) {
 				return r.getCategory().getName().equals(category.getName());
 			}
-		
+
 			public Category getCategory() {
 				return category;
 			}
-		
+
 			@Override
 			public String getName() {
 				return category.getName();
 			}
-		
+
 		}
 	}
 	modifies br.unb.cic.reminders.controller.Controller {
@@ -187,7 +187,7 @@ delta dStaticCategory {
 		modifies createReminderInsert(ContentValues values) {
 			Reminder reminder = original(values);
 			Category category = createCategoryInsert(values);
-			reminder.setCategory(category);	
+			reminder.setCategory(category);
 			return reminder;
 		}
 	}
@@ -202,7 +202,7 @@ delta dStaticCategory {
 					Log.i(DBHelper.class.getCanonicalName(), sql);
 					db.execSQL(sql);
 				}
-	
+
 				for (String sql : DBConstants.PREDEFINED_CATEGORIES) {
 					Log.i(DBHelper.class.getCanonicalName(), sql);
 					db.execSQL(sql);
@@ -214,19 +214,19 @@ delta dStaticCategory {
 	}
 	adds {
 		package br.unb.cic.reminders.model.db;
-		
+
 		import java.util.List;
-		
+
 		import br.unb.cic.framework.persistence.DBException;
 		import br.unb.cic.reminders.model.Category;
-		
+
 		/**
 		 * A Data Access Object for handling the persistence mechanism of categories.
 		 *
 		 * @author rbonifacio
 		 */
 		public interface CategoryDAO {
-		
+
 			/**
 			 * List all Categories of the Reminders database.
 			 *
@@ -235,7 +235,7 @@ delta dStaticCategory {
 			 *             if anything goes wrong with the database query
 			 */
 			public List<Category> listCategories() throws DBException;
-		
+
 			/**
 			 * Find a category by name
 			 *
@@ -244,7 +244,7 @@ delta dStaticCategory {
 			 * @return category that satisfies the name criteria
 			 */
 			public Category findCategory(String name) throws DBException;
-		
+
 			/**
 			 * Find a category by id
 			 *
@@ -257,10 +257,10 @@ delta dStaticCategory {
 	}
 	adds {
 		package br.unb.cic.reminders.model.db;
-		
+
 		import java.util.ArrayList;
 		import java.util.List;
-		
+
 		import android.content.Context;
 		import android.database.Cursor;
 		import android.database.sqlite.SQLiteException;
@@ -269,18 +269,18 @@ delta dStaticCategory {
 		import br.unb.cic.framework.persistence.DBInvalidEntityException;
 		import br.unb.cic.framework.persistence.GenericDAO;
 		import br.unb.cic.reminders.model.Category;
-		
+
 		/**
 		 * A default implementation of the @see {@link CategoryDAO} interface.
 		 *
 		 * @author rbonifacio
 		 */
 		public class DefaultCategoryDAO extends GenericDAO<Category> implements CategoryDAO {
-		
+
 			public DefaultCategoryDAO(Context c) {
 				super(c);
 			}
-		
+
 			/**
 			 * @see CategoryDAO#listCategories()
 			 */
@@ -288,9 +288,9 @@ delta dStaticCategory {
 				try {
 					db = dbHelper.getReadableDatabase();
 					Cursor cursor = db.rawQuery(DBConstants.SELECT_CATEGORIES, null);
-		
+
 					List<Category> categories = new ArrayList<Category>();
-		
+
 					if (cursor.moveToFirst()) {
 						do {
 							Category category = cursorToCategory(cursor);
@@ -307,7 +307,7 @@ delta dStaticCategory {
 					dbHelper.close();
 				}
 			}
-		
+
 			/**
 			 * @see CategoryDAO#findCategory(String)
 			 */
@@ -315,7 +315,7 @@ delta dStaticCategory {
 				try {
 					db = dbHelper.getReadableDatabase();
 					Cursor cursor = db.rawQuery(DBConstants.SELECT_CATEGORY_BY_NAME, new String[] { name });
-		
+
 					return returnUniqueCategory(cursor);
 				} catch (SQLiteException e) {
 					Log.e(DefaultCategoryDAO.class.getCanonicalName(), e.getLocalizedMessage());
@@ -325,7 +325,7 @@ delta dStaticCategory {
 					dbHelper.close();
 				}
 			}
-		
+
 			/**
 			 * @see CategoryDAO#findCategoryById(Long)
 			 */
@@ -333,7 +333,7 @@ delta dStaticCategory {
 				try {
 					db = dbHelper.getReadableDatabase();
 					Cursor cursor = db.rawQuery(DBConstants.SELECT_CATEGORY_BY_ID, new String[] { id.toString() });
-		
+
 					return returnUniqueCategory(cursor);
 				} catch (SQLiteException e) {
 					Log.e(DefaultCategoryDAO.class.getCanonicalName(), e.getLocalizedMessage());
@@ -343,13 +343,13 @@ delta dStaticCategory {
 					dbHelper.close();
 				}
 			}
-		
+
 			/*
 			 * Given a cursor, returns the first category.
 			 */
 			private Category returnUniqueCategory(Cursor cursor) {
 				List<Category> categories = new ArrayList<Category>();
-		
+
 				if (cursor.moveToFirst()) {
 					Category category = cursorToCategory(cursor);
 					categories.add(category);
@@ -358,18 +358,18 @@ delta dStaticCategory {
 				}
 				return null;
 			}
-		
+
 			/*
 			 * Creates a category from a given cursor.
 			 */
 			private Category cursorToCategory(Cursor cursor) {
 				Long pk = cursor.getLong(cursor.getColumnIndex(DBConstants.CATEGORY_PK_COLUMN));
 				String name = cursor.getString(cursor.getColumnIndex(DBConstants.CATEGORY_NAME_COLUMN));
-		
+
 				Category category = new Category();
 				category.setName(name);
 				category.setId(pk);
-		
+
 				return category;
 			}
 		}
@@ -386,7 +386,7 @@ delta dStaticCategory {
 				db = dbHelper.getReadableDatabase();
 				Cursor cursor = db.rawQuery(DBConstants.SELECT_REMINDERS_BY_CATEGORY,
 						new String[] { category.getId().toString() });
-	
+
 				return remindersFromCursor(cursor);
 			} catch (Exception e) {
 				Log.e(DefaultCategoryDAO.class.getCanonicalName(), e.getLocalizedMessage());
@@ -443,11 +443,11 @@ delta dStaticCategory {
 	}
 	adds {
 		package br.unb.cic.reminders.model;
-		
+
 		import br.unb.cic.framework.persistence.DBTypes;
 		import br.unb.cic.framework.persistence.annotations.Column;
 		import br.unb.cic.framework.persistence.annotations.Entity;
-		
+
 		/**
 		 * This class represents a categegory, an useful abstraction for classifying
 		 * reminders.
@@ -458,55 +458,55 @@ delta dStaticCategory {
 		public class Category {
 			@Column(column = "PK", type = DBTypes.LONG, primaryKey = true)
 			private Long id;
-		
+
 			@Column(column = "NAME", type = DBTypes.TEXT)
 			private String name;
-		
+
 			@Column(column = "LOCKED", type = DBTypes.INT)
 			private int locked;
-		
+
 			public Category() {
 			}
-		
+
 			public Category(Long id, String name) {
 				this.id = id;
 				this.name = name;
 				this.locked = 0;
 			}
-		
+
 			public Category(Long id, String name, int locked) {
 				this.id = id;
 				this.name = name;
 				this.locked = locked;
 			}
-		
+
 			public Long getId() {
 				return id;
 			}
-		
+
 			public void setId(Long id) {
 				this.id = id;
 			}
-		
+
 			public String getName() {
 				return name;
 			}
-		
+
 			public void setName(String name) {
 				if (name.isEmpty() == true)
 					throw new InvalidTextException(name);
 				else
 					this.name = name;
 			}
-		
+
 			public int getLocked() {
 				return locked;
 			}
-		
+
 			public void setLocked(int locked) {
 				this.locked = locked;
 			}
-		
+
 			@Override
 			public String toString() {
 				return name;
@@ -560,7 +560,7 @@ delta dStaticCategory {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-	
+
 			try {
 				Controller.instance(getApplicationContext()).updateReminder(reminder);
 			} catch (DBException e) {
@@ -590,9 +590,9 @@ delta dStaticCategory {
 	}
 	adds {
 		package br.unb.cic.reminders.view;
-		
+
 		import java.util.List;
-		
+
 		import android.content.Context;
 		import android.view.LayoutInflater;
 		import android.view.View;
@@ -602,11 +602,11 @@ delta dStaticCategory {
 		import android.widget.TextView;
 		import br.unb.cic.reminders.model.Category;
 		import br.unb.cic.reminders2.R;
-		
+
 		public class CategoryArrayAdapter extends ArrayAdapter<Category> {
-		
+
 			private Context context;
-		
+
 			/**
 			 * This class is used in the parts of the view which is needed to list the
 			 * categories, as an adapter to these components listing the Categories
@@ -622,11 +622,11 @@ delta dStaticCategory {
 				super(context, R.layout.category_row, objects);
 				this.context = context;
 			}
-		
+
 			@Override
 			public View getView(int position, View convertView, ViewGroup parent) {
 				LinearLayout categoryRow;
-		
+
 				// Inflate the view
 				if (convertView == null) {
 					categoryRow = new LinearLayout(getContext());
@@ -637,14 +637,14 @@ delta dStaticCategory {
 				} else {
 					categoryRow = (LinearLayout) convertView;
 				}
-		
+
 				TextView tvCategory = (TextView) categoryRow.findViewById(R.id.row_categoryName);
-		
+
 				tvCategory.setText(getItem(position).getName());
-		
+
 				return categoryRow;
 			}
-		
+
 		}
 	}
 	modifies br.unb.cic.reminders.view.AddReminderActivity {
@@ -658,7 +658,7 @@ delta dStaticCategory {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-	
+
 			try {
 				Controller.instance(getApplicationContext()).updateReminder(reminder);
 			} catch (DBException e) {
@@ -723,10 +723,10 @@ delta dStaticCategory {
 	}
 	adds {
 		package br.unb.cic.reminders.view;
-		
+
 		import java.util.ArrayList;
 		import java.util.List;
-		
+
 		import android.app.Fragment;
 		import android.os.Bundle;
 		import android.util.Log;
@@ -747,42 +747,42 @@ delta dStaticCategory {
 		import br.unb.cic.reminders.controller.ReminderFilter;
 		import br.unb.cic.reminders.model.Category;
 		import br.unb.cic.reminders2.R;
-		
+
 		/**
 		 * A list fragment that holds the list of categories.
 		 *
 		 * @author rbonifacio
 		 */
 		public class FilterListFragment extends Fragment implements OnItemClickListener {
-		
+
 			private static final String CURRENT_FILTER_KEY = "current_filter";
-		
+
 			private static String TAG = "filter fragment list";
-		
+
 			private int currentFilterIndex;
-		
+
 			private List<FiltersListChangeListener> listeners;
-		
+
 			private FiltersListChangeListener filtersChangeListener;
-		
+
 			private int currentFilterId;
 			// Used to list the filters.
 			private ReminderFilterArrayAdapter adapter;
 			private View view;
-		
+
 			private Button btAddCategory;
 			private ListView lvFilters;
-		
+
 			@Override
 			public void onActivityCreated(Bundle savedInstanceState) {
 				super.onActivityCreated(savedInstanceState);
-		
+
 				// this way, we could retrieve the selected filter
 				// after an orientation change.
 				if (savedInstanceState != null) {
 					currentFilterIndex = savedInstanceState.getInt(CURRENT_FILTER_KEY);
 				}
-		
+
 				/*
 				 * categoryList = new ArrayList<String>();
 				 *
@@ -796,12 +796,12 @@ delta dStaticCategory {
 				 * thisListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 				 * thisListView.setBackgroundColor(Color.WHITE);
 				 */
-		
+
 				currentFilterId = 0;
-		
+
 				adapter = null;
 			}
-		
+
 			/**
 			 * Creates the view.
 			 */
@@ -811,7 +811,7 @@ delta dStaticCategory {
 				createUI();
 				return view;
 			}
-		
+
 			/**
 			 * When resumed updates the filters list view.
 			 */
@@ -820,7 +820,7 @@ delta dStaticCategory {
 				super.onResume();
 				updateListView();
 			}
-		
+
 			/**
 			 * Provides each action based in the chosen option(Edit or Delete).
 			 **/
@@ -848,24 +848,24 @@ delta dStaticCategory {
 			 *
 			 * } return super.onContextItemSelected(item); }
 			 */
-		
+
 			public void addListener(FiltersListChangeListener filter) {
 				if (listeners == null)
 					listeners = new ArrayList<FiltersListChangeListener>();
 				listeners.add(filter);
 			}
-		
+
 			public void notifyListeners(ReminderFilter filter) {
 				for (FiltersListChangeListener c : listeners) {
 					c.onSelectedFilterChanged(filter);
 				}
 			}
-		
+
 			/**
 			 * Creates the User Interface.
 			 **/
 			private void createUI() {
-		
+
 				// Button to add a Category:
 				// btAddCategory = (Button) view.findViewById(R.id.btAddCategory);
 				// btAddCategory.setOnClickListener(new OnClickListener() {
@@ -877,23 +877,23 @@ delta dStaticCategory {
 				// + R.string.dialog_addcategory_title);
 				// }
 				// });
-		
+
 				// List of filters
 				lvFilters = (ListView) view.findViewById(R.id.listCategories);
 				lvFilters.setOnItemClickListener(this);
 				registerForContextMenu(lvFilters);
 				updateListView();
 			}
-		
+
 			/**
 			 * Used to populate the list view with the current filters and other
 			 * filters.
 			 */
 			private void updateListView() {
-		
+
 				List<ReminderFilter> filters = listOfFilters();
 				adapter = new ReminderFilterArrayAdapter(getActivity().getApplicationContext(), filters);
-		
+
 				lvFilters.setAdapter(adapter);
 			}
 
@@ -903,7 +903,7 @@ delta dStaticCategory {
 				// Add the allReminders to the filter list
 				AllRemindersFilter allRemindersFilter = new AllRemindersFilter(getActivity());
 				filters.add(allRemindersFilter);
-		
+
 				// Get all categories
 				List<Category> categories = new ArrayList<Category>();
 				try {
@@ -922,7 +922,7 @@ delta dStaticCategory {
 																									// properly.
 					e.printStackTrace();
 				}
-		
+
 				// Add the categories to the filter list
 				ReminderFilter filter;
 				for (Category c : categories) {
@@ -932,17 +932,17 @@ delta dStaticCategory {
 
 				return filters;
 			}
-		
+
 			public void onItemClick(AdapterView<? extends Object> adapterView, View view, int position, long id) {
 				notifyListeners(adapter.getItem(position));
-		
+
 			}
-		
+
 			public void onNothingSelected(AdapterView<? extends Object> arg0) {
 				// TODO Auto-generated method stub
-		
+
 			}
-		
+
 		}
 	}
 	modifies br.unb.cic.reminders.view.ReminderListFragment {
@@ -972,7 +972,7 @@ delta dStaticCategory {
 		adds private void addListenerToSpinnerCategory() {
 			spinnerCategory.setOnItemSelectedListener(new OnItemSelectedListener() {
 				public void onItemSelected(AdapterView<? extends Object> parent, View view, int pos, long id) {}
-	
+
 				public void onNothingSelected(AdapterView<? extends Object> parent) {
 					// well... do nothing
 				}
@@ -984,15 +984,15 @@ delta dStaticCategory {
 		}
 		adds private Spinner getSpinnerCategory() throws Exception {
 			Spinner spinner = (Spinner) findViewById(R.id.spinnerCategories);
-	
+
 			SpinnerAdapterGenerator<Category> adapterCategoryGenerator = new SpinnerAdapterGenerator<Category>();
-	
+
 			List<Category> categories = getCategories();
-	
+
 			ArrayAdapter<Category> adapter = adapterCategoryGenerator.getSpinnerAdapter(categories, this);
-	
+
 			spinner.setAdapter(adapter);
-	
+
 			return spinner;
 		}
 		adds protected List<Category> getCategories() throws Exception {
@@ -1000,11 +1000,11 @@ delta dStaticCategory {
 		}
 		adds protected Spinner getSpinnerCategory(List<Category> categories) throws Exception {
 			Spinner spinner = (Spinner) findViewById(R.id.spinnerCategories);
-	
+
 			SpinnerAdapterGenerator<Category> adapterCategoryGenerator = new SpinnerAdapterGenerator<Category>();
-	
+
 			spinner.setAdapter(adapterCategoryGenerator.getSpinnerAdapter(categories, this));
-	
+
 			return spinner;
 		}
 	}
@@ -1022,7 +1022,7 @@ delta dStaticCategory {
 					// get the category from the spinner
 					selectedCategory = (Category) parent.getItemAtPosition(pos);
 				}
-	
+
 				public void onNothingSelected(AdapterView<? extends Object> parent) {
 					// well... do nothing
 				}
@@ -1064,13 +1064,13 @@ delta dStaticCategory {
 		}
 		adds private Spinner getSpinnerCategory() throws Exception {
 			Spinner spinner = (Spinner) findViewById(R.id.spinnerCategories);
-	
+
 			SpinnerAdapterGenerator<Category> adapterCategoryGenerator = new SpinnerAdapterGenerator<Category>();
-	
+
 			List<Category> categories = Controller.instance(getApplicationContext()).listCategories();
-	
+
 			spinner.setAdapter(adapterCategoryGenerator.getSpinnerAdapter(categories, this));
-	
+
 			return spinner;
 		}
 		adds private int categoryToIndex(Category category) throws Exception {
@@ -1093,7 +1093,7 @@ delta dStaticCategory {
 		removes getView(int position, View convertView, ViewGroup parent);
 		adds @Override public View getView(int position, View convertView, ViewGroup parent) {
 			LinearLayout filterRow;
-	
+
 			// Inflate the view
 			if (convertView == null) {
 				filterRow = new LinearLayout(getContext());
@@ -1104,13 +1104,13 @@ delta dStaticCategory {
 			} else {
 				filterRow = (LinearLayout) convertView;
 			}
-	
+
 			TextView tvFilter = (TextView) filterRow.findViewById(R.id.row_categoryName);
 			tvFilter.setText(getItem(position).getName());
-	
+
 			TextView tvNumReminders = (TextView) filterRow.findViewById(R.id.row_categoryCounter);
 			tvNumReminders.setText(Integer.toString(getItem(position).getNumReminders()));
-	
+
 			return filterRow;
 		}
 	}
