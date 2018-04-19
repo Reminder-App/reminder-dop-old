@@ -500,6 +500,7 @@ delta dManageCategory {
 					//Deletes from the bank;
 						Controller.instance(getActivity().getApplicationContext()).deleteReminderByCategory(category);
 						Controller.instance(getActivity().getApplicationContext()).deleteCategory(category);
+						updateListView();
 					}
 					catch(DBException e) {
 						Log.e(TAG, e.getMessage());
