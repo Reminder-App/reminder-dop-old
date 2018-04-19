@@ -18,7 +18,7 @@ delta dStaticCategory {
 
 		removes SELECT_REMINDERS;
 		adds public static final String SELECT_REMINDERS = "SELECT * FROM REMINDER";
-		adds public static final String SELECT_REMINDERS_BY_CATEGORY = "SELECT * REMINDER WHERE FK_CATEGORY = ?";
+		adds public static final String SELECT_REMINDERS_BY_CATEGORY = "SELECT * FROM REMINDER WHERE FK_CATEGORY = ?";
 		adds public static String DELETE_CATEGORIES = "DELETE FROM CATEGORY WHERE PK = ?";
 
 		adds public static final String PREDEFINED_CATEGORIES[] = { "INSERT INTO CATEGORY VALUES (NULL,'College',1);",
