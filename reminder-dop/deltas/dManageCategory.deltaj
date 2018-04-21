@@ -501,6 +501,7 @@ delta dManageCategory {
 						Controller.instance(getActivity().getApplicationContext()).deleteReminderByCategory(category);
 						Controller.instance(getActivity().getApplicationContext()).deleteCategory(category);
 						updateListView();
+						return true;
 					}
 					catch(DBException e) {
 						Log.e(TAG, e.getMessage());
