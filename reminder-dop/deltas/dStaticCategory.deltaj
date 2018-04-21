@@ -531,8 +531,8 @@ delta dStaticCategory {
 		adds import br.unb.cic.reminders.view.FilterListFragment;
 		removes createUI();
 		adds private void createUI() {
-			FragmentTransaction ft = getFragmentManager().beginTransaction();
-			ReminderListFragment listReminderFragment = new ReminderListFragment();
+			ft = getFragmentManager().beginTransaction();
+			listReminderFragment = new ReminderListFragment();
 			FilterListFragment listCategoryFragment = new FilterListFragment();
 			listCategoryFragment.addListener(listReminderFragment);
 			ft.add(R.id.listReminders, listReminderFragment);

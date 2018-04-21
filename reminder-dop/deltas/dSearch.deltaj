@@ -5,16 +5,7 @@ delta dSearch {
 		adds import android.content.DialogInterface;
 		adds import android.widget.EditText;
 		adds import java.util.ArrayList;
-		removes createUI();
-		adds FragmentTransaction ft;
-		adds ReminderListFragment listReminderFragment;
 		adds public static String search = "";
-		adds private void createUI() {
-	         ft = getFragmentManager().beginTransaction();
-	         listReminderFragment = new ReminderListFragment();
-	        ft.add(R.id.listReminders, listReminderFragment);
-	        ft.commit();
-	    }
 	    removes onOptionsItemSelected(MenuItem item);
 	    adds @Override public boolean onOptionsItemSelected(MenuItem item) {
             switch (item.getItemId()) {

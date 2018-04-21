@@ -16,6 +16,8 @@ delta dManageReminder {
 		public class ReminderMainActivity extends Activity {
 
 			private static String TAG = "Reminder";
+			private FragmentTransaction ft;
+			private ReminderListFragment listReminderFragment;
 
 			/**
 			 * Called when the activity is first created.
@@ -37,8 +39,8 @@ delta dManageReminder {
 			 * Creates the User Interface. Creates the ListFragment.
 			 */
 			private void createUI() {
-				FragmentTransaction ft = getFragmentManager().beginTransaction();
-				ReminderListFragment listReminderFragment = new ReminderListFragment();
+				ft = getFragmentManager().beginTransaction();
+				listReminderFragment = new ReminderListFragment();
 				ft.add(R.id.listReminders, listReminderFragment);
 				ft.commit();
 			}
