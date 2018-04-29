@@ -14,13 +14,6 @@
 			<args>SPLInfoFolder, DeltasFolder</args>
 		</transformation>
 	</configuration>
-	<configuration>
-		<expression>Or(Manage Category, Static Category)</expression>
-		<transformation>
-			<name>createBuildEntries</name>
-			<args>category</args>
-		</transformation>
-	</configuration>
   <configuration>
 		<expression>Search</expression>
 		<transformation>
