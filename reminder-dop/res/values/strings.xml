@@ -40,7 +40,7 @@
     <string name="reminderPriorityTip">Reminder\'s priority</string>
     //#endif
 
-    //#ifdef category
+    //#ifdef staticCategory || manageCategory
     <string name="reminderCategory">Category</string>
     <string name="context_menu_category_title">Category</string>
     //#endif
