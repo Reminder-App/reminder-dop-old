@@ -208,7 +208,7 @@
           android:minWidth="290dip" >
         </Spinner>
         //#endif
-        //#ifdef category
+        //#ifdef staticCategory || manageCategory
         <TextView
           android:id="@+id/txtCategory"
           android:layout_width="wrap_content"
@@ -253,17 +253,17 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_alignParentLeft="true"
-          //#if (fixedDate) && (!priority && !category)
+          //#if (fixedDate) && (!priority && !staticCategory && !manageCategory)
           android:layout_below="@id/spinnerTime"
-          //#elif (fixedDate && priority) && (!category)
+          //#elif (fixedDate && priority) && (!staticCategory && !manageCategory)
           android:layout_below="@id/spinnerPriorities"
-          //#elif ((fixedDate && category) && (!priority)) || (fixedDate && category && priority)
+          //#elif ((fixedDate && (staticCategory || manageCategory)) && (!priority)) || (fixedDate && (staticCategory || manageCategory) && priority)
           android:layout_below="@id/spinnerCategories"
-          //#elif (dateRange) && (!priority && !category)
+          //#elif (dateRange) && (!priority && !staticCategory && !manageCategory)
           android:layout_below="@id/spinnerTimeFinal"
-          //#elif (dateRange && priority) && (!category)
+          //#elif (dateRange && priority) && (!staticCategory && !manageCategory)
           android:layout_below="@id/spinnerPriorities"
-          //#elif ((dateRange && category) && (!priority)) || (dateRange && category && priority)
+          //#elif ((dateRange && (staticCategory || manageCategory)) && (!priority)) || (dateRange && (staticCategory || manageCategory) && priority)
           android:layout_below="@id/spinnerCategories"
           //#endif
           android:gravity="right"
@@ -275,17 +275,17 @@
           android:id="@+id/cbCalendar"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          //#if (fixedDate) && (!priority && !category)
+          //#if (fixedDate) && (!priority && !staticCategory && !manageCategory)
           android:layout_below="@id/spinnerTime"
-          //#elif (fixedDate && priority) && (!category)
+          //#elif (fixedDate && priority) && (!staticCategory && !manageCategory)
           android:layout_below="@id/spinnerPriorities"
-          //#elif ((fixedDate && category) && (!priority)) || (fixedDate && category && priority)
+          //#elif ((fixedDate && (staticCategory || manageCategory)) && (!priority)) || (fixedDate && (staticCategory || manageCategory) && priority)
           android:layout_below="@id/spinnerCategories"
-          //#elif (dateRange) && (!priority && !category)
+          //#elif (dateRange) && (!priority && !staticCategory && !manageCategory)
           android:layout_below="@id/spinnerTimeFinal"
-          //#elif (dateRange && priority) && (!category)
+          //#elif (dateRange && priority) && (!staticCategory && !manageCategory)
           android:layout_below="@id/spinnerPriorities"
-          //#elif ((dateRange && category) && (!priority)) || (dateRange && category && priority)
+          //#elif ((dateRange && (staticCategory || manageCategory)) && (!priority)) || (dateRange && (staticCategory || manageCategory) && priority)
           android:layout_below="@id/spinnerCategories"
           //#endif
           android:layout_marginLeft="5dip"
@@ -298,37 +298,37 @@
             android:id="@+id/linearLayout1"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            //#if (fixedDate) && (!priority && !category && !googleCalendar)
+            //#if (fixedDate) && (!priority && !staticCategory && !manageCategory && !googleCalendar)
             android:layout_below="@id/spinnerTime"
-            //#elif ((fixedDate && googleCalendar) && (!priority && !category))
+            //#elif ((fixedDate && googleCalendar) && (!priority && !staticCategory && !manageCategory))
             android:layout_below="@id/txtAddgCalendar"
-            //#elif (fixedDate && category) && (!priority && !googleCalendar)
+            //#elif (fixedDate && (staticCategory || manageCategory)) && (!priority && !googleCalendar)
             android:layout_below="@id/spinnerCategories"
-            //#elif (fixedDate && category && googleCalendar) && (!priority)
+            //#elif (fixedDate && (staticCategory || manageCategory) && googleCalendar) && (!priority)
             android:layout_below="@id/txtAddgCalendar"
-            //#elif (fixedDate && priority) && (!category && !googleCalendar)
+            //#elif (fixedDate && priority) && (!staticCategory && !manageCategory && !googleCalendar)
             android:layout_below="@id/spinnerPriorities"
-            //#elif (fixedDate && priority && googleCalendar) && (!category)
+            //#elif (fixedDate && priority && googleCalendar) && (!staticCategory && !manageCategory)
             android:layout_below="@id/txtAddgCalendar"
-            //#elif (fixedDate && priority && category) && (!googleCalendar)
+            //#elif (fixedDate && priority && (staticCategory || manageCategory)) && (!googleCalendar)
             android:layout_below="@id/spinnerCategories"
-            //#elif (fixedDate && priority && category && googleCalendar)
+            //#elif (fixedDate && priority && (staticCategory || manageCategory) && googleCalendar)
             android:layout_below="@id/txtAddgCalendar"
-            //#elif (dateRange) && (!priority && !category && !googleCalendar)
+            //#elif (dateRange) && (!priority && !staticCategory && !manageCategory && !googleCalendar)
             android:layout_below="@id/spinnerTimeFinal"
-            //#elif (dateRange && googleCalendar) && (!priority && !category)
+            //#elif (dateRange && googleCalendar) && (!priority && !staticCategory && !manageCategory)
             android:layout_below="@id/txtAddgCalendar"
-            //#elif (dateRange && category) && (!priority && !googleCalendar)
+            //#elif (dateRange && (staticCategory || manageCategory)) && (!priority && !googleCalendar)
             android:layout_below="@id/spinnerCategories"
-            //#elif (dateRange && category && googleCalendar) && (!priority)
+            //#elif (dateRange && (staticCategory || manageCategory) && googleCalendar) && (!priority)
             android:layout_below="@id/txtAddgCalendar"
-            //#elif (dateRange && priority) && (!category && !googleCalendar)
+            //#elif (dateRange && priority) && (!staticCategory && !manageCategory && !googleCalendar)
             android:layout_below="@id/spinnerPriorities"
-            //#elif (dateRange && priority && googleCalendar) && (!category)
+            //#elif (dateRange && priority && googleCalendar) && (!staticCategory && !manageCategory)
             android:layout_below="@id/txtAddgCalendar"
-            //#elif (dateRange && priority && category) && (!googleCalendar)
+            //#elif (dateRange && priority && (staticCategory || manageCategory)) && (!googleCalendar)
             android:layout_below="@id/spinnerCategories"
-            //#elif (dateRange && priority && category && googleCalendar)
+            //#elif (dateRange && priority && (staticCategory || manageCategory) && googleCalendar)
             android:layout_below="@id/txtAddgCalendar"
             //#endif
             android:gravity="center_vertical" >
