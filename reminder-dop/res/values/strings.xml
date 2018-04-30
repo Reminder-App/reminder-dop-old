@@ -42,10 +42,10 @@
 
     //#ifdef staticCategory || manageCategory
     <string name="reminderCategory">Category</string>
-    <string name="context_menu_category_title">Category</string>
     //#endif
 
     //#ifdef manageCategory
+    <string name="context_menu_category_title">Category</string>
     <!-- Category_list_fragment -->
     <string name="addCategory">Add</string>
     <!-- category_dialog -->
