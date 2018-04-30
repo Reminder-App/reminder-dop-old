@@ -5,7 +5,7 @@ SPL Reminder {
 
 	Deltas = {dManageReminder, dStaticCategory, dManageCategory, dPriority,
 	dStaticCategoryPriority, dManageCategoryPriority, dGoogleCalendar, dDateRange,
-	dSearch, dDateRangeGoogleCalendar, dDateRangePriority,
+	dSearch, dDateRangeGoogleCalendar,
 	dDateRangePriorityManageCategory, dDateRangeSearch}
 
 	Constraints {
@@ -32,8 +32,6 @@ SPL Reminder {
 		{dStaticCategoryPriority} when (Priority & StaticCategory);
 		
 		{dManageCategoryPriority} when (Priority & ManageCategory);
-		
-		{dDateRangePriority} when (DateRange & Priority);
 		
 		{dDateRangeGoogleCalendar} when (DateRange & GoogleCalendar);
 		
