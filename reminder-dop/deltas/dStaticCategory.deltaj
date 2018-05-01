@@ -9,15 +9,16 @@ delta dStaticCategory {
 
 			"CREATE TABLE REMINDER ( " + "PK INTEGER PRIMARY KEY AUTOINCREMENT, " + "TEXT VARCHAR(50) NOT NULL,"
 					+ "DETAILS VARCHAR(50) NULL,"
-					+ "FK_CATEGORY INTEGER NOT NULL REFERENCES CATEGORY ON DELETE CASCADE," + "DATE CHAR(10) NULL,"
-					+ "HOUR CHAR(5) NULL," + "DONE INTEGER NOT NULL);", };
+					+ tableStatement() + "DONE INTEGER NOT NULL);", };
+
+		modifies tableStatement() {
+			return "FK_CATEGORY INTEGER NOT NULL REFERENCES CATEGORY ON DELETE CASCADE," + original();
+		}
 
 		adds public static final String SELECT_CATEGORIES = "SELECT PK, NAME FROM CATEGORY";
 		adds public static final String SELECT_CATEGORY_BY_NAME = "SELECT PK, NAME FROM CATEGORY WHERE NAME = ?";
 		adds public static final String SELECT_CATEGORY_BY_ID = "SELECT PK, NAME FROM CATEGORY WHERE PK = ?";
 
-		removes SELECT_REMINDERS;
-		adds public static final String SELECT_REMINDERS = "SELECT * FROM REMINDER";
 		adds public static final String SELECT_REMINDERS_BY_CATEGORY = "SELECT * FROM REMINDER WHERE FK_CATEGORY = ?";
 		adds public static String DELETE_CATEGORIES = "DELETE FROM CATEGORY WHERE PK = ?";
 
