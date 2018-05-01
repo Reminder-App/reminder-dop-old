@@ -6,7 +6,6 @@
   android:orientation="vertical" >
 
   //#if staticCategory || manageCategory || priority
-  <!-- List of Categories -->
   <LinearLayout
     android:id="@+id/listCategories"
     android:layout_width="160dp"
@@ -16,16 +15,6 @@
     android:orientation="vertical" >
   </LinearLayout>
   //#endif
-  <!-- List of Reminders -->
-  <LinearLayout
-    android:id="@+id/listReminders"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:layout_marginLeft="1dp"
-    android:layout_toRightOf="@id/listCategories"
-    android:background="#FFFFFF"
-    android:orientation="vertical" >
-  </LinearLayout>
 
   <LinearLayout
     android:id="@+id/listReminders"
