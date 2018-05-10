@@ -459,4 +459,49 @@ delta dDateRepeat {
             updateTimeFromString(reminder.getHour());
         }
     }
+    modifies br.unb.cic.reminders.view.ReminderActivity {
+        removes date;
+        removes spinnerDate;
+        adds protected CheckBox cbMonday, cbTuesday, cbWednesday, cbThursday, cbFriday,
+			cbSaturday, cbSunday;
+        removes initializeFields();
+        adds private void initializeFields() {
+            btnSave = (Button) findViewById(R.id.btnSave);
+            btnCancel = (Button) findViewById(R.id.btnCancel);
+            edtReminder = (EditText) findViewById(R.id.edtReminder);
+            edtDetails = (EditText) findViewById(R.id.edtDetails);
+            cbMonday = (CheckBox) findViewById(R.id.cbMonday);
+            cbTuesday = (CheckBox) findViewById(R.id.cbTuesday);
+            cbWednesday = (CheckBox) findViewById(R.id.cbWednesday);
+            cbThursday = (CheckBox) findViewById(R.id.cbThursday);
+            cbFriday = (CheckBox) findViewById(R.id.cbFriday);
+            cbSaturday = (CheckBox) findViewById(R.id.cbSaturday);
+            cbSunday = (CheckBox) findViewById(R.id.cbSunday);
+            spinnerTime = getSpinnerTime();
+            // edtDate = (EditText) findViewById(R.id.selectedDate);
+            // edtTime = (EditText) findViewById(R.id.selectedTime);
+
+        }   
+        removes initializeListeners();
+        adds private void initializeListeners() {
+            addListenerToBtnSave();
+            addListenerToBtnCancel();
+            addListenerToSpinnerTime();
+        }
+        removes addListenerToSpinnerDate();
+        removes setValuesOnReminder();
+        adds private void setValuesOnReminder() throws Exception {
+            reminder.setMonday(cbMonday.isChecked());
+			reminder.setTuesday(cbTuesday.isChecked());
+			reminder.setWednesday(cbWednesday.isChecked());
+			reminder.setThursday(cbThursday.isChecked());
+			reminder.setFriday(cbFriday.isChecked());
+			reminder.setSaturday(cbSaturday.isChecked());
+			reminder.setSunday(cbSunday.isChecked());
+            reminder.setHour(timeToString());
+        }
+        removes dateToString();
+        removes updateDateFromString(String sDate);
+        removes getSpinnerDate();
+    }
 }
