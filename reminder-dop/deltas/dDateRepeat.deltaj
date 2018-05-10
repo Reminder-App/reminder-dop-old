@@ -96,4 +96,71 @@ delta dDateRepeat {
             edtHour.setText(reminder.getHour());
         }
     }
+    modifies br.unb.cic.reminders.view.ReminderArrayAdapter {
+        removes rowType;
+        removes LATE;
+        removes TODAY;
+        removes NEXT_DAYS;
+        removes NO_DATE;
+        adds private int rowType = MONDAY;
+        adds public static final int MONDAY = 0;
+        adds public static final int TUESDAY = 1;
+        adds public static final int WEDNESDAY = 2;
+        adds public static final int THURSDAY = 3;
+        adds public static final int FRIDAY = 4;
+        adds public static final int SATURDAY = 5;
+        adds public static final int SUNDAY = 6;
+        removes ReminderArrayAdapter(Context context, List<Reminder> objects);
+        adds public ReminderArrayAdapter(Context context, List<Reminder> objects) {
+            super(context, R.layout.reminder_row, objects);
+            this.context = context;
+
+            this.rowColor = Color.BLACK;
+            this.rowType = MONDAY;
+        }
+        removes getView(int position, View convertView, ViewGroup parent);
+        adds @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            LinearLayout reminderRow;
+
+            // Inflate the row view
+            if (convertView == null) {
+                reminderRow = new LinearLayout(getContext());
+                String inflater = Context.LAYOUT_INFLATER_SERVICE;
+                LayoutInflater vi;
+                vi = (LayoutInflater) getContext().getSystemService(inflater);
+                vi.inflate(R.layout.reminder_row, reminderRow, true);
+            } else {
+                reminderRow = (LinearLayout) convertView;
+            }
+
+            TextView tvReminder = (TextView) reminderRow.findViewById(R.id.txtReminder);
+            TextView tvHour = (TextView) reminderRow.findViewById(R.id.txtHour);
+            CheckBox tvDone = (CheckBox) reminderRow.findViewById(R.id.cbDone);
+            tvDone.setTag(position);
+            tvDone.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    try {
+                        Reminder reminder = getItem((Integer) buttonView.getTag());
+                        reminder.setDone(isChecked);
+                        Controller.instance(getContext()).updateReminder(reminder);
+                    } catch (DBException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+            tvReminder.setTextColor(rowColor);
+            tvReminder.setText(getItem(position).getText());
+            
+            tvHour.setTextColor(rowColor);
+            tvHour.setText(getDatesHour(position));
+            
+            tvDone.setChecked(getItem(position).isDone());
+
+            return reminderRow;
+        }
+        removes getDateFirst(int position);
+        removes getDateSecond(int position);
+    }
 }
