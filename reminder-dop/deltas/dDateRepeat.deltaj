@@ -23,4 +23,77 @@ delta dDateRepeat {
         }
     }
     removes br.unb.cic.reminders.view.DatePickerDialogFragment;
+    modifies br.unb.cic.reminders.view.ReminderAddActivity {
+        adds import android.widget.CheckBox;
+        adds private CheckBox cbMonday, cbTuesday, cbWednesday, cbThursday,
+			cbFriday, cbSaturday, cbSunday;
+        removes createReminderAux();
+        adds private Reminder createReminderAux() {
+            Reminder reminder = new Reminder();
+            reminder.setMonday(cbMonday.isChecked());
+			reminder.setTuesday(cbTuesday.isChecked());
+			reminder.setWednesday(cbWednesday.isChecked());
+			reminder.setThursday(cbThursday.isChecked());
+			reminder.setFriday(cbFriday.isChecked());
+			reminder.setSaturday(cbSaturday.isChecked());
+			reminder.setSunday(cbSunday.isChecked());
+            reminder.setHour(edtHour.getText().toString());
+            return reminder;
+        }
+        removes createReminderExisting(Intent intent);
+        adds private Reminder createReminderExisting(Intent intent) {
+            Reminder reminder = new Reminder();
+            boolean monday = intent.getBooleanExtra("monday", false);
+			boolean tuesday = intent.getBooleanExtra("tuesday", false);
+			boolean wednesday = intent.getBooleanExtra("wednesday", false);
+			boolean thursday = intent.getBooleanExtra("thursday", false);
+			boolean friday = intent.getBooleanExtra("friday", false);
+			boolean saturday = intent.getBooleanExtra("saturday", false);
+			boolean sunday = intent.getBooleanExtra("sunday", false);
+            String hour = intent.getStringExtra("hour");
+            reminder.setMonday(monday);
+			reminder.setTuesday(tuesday);
+			reminder.setWednesday(wednesday);
+			reminder.setThursday(thursday);
+			reminder.setFriday(friday);
+			reminder.setSaturday(saturday);
+			reminder.setSunday(sunday);
+            reminder.setHour(hour);
+            return reminder;
+        }
+        removes createReminderIntent(Intent intent);
+        adds private Reminder createReminderIntent(Intent intent) {
+            Reminder reminder = new Reminder();
+            boolean monday = intent.getBooleanExtra("monday", false);
+            boolean tuesday = intent.getBooleanExtra("tuesday", false);
+            boolean wednesday = intent.getBooleanExtra("wednesday", false);
+            boolean thursday = intent.getBooleanExtra("thursday", false);
+            boolean friday = intent.getBooleanExtra("friday", false);
+            boolean saturday = intent.getBooleanExtra("saturday", false);
+            boolean sunday = intent.getBooleanExtra("sunday", false);
+            String hour = intent.getStringExtra("hour");
+            reminder.setMonday(monday);
+            reminder.setTuesday(tuesday);
+            reminder.setWednesday(wednesday);
+            reminder.setThursday(thursday);
+            reminder.setFriday(friday);
+            reminder.setSaturday(saturday);
+            reminder.setSunday(sunday);
+            reminder.setHour(hour);
+            return reminder;
+        }
+        removes updateFieldsFromReminder(Reminder reminder);
+        adds private void updateFieldsFromReminder(Reminder reminder) throws Exception {
+            edtReminder.setText(reminder.getText());
+            edtDetails.setText(reminder.getDetails());
+            cbMonday.setChecked(reminder.isMonday());
+            cbTuesday.setChecked(reminder.isTuesday());
+            cbWednesday.setChecked(reminder.isWednesday());
+            cbThursday.setChecked(reminder.isThursday());
+            cbFriday.setChecked(reminder.isFriday());
+            cbSaturday.setChecked(reminder.isSaturday());
+            cbSunday.setChecked(reminder.isSunday());
+            edtHour.setText(reminder.getHour());
+        }
+    }
 }
