@@ -392,4 +392,13 @@ delta dDateRepeat {
         adds public static String REMINDER_SATURDAY_COLUMN = "SATURDAY";
         adds public static String REMINDER_SUNDAY_COLUMN = "SUNDAY";           
     }
+    modifies br.unb.cic.reminders.model.cp.ReminderContentProvider {
+        removes date();
+        removes createReminderInsert(ContentValues values);
+        adds private Reminder createReminderInsert(ContentValues values) throws DBException {
+            Reminder reminder = new Reminder();
+            reminder.setHour(values.getAsString(hour()));
+            return reminder;
+        }
+    }
 }
