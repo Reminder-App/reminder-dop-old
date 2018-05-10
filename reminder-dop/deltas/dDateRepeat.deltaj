@@ -1,0 +1,25 @@
+delta dDateRepeat {
+    modifies br.unb.cic.reminders.model.db.DefaultReminderDAO {
+        removes createReminderCursor(Cursor cursor);
+        adds private Reminder createReminderCursor(Cursor cursor) throws DBException {
+            Reminder reminder = new Reminder();
+            int monday = cursor.getInt(cursor.getColumnIndex(DBConstants.REMINDER_MONDAY_COLUMN));
+            int tuesday = cursor.getInt(cursor.getColumnIndex(DBConstants.REMINDER_TUESDAY_COLUMN));
+            int wednesday = cursor.getInt(cursor.getColumnIndex(DBConstants.REMINDER_WEDNESDAY_COLUMN));
+            int thursday = cursor.getInt(cursor.getColumnIndex(DBConstants.REMINDER_THURSDAY_COLUMN));
+            int friday = cursor.getInt(cursor.getColumnIndex(DBConstants.REMINDER_FRIDAY_COLUMN));
+            int saturday = cursor.getInt(cursor.getColumnIndex(DBConstants.REMINDER_SATURDAY_COLUMN));
+            int sunday = cursor.getInt(cursor.getColumnIndex(DBConstants.REMINDER_SUNDAY_COLUMN));
+            String hour = cursor.getString(cursor.getColumnIndex(DBConstants.REMINDER_HOUR_COLUMN));
+            reminder.setMonday(monday);
+            reminder.setTuesday(tuesday);
+            reminder.setWednesday(wednesday);
+            reminder.setThursday(thursday);
+            reminder.setFriday(friday);
+            reminder.setSaturday(saturday);
+            reminder.setSunday(sunday);
+            reminder.setHour(hour);
+            return reminder;
+        }
+    }
+}
