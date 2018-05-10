@@ -376,4 +376,20 @@ delta dDateRepeat {
             return sunday ? 1 : 0;
         }    
     }
+    modifies br.unb.cic.reminders.model.db.DBConstants {
+        removes tableStatement();
+        adds private static String tableStatement() {
+            return "MONDAY INTEGER NOT NULL,"
+					+ "TUESDAY INTEGER NOT NULL," + "WEDNESDAY INTEGER NOT NULL," + "THURSDAY INTEGER NOT NULL,"
+					+ "FRIDAY INTEGER NOT NULL," + "SATURDAY INTEGER NOT NULL," + "SUNDAY INTEGER NOT NULL," + "HOUR CHAR(5) NULL,";
+        }
+        removes REMINDER_DATE_COLUMN;
+        adds public static String REMINDER_MONDAY_COLUMN = "MONDAY";
+        adds public static String REMINDER_TUESDAY_COLUMN = "TUESDAY";
+        adds public static String REMINDER_WEDNESDAY_COLUMN = "WEDNESDAY";
+        adds public static String REMINDER_THURSDAY_COLUMN = "THURSDAY";
+        adds public static String REMINDER_FRIDAY_COLUMN = "FRIDAY";
+        adds public static String REMINDER_SATURDAY_COLUMN = "SATURDAY";
+        adds public static String REMINDER_SUNDAY_COLUMN = "SUNDAY";           
+    }
 }
