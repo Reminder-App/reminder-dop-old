@@ -274,4 +274,106 @@ delta dDateRepeat {
             Utility.setListViewHeightBasedOnChildren(lvSunday);
         }
     }
+    modifies br.unb.cic.reminders.model.Reminder {
+        removes date;
+        adds @Column(column = "MONDAY", type = DBTypes.INT) private boolean monday;
+        adds @Column(column = "TUESDAY", type = DBTypes.INT) private boolean tuesday;
+        adds @Column(column = "WEDNESDAY", type = DBTypes.INT) private boolean wednesday;
+        adds @Column(column = "THURSDAY", type = DBTypes.INT) private boolean thursday;
+        adds @Column(column = "FRIDAY", type = DBTypes.INT) private boolean friday;
+        adds @Column(column = "SATURDAY", type = DBTypes.INT) private boolean saturday;
+        adds @Column(column = "SUNDAY", type = DBTypes.INT) private boolean sunday;
+
+        removes getDate();
+        removes setDate(String date);
+        removes isValid();
+        adds public boolean isValid() {
+            return (text != null && hour != null);
+        }
+
+        adds public boolean isMonday() {
+            return monday;
+        }
+        adds public void setMonday(boolean monday) {
+            this.monday = monday;
+        }
+        adds public void setMonday(int monday) {
+            this.monday = (monday == 0 ? false : true);
+        }
+        adds public int getMonday() {
+            return monday ? 1 : 0;
+        }
+        adds public boolean isTuesday() {
+            return tuesday;
+        }
+        adds public void setTuesday(boolean tuesday) {
+            this.tuesday = tuesday;
+        }
+        adds public void setTuesday(int tuesday) {
+            this.tuesday = (tuesday == 0 ? false : true);
+        }
+        adds public int getTuesday() {
+            return tuesday ? 1 : 0;
+        }
+        adds public boolean isWednesday() {
+            return wednesday;
+        }
+        adds public void setWednesday(boolean wednesday) {
+            this.wednesday = wednesday;
+        }
+        adds public void setWednesday(int wednesday) {
+            this.wednesday = (wednesday == 0 ? false : true);
+        }
+        adds public int getWednesday() {
+            return wednesday ? 1 : 0;
+        }
+        adds public boolean isThursday() {
+            return thursday;
+        }
+        adds public void setThursday(boolean thursday) {
+            this.thursday = thursday;
+        }
+        adds public void setThursday(int thursday) {
+            this.thursday = (thursday == 0 ? false : true);
+        }
+        adds public int getThursday() {
+            return thursday ? 1 : 0;
+        }
+        adds public boolean isFriday() {
+            return friday;
+        }
+        adds public void setFriday(boolean friday) {
+            this.friday = friday;
+        }
+        adds public void setFriday(int friday) {
+            this.friday = (friday == 0 ? false : true);
+        }
+        adds public int getFriday() {
+            return friday ? 1 : 0;
+        }
+        adds public boolean isSaturday() {
+            return saturday;
+        }
+        adds public void setSaturday(boolean saturday) {
+            this.saturday = saturday;
+        }
+        adds public void setSaturday(int saturday) {
+            this.saturday = (saturday == 0 ? false : true);
+        }
+        adds public int getSaturday() {
+            return saturday ? 1 : 0;
+        }
+        adds public boolean isSunday() {
+            return sunday;
+        }
+        adds public void setSunday(boolean sunday) {
+            this.sunday = sunday;
+        }
+        adds public void setSunday(int sunday) {
+            this.sunday = (sunday == 0 ? false : true);
+        }
+        adds public int getSunday() {
+            return sunday ? 1 : 0;
+        }    
+    }
 }
