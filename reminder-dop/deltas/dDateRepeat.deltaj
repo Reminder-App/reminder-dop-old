@@ -22,4 +22,5 @@ delta dDateRepeat {
             return reminder;
         }
     }
+    removes br.unb.cic.reminders.view.DatePickerDialogFragment;
 }
