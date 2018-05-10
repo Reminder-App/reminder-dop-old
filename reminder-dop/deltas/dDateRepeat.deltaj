@@ -433,4 +433,30 @@ delta dDateRepeat {
             updateTimeFromString(hour);
         }
     }
+    modifies br.unb.cic.reminders.view.ExternalAddReminderActivity {
+        removes reminderFromIntent(Intent intent);
+        adds private void reminderFromIntent(Intent intent) throws Exception {
+            String hour = intent.getStringExtra("hour");
+            int monday = intent.getIntExtra("monday", 0);
+			int tuesday = intent.getIntExtra("tuesday", 0);
+			int wednesday = intent.getIntExtra("wednesday", 0);
+			int thursday = intent.getIntExtra("thursday", 0);
+			int friday = intent.getIntExtra("friday", 0);
+			int saturday = intent.getIntExtra("saturday", 0);
+			int sunday = intent.getIntExtra("sunday", 0);
+            reminder.setMonday(monday);
+			reminder.setTuesday(tuesday);
+			reminder.setWednesday(wednesday);
+			reminder.setThursday(thursday);
+			reminder.setFriday(friday);
+			reminder.setSaturday(saturday);
+			reminder.setSunday(sunday);
+            reminder.setHour(hour);
+        }
+        removes initialize();
+        adds private void initialize() throws Exception {
+            updateSpinnerDateHour(spinnerTime, reminder.getHour());
+            updateTimeFromString(reminder.getHour());
+        }
+    }
 }
