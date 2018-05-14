@@ -91,4 +91,11 @@
 			<args>fixedDate</args>
 		</transformation>
 	</configuration>
+	<configuration>
+		<expression>Date Repeat</expression>
+		<transformation>
+			<name>createBuildEntries</name>
+			<args>dateRepeat</args>
+		</transformation>
+	</configuration>
 </configurationModel>
