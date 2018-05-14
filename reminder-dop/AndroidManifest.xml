@@ -115,6 +115,31 @@
         android:name="reminder.daterangestaticcategorygooglecalendarsearch.br.unb.cic.reminders.ReminderMainActivity"
         //#elif dateRange && !priority && staticCategory && !googleCalendar && search && !manageCategory
         android:name="reminder.daterangestaticcategorysearch.br.unb.cic.reminders.ReminderMainActivity"
+
+        //#elif dateRepeat && !priority && !staticCategory && !search && !manageCategory
+        android:name="reminder.daterepeat.br.unb.cic.reminders.ReminderMainActivity"
+        //#elif dateRepeat && !priority && manageCategory && !search && !staticCategory
+        android:name="reminder.daterepeatmanagecategory.br.unb.cic.reminders.ReminderMainActivity"
+        //#elif dateRepeat && !priority && manageCategory && search && !staticCategory
+        android:name="reminder.daterepeatmanagecategorysearch.br.unb.cic.reminders.ReminderMainActivity"
+        //#elif dateRepeat && priority && !manageCategory && !search && !staticCategory
+        android:name="reminder.daterepeatpriority.br.unb.cic.reminders.ReminderMainActivity"
+        //#elif dateRepeat && priority && manageCategory && !search && !staticCategory
+        android:name="reminder.daterepeatprioritymanagecategory.br.unb.cic.reminders.ReminderMainActivity"
+        //#elif dateRepeat && priority && manageCategory && search && !staticCategory
+        android:name="reminder.daterepeatprioritymanagecategorysearch.br.unb.cic.reminders.ReminderMainActivity"
+        //#elif dateRepeat && priority && !staticCategory && search && !manageCategory
+        android:name="reminder.daterepeatprioritysearch.br.unb.cic.reminders.ReminderMainActivity"
+        //#elif dateRepeat && priority && staticCategory && !search && !manageCategory
+        android:name="reminder.daterepeatprioritystaticcategory.br.unb.cic.reminders.ReminderMainActivity"
+        //#elif dateRepeat && priority && staticCategory && search && !manageCategory
+        android:name="reminder.daterepeatprioritystaticcategorysearch.br.unb.cic.reminders.ReminderMainActivity"
+        //#elif dateRepeat && !priority && !staticCategory && search && !manageCategory
+        android:name="reminder.daterepeatsearch.br.unb.cic.reminders.ReminderMainActivity"
+        //#elif dateRepeat && !priority && staticCategory && !search && !manageCategory
+        android:name="reminder.daterepeatstaticcategory.br.unb.cic.reminders.ReminderMainActivity"
+        //#elif dateRepeat && !priority && staticCategory && search && !manageCategory
+        android:name="reminder.daterepeatstaticcategorysearch.br.unb.cic.reminders.ReminderMainActivity"
         //#endif
         android:configChanges="keyboardHidden|orientation|screenSize"
         android:screenOrientation="landscape" >
@@ -221,6 +246,31 @@
         android:name="reminder.daterangestaticcategorygooglecalendarsearch.br.unb.cic.reminders.view.AddReminderActivity"
         //#elif dateRange && !priority && staticCategory && !googleCalendar && search && !manageCategory
         android:name="reminder.daterangestaticcategorysearch.br.unb.cic.reminders.view.AddReminderActivity"
+
+        //#elif dateRepeat && !priority && !staticCategory && !search && !manageCategory
+        android:name="reminder.daterepeat.br.unb.cic.reminders.view.AddReminderActivity"
+        //#elif dateRepeat && !priority && manageCategory && !search && !staticCategory
+        android:name="reminder.daterepeatmanagecategory.br.unb.cic.reminders.view.AddReminderActivity"
+        //#elif dateRepeat && !priority && manageCategory && search && !staticCategory
+        android:name="reminder.daterepeatmanagecategorysearch.br.unb.cic.reminders.view.AddReminderActivity"
+        //#elif dateRepeat && priority && !manageCategory && !search && !staticCategory
+        android:name="reminder.daterepeatpriority.br.unb.cic.reminders.view.AddReminderActivity"
+        //#elif dateRepeat && priority && manageCategory && !search && !staticCategory
+        android:name="reminder.daterepeatprioritymanagecategory.br.unb.cic.reminders.view.AddReminderActivity"
+        //#elif dateRepeat && priority && manageCategory && search && !staticCategory
+        android:name="reminder.daterepeatprioritymanagecategorysearch.br.unb.cic.reminders.view.AddReminderActivity"
+        //#elif dateRepeat && priority && !staticCategory && search && !manageCategory
+        android:name="reminder.daterepeatprioritysearch.br.unb.cic.reminders.view.AddReminderActivity"
+        //#elif dateRepeat && priority && staticCategory && !search && !manageCategory
+        android:name="reminder.daterepeatprioritystaticcategory.br.unb.cic.reminders.view.AddReminderActivity"
+        //#elif dateRepeat && priority && staticCategory && search && !manageCategory
+        android:name="reminder.daterepeatprioritystaticcategorysearch.br.unb.cic.reminders.view.AddReminderActivity"
+        //#elif dateRepeat && !priority && !staticCategory && search && !manageCategory
+        android:name="reminder.daterepeatsearch.br.unb.cic.reminders.view.AddReminderActivity"
+        //#elif dateRepeat && !priority && staticCategory && !search && !manageCategory
+        android:name="reminder.daterepeatstaticcategory.br.unb.cic.reminders.view.AddReminderActivity"
+        //#elif dateRepeat && !priority && staticCategory && search && !manageCategory
+        android:name="reminder.daterepeatstaticcategorysearch.br.unb.cic.reminders.view.AddReminderActivity"
         //#endif
         android:configChanges="keyboardHidden|orientation|screenSize"
         android:label="@string/title_activity_reminder_add"
@@ -324,6 +374,31 @@
         android:name="reminder.daterangestaticcategorygooglecalendarsearch.br.unb.cic.reminders.view.EditReminderActivity"
         //#elif dateRange && !priority && staticCategory && !googleCalendar && search && !manageCategory
         android:name="reminder.daterangestaticcategorysearch.br.unb.cic.reminders.view.EditReminderActivity"
+
+        //#elif dateRepeat && !priority && !staticCategory && !search && !manageCategory
+        android:name="reminder.daterepeat.br.unb.cic.reminders.view.EditReminderActivity"
+        //#elif dateRepeat && !priority && manageCategory && !search && !staticCategory
+        android:name="reminder.daterepeatmanagecategory.br.unb.cic.reminders.view.EditReminderActivity"
+        //#elif dateRepeat && !priority && manageCategory && search && !staticCategory
+        android:name="reminder.daterepeatmanagecategorysearch.br.unb.cic.reminders.view.EditReminderActivity"
+        //#elif dateRepeat && priority && !manageCategory && !search && !staticCategory
+        android:name="reminder.daterepeatpriority.br.unb.cic.reminders.view.EditReminderActivity"
+        //#elif dateRepeat && priority && manageCategory && !search && !staticCategory
+        android:name="reminder.daterepeatprioritymanagecategory.br.unb.cic.reminders.view.EditReminderActivity"
+        //#elif dateRepeat && priority && manageCategory && search && !staticCategory
+        android:name="reminder.daterepeatprioritymanagecategorysearch.br.unb.cic.reminders.view.EditReminderActivity"
+        //#elif dateRepeat && priority && !staticCategory && search && !manageCategory
+        android:name="reminder.daterepeatprioritysearch.br.unb.cic.reminders.view.EditReminderActivity"
+        //#elif dateRepeat && priority && staticCategory && !search && !manageCategory
+        android:name="reminder.daterepeatprioritystaticcategory.br.unb.cic.reminders.view.EditReminderActivity"
+        //#elif dateRepeat && priority && staticCategory && search && !manageCategory
+        android:name="reminder.daterepeatprioritystaticcategorysearch.br.unb.cic.reminders.view.EditReminderActivity"
+        //#elif dateRepeat && !priority && !staticCategory && search && !manageCategory
+        android:name="reminder.daterepeatsearch.br.unb.cic.reminders.view.EditReminderActivity"
+        //#elif dateRepeat && !priority && staticCategory && !search && !manageCategory
+        android:name="reminder.daterepeatstaticcategory.br.unb.cic.reminders.view.EditReminderActivity"
+        //#elif dateRepeat && !priority && staticCategory && search && !manageCategory
+        android:name="reminder.daterepeatstaticcategorysearch.br.unb.cic.reminders.view.EditReminderActivity"
         //#endif
         android:configChanges="keyboardHidden|orientation|screenSize"
         android:label="@string/title_activity_reminder_edit"
@@ -427,6 +502,31 @@
         android:name="reminder.daterangestaticcategorygooglecalendarsearch.br.unb.cic.reminders.view.ExternalAddReminderActivity"
         //#elif dateRange && !priority && staticCategory && !googleCalendar && search && !manageCategory
         android:name="reminder.daterangestaticcategorysearch.br.unb.cic.reminders.view.ExternalAddReminderActivity"
+
+        //#elif dateRepeat && !priority && !staticCategory && !search && !manageCategory
+        android:name="reminder.daterepeat.br.unb.cic.reminders.view.ExternalAddReminderActivity"
+        //#elif dateRepeat && !priority && manageCategory && !search && !staticCategory
+        android:name="reminder.daterepeatmanagecategory.br.unb.cic.reminders.view.ExternalAddReminderActivity"
+        //#elif dateRepeat && !priority && manageCategory && search && !staticCategory
+        android:name="reminder.daterepeatmanagecategorysearch.br.unb.cic.reminders.view.ExternalAddReminderActivity"
+        //#elif dateRepeat && priority && !manageCategory && !search && !staticCategory
+        android:name="reminder.daterepeatpriority.br.unb.cic.reminders.view.ExternalAddReminderActivity"
+        //#elif dateRepeat && priority && manageCategory && !search && !staticCategory
+        android:name="reminder.daterepeatprioritymanagecategory.br.unb.cic.reminders.view.ExternalAddReminderActivity"
+        //#elif dateRepeat && priority && manageCategory && search && !staticCategory
+        android:name="reminder.daterepeatprioritymanagecategorysearch.br.unb.cic.reminders.view.ExternalAddReminderActivity"
+        //#elif dateRepeat && priority && !staticCategory && search && !manageCategory
+        android:name="reminder.daterepeatprioritysearch.br.unb.cic.reminders.view.ExternalAddReminderActivity"
+        //#elif dateRepeat && priority && staticCategory && !search && !manageCategory
+        android:name="reminder.daterepeatprioritystaticcategory.br.unb.cic.reminders.view.ExternalAddReminderActivity"
+        //#elif dateRepeat && priority && staticCategory && search && !manageCategory
+        android:name="reminder.daterepeatprioritystaticcategorysearch.br.unb.cic.reminders.view.ExternalAddReminderActivity"
+        //#elif dateRepeat && !priority && !staticCategory && search && !manageCategory
+        android:name="reminder.daterepeatsearch.br.unb.cic.reminders.view.ExternalAddReminderActivity"
+        //#elif dateRepeat && !priority && staticCategory && !search && !manageCategory
+        android:name="reminder.daterepeatstaticcategory.br.unb.cic.reminders.view.ExternalAddReminderActivity"
+        //#elif dateRepeat && !priority && staticCategory && search && !manageCategory
+        android:name="reminder.daterepeatstaticcategorysearch.br.unb.cic.reminders.view.ExternalAddReminderActivity"
         //#endif
         android:configChanges="keyboardHidden|orientation|screenSize"
         android:label="@string/title_activity_reminder_edit"
@@ -529,6 +629,31 @@
           <action android:name="reminder.daterangestaticcategorygooglecalendarsearch.br.unb.cic.reminders.ADD_REMINDER" />
           //#elif dateRange && !priority && staticCategory && !googleCalendar && search && !manageCategory
           <action android:name="reminder.daterangestaticcategorysearch.br.unb.cic.reminders.ADD_REMINDER" />
+
+          //#elif dateRepeat && !priority && !staticCategory && !search && !manageCategory
+          <action android:name="reminder.daterepeat.br.unb.cic.reminders.ADD_REMINDER" />
+          //#elif dateRepeat && !priority && manageCategory && !search && !staticCategory
+          <action android:name="reminder.daterepeatmanagecategory.br.unb.cic.reminders.ADD_REMINDER" />
+          //#elif dateRepeat && !priority && manageCategory && search && !staticCategory
+          <action android:name="reminder.daterepeatmanagecategorysearch.br.unb.cic.reminders.ADD_REMINDER" />
+          //#elif dateRepeat && priority && !manageCategory && !search && !staticCategory
+          <action android:name="reminder.daterepeatpriority.br.unb.cic.reminders.ADD_REMINDER" />
+          //#elif dateRepeat && priority && manageCategory && !search && !staticCategory
+          <action android:name="reminder.daterepeatprioritymanagecategory.br.unb.cic.reminders.ADD_REMINDER" />
+          //#elif dateRepeat && priority && manageCategory && search && !staticCategory
+          <action android:name="reminder.daterepeatprioritymanagecategorysearch.br.unb.cic.reminders.ADD_REMINDER" />
+          //#elif dateRepeat && priority && !staticCategory && search && !manageCategory
+          <action android:name="reminder.daterepeatprioritysearch.br.unb.cic.reminders.ADD_REMINDER" />
+          //#elif dateRepeat && priority && staticCategory && !search && !manageCategory
+          <action android:name="reminder.daterepeatprioritystaticcategory.br.unb.cic.reminders.ADD_REMINDER" />
+          //#elif dateRepeat && priority && staticCategory && search && !manageCategory
+          <action android:name="reminder.daterepeatprioritystaticcategorysearch.br.unb.cic.reminders.ADD_REMINDER" />
+          //#elif dateRepeat && !priority && !staticCategory && search && !manageCategory
+          <action android:name="reminder.daterepeatsearch.br.unb.cic.reminders.ADD_REMINDER" />
+          //#elif dateRepeat && !priority && staticCategory && !search && !manageCategory
+          <action android:name="reminder.daterepeatstaticcategory.br.unb.cic.reminders.ADD_REMINDER" />
+          //#elif dateRepeat && !priority && staticCategory && search && !manageCategory
+          <action android:name="reminder.daterepeatstaticcategorysearch.br.unb.cic.reminders.ADD_REMINDER" />
           //#endif
           <category android:name="android.intent.category.DEFAULT" />
           <data android:mimeType="text/plain" />
