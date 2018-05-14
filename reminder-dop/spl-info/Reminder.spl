@@ -1,22 +1,25 @@
 SPL Reminder {
 
 	Features = {ManageReminder, ReminderCategory, ManageCategory, StaticCategory,
-	Priority, ReminderSchedule, DateRange, FixedDate, GoogleCalendar, Search}
+	Priority, ReminderSchedule, DateRange, FixedDate, DateRepeat, GoogleCalendar, Search}
 
 	Deltas = {dManageReminder, dStaticCategory, dManageCategory, dPriority,
 	dStaticCategoryPriority, dManageCategoryPriority, dGoogleCalendar, dDateRange,
-	dSearch, dDateRangeGoogleCalendar, dDateRangeSearch}
+	dSearch, dDateRangeGoogleCalendar, dDateRangeSearch, dDateRepeat, dDateRepeatSearch}
 
 	Constraints {
 		ManageReminder & ReminderSchedule | ReminderCategory | Priority | GoogleCalendar | Search;
-		ReminderSchedule & (DateRange ^ FixedDate);
-		ReminderCategory & (ManageCategory ^ StaticCategory);		
+		ReminderSchedule & (DateRange ^ FixedDate ^ DateRepeat);
+		ReminderCategory & (ManageCategory ^ StaticCategory);	
+		DateRepeat IMPLIES ~GoogleCalendar;	
 	}
 
 	Partitions {
 		{dManageReminder} when (ManageReminder & FixedDate);
 		
 		{dManageReminder, dDateRange} when (ManageReminder & DateRange);
+		
+		{dManageReminder, dDateRepeat} when (ManageReminder & DateRepeat);
 
 		{dPriority} when (Priority);
 
@@ -35,10 +38,12 @@ SPL Reminder {
 		{dDateRangeGoogleCalendar} when (DateRange & GoogleCalendar);
 		
 		{dDateRangeSearch} when (DateRange & Search);
+		
+		{dDateRepeatSearch} when (DateRepeat & Search);
 	}
 
 	Products {
-		/* Products with Fixed Date feature */
+		/* Products with Fixed Date feature
 		FixedDate={ManageReminder,FixedDate};
 		FixedDateGoogleCalendar={ManageReminder,FixedDate,GoogleCalendar};
 		FixedDateGoogleCalendarSearch={ManageReminder,FixedDate,GoogleCalendar,Search};
@@ -62,9 +67,9 @@ SPL Reminder {
 		FixedDateStaticCategory={ManageReminder,FixedDate,StaticCategory};
 		FixedDateStaticCategoryGoogleCalendar={ManageReminder,FixedDate,StaticCategory,GoogleCalendar};
 		FixedDateStaticCategoryGoogleCalendarSearch={ManageReminder,FixedDate,StaticCategory,GoogleCalendar,Search};
-		FixedDateStaticCategorySearch={ManageReminder,FixedDate,StaticCategory,Search};
+		FixedDateStaticCategorySearch={ManageReminder,FixedDate,StaticCategory,Search}; */
 		
-		/* Products with Date Range feature */
+		/* Products with Date Range feature 
 		DateRange={ManageReminder,DateRange};
 		DateRangeGoogleCalendar={ManageReminder,DateRange,GoogleCalendar};
 		DateRangeGoogleCalendarSearch={ManageReminder,DateRange,GoogleCalendar,Search};
@@ -88,6 +93,21 @@ SPL Reminder {
 		DateRangeStaticCategory={ManageReminder,DateRange,StaticCategory};
 		DateRangeStaticCategoryGoogleCalendar={ManageReminder,DateRange,StaticCategory,GoogleCalendar};
 		DateRangeStaticCategoryGoogleCalendarSearch={ManageReminder,DateRange,StaticCategory,GoogleCalendar,Search};
-		DateRangeStaticCategorySearch={ManageReminder,DateRange,StaticCategory,Search};
+		DateRangeStaticCategorySearch={ManageReminder,DateRange,StaticCategory,Search}; */
+		
+		/* Products with Date Repeat feature */
+		DateRepeat={ManageReminder,DateRepeat};
+		DateRepeatManageCategory={ManageReminder,DateRepeat,ManageCategory};
+		DateRepeatManageCategorySearch={ManageReminder,DateRepeat,ManageCategory,Search};
+		DateRepeatPriority={ManageReminder,DateRepeat,Priority};
+		DateRepeatPriorityManageCategory={ManageReminder,DateRepeat,Priority,ManageCategory};
+		DateRepeatPriorityManageCategorySearch={ManageReminder,DateRepeat,Priority,ManageCategory,Search};
+		DateRepeatPrioritySearch={ManageReminder,DateRepeat,Priority,Search};
+		DateRepeatPriorityStaticCategory={ManageReminder,DateRepeat,Priority,StaticCategory};
+		DateRepeatPriorityStaticCategorySearch={ManageReminder,DateRepeat,Priority,StaticCategory,Search};
+		DateRepeatSearch={ManageReminder,DateRepeat,Search};
+		DateRepeatStaticCategory={ManageReminder,DateRepeat,StaticCategory};
+		DateRepeatStaticCategorySearch={ManageReminder,DateRepeat,StaticCategory,Search};
+		
 	}
 }
