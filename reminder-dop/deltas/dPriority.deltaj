@@ -373,58 +373,21 @@ delta dPriority {
 		}
 	}
 	modifies br.unb.cic.reminders.view.ReminderArrayAdapter {
-		removes getView(int position, View convertView, ViewGroup parent);
+		reoves public View getView(int position, View convertView, ViewGroup parent);
 		adds @Override public View getView(int position, View convertView, ViewGroup parent) {
-			LinearLayout reminderRow;
-			if(convertView == null) {
-				reminderRow = new LinearLayout(getContext());
-				String inflater = Context.LAYOUT_INFLATER_SERVICE;
-				LayoutInflater vi;
-				vi = ( LayoutInflater ) getContext().getSystemService(inflater);
-				vi.inflate(R.layout.reminder_row, reminderRow, true);
-			}
-			else {
-				reminderRow = ( LinearLayout ) convertView;
-			}
-			ImageView ivPriority = (ImageView) reminderRow.findViewById(R.id.ivPriority);
 			TextView tvReminder = ( TextView )
 			reminderRow.findViewById(R.id.txtReminder);
-			TextView tvDateFirst = ( TextView )
-			reminderRow.findViewById(R.id.txtDateFirst);
-			TextView tvDateSecond = ( TextView )
-			reminderRow.findViewById(R.id.txtDateSecond);
-			CheckBox tvDone = ( CheckBox ) reminderRow.findViewById(R.id.cbDone);
-			tvDone.setTag(position);
-			tvDone.setOnCheckedChangeListener(new
-				CompoundButton.OnCheckedChangeListener() {
-					public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
-					{
-						try {
-							Reminder reminder = getItem(( Integer ) buttonView.getTag());
-							reminder.setDone(isChecked);
-							Controller.instance(getContext()).updateReminder(reminder);
-						}
-						catch(DBException e) {
-							e.printStackTrace();
-						}
-					}
-				});
+			LinearLayout reminderRow = view(position, convertView, parent, tvReminder);
+			ImageView ivPriority = (ImageView) reminderRow.findViewById(R.id.ivPriority);
 			// Fill the views with its contents
 			// Fill the imageview based in the priority
 			if (getItem(position).getPriority() == 1)
 				ivPriority.setImageResource(R.drawable.important);
 			else if (getItem(position).getPriority() == 2)
 				ivPriority.setImageResource(R.drawable.urgent);
-			tvReminder.setTextColor(rowColor);
 			// if it is "Importante" or "Urgente" it might be bold!
 			if (getItem(position).getPriority() != 0)
 				tvReminder.setTypeface(null, Typeface.BOLD);
-			tvReminder.setText(getItem(position).getText());
-			tvDateFirst.setTextColor(rowColor);
-			tvDateFirst.setText(getDateFirst(position));
-			tvDateSecond.setTextColor(rowColor);
-			tvDateSecond.setText(getDateSecond(position));
-			tvDone.setChecked(getItem(position).isDone());
 			return reminderRow;
 		}
 	}

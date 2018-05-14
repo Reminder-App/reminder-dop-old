@@ -118,9 +118,9 @@ delta dDateRepeat {
             this.rowColor = Color.BLACK;
             this.rowType = MONDAY;
         }
-        removes getView(int position, View convertView, ViewGroup parent);
-        adds @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        removes view(int position, View convertView, ViewGroup parent, TextView tvReminder);
+        adds 
+        public View view(int position, View convertView, ViewGroup parent, TextView tvReminder) {
             LinearLayout reminderRow;
 
             // Inflate the row view
@@ -134,7 +134,6 @@ delta dDateRepeat {
                 reminderRow = (LinearLayout) convertView;
             }
 
-            TextView tvReminder = (TextView) reminderRow.findViewById(R.id.txtReminder);
             TextView tvHour = (TextView) reminderRow.findViewById(R.id.txtHour);
             CheckBox tvDone = (CheckBox) reminderRow.findViewById(R.id.cbDone);
             tvDone.setTag(position);

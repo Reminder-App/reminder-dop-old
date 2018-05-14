@@ -1264,6 +1264,13 @@ delta dManageReminder {
 
 			@Override
 			public View getView(int position, View convertView, ViewGroup parent) {
+				TextView tvReminder = (TextView) reminderRow.findViewById(R.id.txtReminder);
+				LinearLayout reminderRow = view(position, convertView, parent, tvReminder);
+
+				return reminderRow;
+			}
+
+			public View view(int position, View convertView, ViewGroup parent, TextView tvReminder){
 				LinearLayout reminderRow;
 
 				// Inflate the row view
@@ -1278,7 +1285,6 @@ delta dManageReminder {
 				}
 
 				// Takes the views included in the row
-				TextView tvReminder = (TextView) reminderRow.findViewById(R.id.txtReminder);
 				TextView tvDateFirst = (TextView) reminderRow.findViewById(R.id.txtDateFirst);
 				TextView tvDateSecond = (TextView) reminderRow.findViewById(R.id.txtDateSecond);
 				CheckBox tvDone = (CheckBox) reminderRow.findViewById(R.id.cbDone);
