@@ -50,6 +50,7 @@
       android:width="290dip" >
     </EditText>
 
+    //#ifndef dateRepeat
     <TextView
       //#ifdef fixedDate
       android:id="@+id/txtDate"
@@ -87,9 +88,10 @@
       //#endif
       android:minWidth="290dip" >
     </Spinner>
+    //#endif
 
     <TextView
-      //#ifdef fixedDate
+      //#if fixedDate || dateRepeat
       android:id="@+id/txtTime"
       //#elifdef dateRange
       android:id="@+id/txtTimeStart"
@@ -101,10 +103,12 @@
       android:layout_below="@id/spinnerDate"
       //#elifdef dateRange
       android:layout_below="@id/spinnerDateStart"
+      //#elifdef dateRepeat
+      android:layout_below="@id/edtDetails"
       //#endif
       android:layout_marginTop="10dip"
       android:gravity="right"
-      //#ifdef fixedDate
+      //#if fixedDate || dateRepeat
       android:text="@string/reminderHour"
       //#elifdef dateRange
       android:text="@string/reminderHourStart"
@@ -112,7 +116,7 @@
       android:width="70dip" />
 
       <Spinner
-        //#ifdef fixedDate
+        //#if fixedDate || dateRepeat
         android:id="@+id/spinnerTime"
         //#elifdef dateRange
         android:id="@+id/spinnerTimeStart"
@@ -123,9 +127,11 @@
         android:layout_below="@id/spinnerDate"
         //#elifdef dateRange
         android:layout_below="@id/spinnerDateStart"
+        //#elifdef dateRepeat
+        android:layout_below="@id/edtDetails"
         //#endif
         android:layout_marginLeft="5dip"
-        //#ifdef fixedDate
+        //#if fixedDate || dateRepeat
         android:layout_toRightOf="@id/txtTime"
         //#elifdef dateRange
         android:layout_toRightOf="@id/txtTimeStart"
@@ -177,6 +183,147 @@
           android:minWidth="290dip" >
         </Spinner>
         //#endif
+        //#ifdef dateRepeat
+        <!-- MONDAY -->
+        <TextView
+            android:id="@+id/txtMonday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/spinnerTime"
+            android:gravity="right"
+            android:text="@string/Mon"
+            android:width="75dip" >
+        </TextView>
+
+        <CheckBox
+            android:id="@+id/cbMonday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/spinnerTime"
+            android:layout_marginLeft="5dip"
+            android:layout_toRightOf="@id/txtMonday"
+            android:gravity="right" />
+
+        <!-- TUESDAY -->
+        <TextView
+            android:id="@+id/txtTuesday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/cbMonday"
+            android:gravity="right"
+            android:text="@string/Tue"
+            android:width="75dip" >
+        </TextView>
+
+        <CheckBox
+            android:id="@+id/cbTuesday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/cbMonday"
+            android:layout_marginLeft="5dip"
+            android:layout_toRightOf="@id/txtTuesday"
+            android:gravity="right" />
+
+        <!-- WEDNESDAY -->
+        <TextView
+            android:id="@+id/txtWednesday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/cbTuesday"
+            android:gravity="right"
+            android:text="@string/Wed"
+            android:width="75dip" >
+        </TextView>
+
+        <CheckBox
+            android:id="@+id/cbWednesday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/cbTuesday"
+            android:layout_marginLeft="5dip"
+            android:layout_toRightOf="@id/txtWednesday"
+            android:gravity="right" />
+
+        <!-- THURSDAY -->
+        <TextView
+            android:id="@+id/txtThursday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/cbWednesday"
+            android:gravity="right"
+            android:text="@string/Thu"
+            android:width="75dip" >
+        </TextView>
+
+        <CheckBox
+            android:id="@+id/cbThursday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/cbWednesday"
+            android:layout_marginLeft="5dip"
+            android:layout_toRightOf="@id/txtThursday"
+            android:gravity="right" />
+
+        <!-- FRIDAY -->
+        <TextView
+            android:id="@+id/txtFriday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/cbThursday"
+            android:gravity="right"
+            android:text="@string/Fri"
+            android:width="75dip" >
+        </TextView>
+
+        <CheckBox
+            android:id="@+id/cbFriday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/cbThursday"
+            android:layout_marginLeft="5dip"
+            android:layout_toRightOf="@id/txtFriday"
+            android:gravity="right" />
+
+        <!-- SATURDAY -->
+        <TextView
+            android:id="@+id/txtSaturday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/cbFriday"
+            android:gravity="right"
+            android:text="@string/Sat"
+            android:width="75dip" >
+        </TextView>
+
+        <CheckBox
+            android:id="@+id/cbSaturday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/cbFriday"
+            android:layout_marginLeft="5dip"
+            android:layout_toRightOf="@id/txtSaturday"
+            android:gravity="right" />
+
+        <!-- SUNDAY -->
+        <TextView
+            android:id="@+id/txtSunday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/cbSaturday"
+            android:gravity="right"
+            android:text="@string/Sun"
+            android:width="75dip" >
+        </TextView>
+
+        <CheckBox
+            android:id="@+id/cbSunday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/cbSaturday"
+            android:layout_marginLeft="5dip"
+            android:layout_toRightOf="@id/txtSunday"
+            android:gravity="right" />
+        //#endif
         //#ifdef priority
         <TextView
           android:id="@+id/txtPriority"
@@ -187,6 +334,8 @@
           android:layout_below="@id/spinnerTime"
           //#elifdef dateRange
           android:layout_below="@id/spinnerTimeFinal"
+          //#elifdef dateRepeat
+          android:layout_below="@id/cbSunday"
           //#endif
           android:layout_marginTop="10dip"
           android:gravity="right"
@@ -202,13 +351,15 @@
           android:layout_below="@id/spinnerTime"
           //#elifdef dateRange
           android:layout_below="@id/spinnerTimeFinal"
+          //#elifdef dateRepeat
+          android:layout_below="@id/cbSunday"
           //#endif
           android:layout_marginLeft="5dip"
           android:layout_toRightOf="@id/txtPriority"
           android:minWidth="290dip" >
         </Spinner>
         //#endif
-        //#ifdef staticCategory || manageCategory
+        //#if staticCategory || manageCategory
         <TextView
           android:id="@+id/txtCategory"
           android:layout_width="wrap_content"
@@ -218,9 +369,15 @@
           android:layout_below="@id/spinnerTime"
           //#elif (fixedDate && priority)
           android:layout_below="@id/spinnerPriorities"
+
           //#elif (dateRange) && (!priority)
           android:layout_below="@id/spinnerTimeFinal"
           //#elif (dateRange && priority)
+          android:layout_below="@id/spinnerPriorities"
+
+          //#elif (dateRepeat) && (!priority)
+          android:layout_below="@id/cbSunday"
+          //#elif (dateRepeat && priority)
           android:layout_below="@id/spinnerPriorities"
           //#endif
           android:layout_marginTop="10dip"
@@ -237,9 +394,15 @@
           android:layout_below="@id/spinnerTime"
           //#elif (fixedDate && priority)
           android:layout_below="@id/spinnerPriorities"
+
           //#elif (dateRange) && (!priority)
           android:layout_below="@id/spinnerTimeFinal"
           //#elif (dateRange && priority)
+          android:layout_below="@id/spinnerPriorities"
+
+          //#elif (dateRepeat) && (!priority)
+          android:layout_below="@id/cbSunday"
+          //#elif (dateRepeat && priority)
           android:layout_below="@id/spinnerPriorities"
           //#endif
           android:layout_marginLeft="5dip"
@@ -259,6 +422,7 @@
           android:layout_below="@id/spinnerPriorities"
           //#elif ((fixedDate && (staticCategory || manageCategory)) && (!priority)) || (fixedDate && (staticCategory || manageCategory) && priority)
           android:layout_below="@id/spinnerCategories"
+
           //#elif (dateRange) && (!priority && !staticCategory && !manageCategory)
           android:layout_below="@id/spinnerTimeFinal"
           //#elif (dateRange && priority) && (!staticCategory && !manageCategory)
@@ -281,6 +445,7 @@
           android:layout_below="@id/spinnerPriorities"
           //#elif ((fixedDate && (staticCategory || manageCategory)) && (!priority)) || (fixedDate && (staticCategory || manageCategory) && priority)
           android:layout_below="@id/spinnerCategories"
+
           //#elif (dateRange) && (!priority && !staticCategory && !manageCategory)
           android:layout_below="@id/spinnerTimeFinal"
           //#elif (dateRange && priority) && (!staticCategory && !manageCategory)
@@ -314,6 +479,7 @@
             android:layout_below="@id/spinnerCategories"
             //#elif (fixedDate && priority && (staticCategory || manageCategory) && googleCalendar)
             android:layout_below="@id/txtAddgCalendar"
+
             //#elif (dateRange) && (!priority && !staticCategory && !manageCategory && !googleCalendar)
             android:layout_below="@id/spinnerTimeFinal"
             //#elif (dateRange && googleCalendar) && (!priority && !staticCategory && !manageCategory)
@@ -330,6 +496,15 @@
             android:layout_below="@id/spinnerCategories"
             //#elif (dateRange && priority && (staticCategory || manageCategory) && googleCalendar)
             android:layout_below="@id/txtAddgCalendar"
+
+            //#elif (dateRepeat) && (!priority && !staticCategory && !manageCategory)
+            android:layout_below="@id/cbSunday"
+            //#elif (dateRepeat && (staticCategory || manageCategory)) && (!priority)
+            android:layout_below="@id/spinnerCategories"
+            //#elif (dateRepeat && priority) && (!staticCategory && !manageCategory)
+            android:layout_below="@id/spinnerPriorities"
+            //#elif (dateRepeat && priority && (staticCategory || manageCategory))
+            android:layout_below="@id/spinnerCategories"
             //#endif
             android:gravity="center_vertical" >
 
