@@ -373,7 +373,7 @@ delta dPriority {
 		}
 	}
 	modifies br.unb.cic.reminders.view.ReminderArrayAdapter {
-		reoves public View getView(int position, View convertView, ViewGroup parent);
+		removes getView(int position, View convertView, ViewGroup parent);
 		adds @Override public View getView(int position, View convertView, ViewGroup parent) {
 			TextView tvReminder = ( TextView )
 			reminderRow.findViewById(R.id.txtReminder);
