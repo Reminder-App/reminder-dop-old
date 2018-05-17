@@ -26,7 +26,6 @@ delta dDateRange {
 			return hourStart;
 		}
 		adds public void setHourStart(String hourStart) {
-			// We allow reminders to have no hour associated.
 			if (!(hourStart == null || hourStart.equals("")) && !checkFormat(hourStart, Patterns.HOUR_PATTERN)) {
 				throw new InvalidHourException(hourStart);
 			}
@@ -48,7 +47,6 @@ delta dDateRange {
 			return hourFinal;
 		}
 		adds public void setHourFinal(String hourFinal) {
-			// We allow reminders to have no hour associated.
 			if (!(hourFinal == null || hourFinal.equals("")) && !checkFormat(hourFinal, Patterns.HOUR_PATTERN)) {
 				throw new InvalidHourException(hourFinal);
 			}
@@ -200,7 +198,6 @@ delta dDateRange {
 				}
 
 				public void onNothingSelected(AdapterView<? extends Object> arg0) {
-					// Well, do nothing...
 				}
 
 			});
@@ -238,7 +235,6 @@ delta dDateRange {
 				}
 
 				public void onNothingSelected(AdapterView<? extends Object> arg0) {
-					// Well, do nothing...
 				}
 
 			});
@@ -279,7 +275,6 @@ delta dDateRange {
 				}
 
 				public void onNothingSelected(AdapterView<? extends Object> arg0) {
-					// Well, do nothing...
 				}
 			});
 
@@ -316,7 +311,6 @@ delta dDateRange {
 				}
 
 				public void onNothingSelected(AdapterView<? extends Object> arg0) {
-					// Well, do nothing...
 				}
 			});
 
@@ -402,7 +396,6 @@ delta dDateRange {
 			SpinnerAdapterGenerator<String> adapterDateGenerator = new SpinnerAdapterGenerator<String>();
 
 			List<String> items = new ArrayList<String>();
-			// TODO: Move these to XML.
 			items.add("No date");
 			items.add("+ Select");
 
@@ -417,7 +410,6 @@ delta dDateRange {
 			SpinnerAdapterGenerator<String> adapterTimeGenerator = new SpinnerAdapterGenerator<String>();
 
 			List<String> items = new ArrayList<String>();
-			// TODO: Move these to XML.
 			items.add("No time");
 			items.add("+ Select");
 
@@ -432,7 +424,6 @@ delta dDateRange {
 			SpinnerAdapterGenerator<String> adapterDateGenerator = new SpinnerAdapterGenerator<String>();
 
 			List<String> items = new ArrayList<String>();
-			// TODO: Move these to XML.
 			items.add("No date");
 			items.add("+ Select");
 
@@ -447,7 +438,6 @@ delta dDateRange {
 			SpinnerAdapterGenerator<String> adapterTimeGenerator = new SpinnerAdapterGenerator<String>();
 
 			List<String> items = new ArrayList<String>();
-			// TODO: Move these to XML.
 			items.add("No time");
 			items.add("+ Select");
 
@@ -516,14 +506,12 @@ delta dDateRange {
 			String months[] = { "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC" };
 			String week[] = { "", "SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT" };
 
-			// Today and thatDay Calendars being initialized
 			Calendar today = Calendar.getInstance();
 			GregorianCalendar thatDay = new GregorianCalendar();
-			thatDay.set(Integer.parseInt(getItem(position).getDateFinal().substring(6, 10)), // year
-					Integer.parseInt(getItem(position).getDateFinal().substring(3, 5)) - 1, // month
-					Integer.parseInt(getItem(position).getDateFinal().substring(0, 2)));// day
+			thatDay.set(Integer.parseInt(getItem(position).getDateFinal().substring(6, 10)),
+					Integer.parseInt(getItem(position).getDateFinal().substring(3, 5)) - 1, 
+					Integer.parseInt(getItem(position).getDateFinal().substring(0, 2)));
 
-			// switch based on the row type
 			switch (rowType) {
 			case LATE:
 				long diff = today.getTimeInMillis() - thatDay.getTimeInMillis();
@@ -532,11 +520,9 @@ delta dDateRange {
 						return "Yesterday";
 				else
 					return days + " days ago";
-				// break;
 
 			case TODAY:
 				return getDatesHour(position);
-			// break;
 
 			case NEXT_DAYS:
 				diff = thatDay.getTimeInMillis() - today.getTimeInMillis();
@@ -550,7 +536,6 @@ delta dDateRange {
 					return thatDay.get(Calendar.DAY_OF_MONTH) + " " + months[thatDay.get(Calendar.MONTH)];
 				}
 
-				// break;
 
 			default:
 				break;
@@ -564,17 +549,14 @@ delta dDateRange {
 			switch (rowType) {
 			case LATE:
 				return getDatesHour(position);
-			// break;
 			case TODAY:
 				return "today";
-			// break;
 			case NEXT_DAYS:
-				// Today and thatDay Calendars being initialized
 				Calendar today = Calendar.getInstance();
 				GregorianCalendar thatDay = new GregorianCalendar();
-				thatDay.set(Integer.parseInt(getItem(position).getDateFinal().substring(6, 10)), // year
-						Integer.parseInt(getItem(position).getDateFinal().substring(3, 5)) - 1, // month
-						Integer.parseInt(getItem(position).getDateFinal().substring(0, 2)));// day
+				thatDay.set(Integer.parseInt(getItem(position).getDateFinal().substring(6, 10)), 
+						Integer.parseInt(getItem(position).getDateFinal().substring(3, 5)) - 1, 
+						Integer.parseInt(getItem(position).getDateFinal().substring(0, 2)));
 
 				long diff = thatDay.getTimeInMillis() - today.getTimeInMillis();
 				long days = diff / (24*60*60*1000);
@@ -583,7 +565,6 @@ delta dDateRange {
 					return "tomorrow";
 				else
 					return getDatesHour(position);
-				// break;
 			default:
 				break;
 			}
@@ -607,8 +588,6 @@ delta dDateRange {
 		removes lvReminderNoDate;
 		removes createUI();
 		adds public void createUI() {
-			// Take the ListView view form the layout and apply the
-			// ReminderArrayAdapter to it
 			lvReminderLate = (ListView) view.findViewById(R.id.lvRemindersLate);
 			lvReminderToday = (ListView) view.findViewById(R.id.lvRemindersToday);
 			lvReminderNextDays = (ListView) view.findViewById(R.id.lvRemindersNextDays);
@@ -632,9 +611,6 @@ delta dDateRange {
 				filter = new AllRemindersFilter(getActivity());
 			adapter = new ReminderArrayAdapter(getActivity().getApplicationContext(), filter.getReminderList());
 
-			// Divide the adapter in 4 possibilities of dates(Late, Today, Next Days
-			// and No Date)
-			// and distribute it to each responsible ListView:
 			ReminderArrayAdapter adapterLate, adapterToday, adapterNextDays;
 
 			Reminder r = new Reminder();
@@ -642,7 +618,6 @@ delta dDateRange {
 			List<Reminder> remindersToday = new ArrayList<Reminder>();
 			List<Reminder> remindersNextDays = new ArrayList<Reminder>();
 
-			// Runs through the adapter and divides to the correspondent adapter
 			for (int i = 0; i < adapter.getCount(); ++i) {
 				r = adapter.getItem(i);
 				if (r.getDateFinal() != null && r.getDateStart() != null) {
@@ -672,7 +647,6 @@ delta dDateRange {
 					} else {
 						gc2.set(Integer.parseInt(yearStart), Integer.parseInt(monthStart) - 1, Integer.parseInt(dayStart));
 					}
-					// if(Integer.parseInt(day)<cal.get(Calendar.DAY_OF_MONTH))
 					if (gc.before(cal))
 						remindersLate.add(r);
 					else if (gc.after(cal) && gc2.before(cal))
@@ -682,7 +656,6 @@ delta dDateRange {
 				}
 			}
 
-			// Creates each adapter:
 			adapterLate = new ReminderArrayAdapter(getActivity().getApplicationContext(), remindersLate,
 					Color.rgb(0xED, 0x1C, 0x24), ReminderArrayAdapter.LATE);
 			adapterToday = new ReminderArrayAdapter(getActivity().getApplicationContext(), remindersToday,
@@ -690,7 +663,6 @@ delta dDateRange {
 			adapterNextDays = new ReminderArrayAdapter(getActivity().getApplicationContext(), remindersNextDays,
 					Color.rgb(0x99, 0x99, 0x99), ReminderArrayAdapter.NEXT_DAYS);
 
-			// Apply the adapters and rearrange the ListViews to its contents size:
 			lvReminderLate.setAdapter(adapterLate);
 			Utility.setListViewHeightBasedOnChildren(lvReminderLate);
 			lvReminderToday.setAdapter(adapterToday);

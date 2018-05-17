@@ -123,7 +123,6 @@ delta dDateRepeat {
         public View view(int position, View convertView, ViewGroup parent, TextView tvReminder) {
             LinearLayout reminderRow;
 
-            // Inflate the row view
             if (convertView == null) {
                 reminderRow = new LinearLayout(getContext());
                 String inflater = Context.LAYOUT_INFLATER_SERVICE;
@@ -183,8 +182,6 @@ delta dDateRepeat {
         }
         removes createUI();
         adds public void createUI() {
-            // Take the ListView view form the layout and apply the
-            // ReminderArrayAdapter to it
             lvMonday = (ListView) view.findViewById(R.id.lvMonday);
             lvTuesday = (ListView) view.findViewById(R.id.lvTuesday);
             lvWednesday = (ListView) view.findViewById(R.id.lvWednesday);
@@ -207,9 +204,6 @@ delta dDateRepeat {
                 filter = new AllRemindersFilter(getActivity());
             adapter = new ReminderArrayAdapter(getActivity().getApplicationContext(), filter.getReminderList());
 
-            // Divide the adapter in 4 possibilities of dates(Late, Today, Next Days
-            // and No Date)
-            // and distribute it to each responsible ListView:
             ReminderArrayAdapter adapterMonday, adapterTuesday, adapterWednesday, adapterThursday, adapterFriday, adapterSaturday, adapterSunday;
 
             Reminder r = new Reminder();
@@ -221,7 +215,6 @@ delta dDateRepeat {
             List<Reminder> remindersSaturday = new ArrayList<Reminder>();
             List<Reminder> remindersSunday = new ArrayList<Reminder>();
 
-            // Runs through the adapter and divides to the correspondent adapter
             for (int i = 0; i < adapter.getCount(); ++i) {
                 r = adapter.getItem(i);
                 if (r.isMonday())
@@ -240,7 +233,6 @@ delta dDateRepeat {
                     remindersSunday.add(r);
             }
 
-            // Creates each adapter:
             adapterMonday = new ReminderArrayAdapter(getActivity().getApplicationContext(), remindersModay,
 				Color.rgb(0xED, 0x1C, 0x24), ReminderArrayAdapter.MONDAY);
             adapterTuesday = new ReminderArrayAdapter(getActivity().getApplicationContext(), remindersTuesday,
@@ -256,7 +248,6 @@ delta dDateRepeat {
             adapterSunday = new ReminderArrayAdapter(getActivity().getApplicationContext(), remindersSunday,
                     Color.rgb(0xED, 0x1C, 0x24), ReminderArrayAdapter.SUNDAY);
 
-            // Apply the adapters and rearrange the ListViews to its contents size:
             lvMonday.setAdapter(adapterMonday);
             Utility.setListViewHeightBasedOnChildren(lvMonday);
             lvTuesday.setAdapter(adapterTuesday);
@@ -477,8 +468,6 @@ delta dDateRepeat {
             cbSaturday = (CheckBox) findViewById(R.id.cbSaturday);
             cbSunday = (CheckBox) findViewById(R.id.cbSunday);
             spinnerTime = getSpinnerTime();
-            // edtDate = (EditText) findViewById(R.id.selectedDate);
-            // edtTime = (EditText) findViewById(R.id.selectedTime);
 
         }   
         removes initializeListeners();

@@ -8,7 +8,6 @@ delta dPriority {
 		adds @Override public View getView(int position, View convertView, ViewGroup parent) {
 			LinearLayout filterRow;
 
-			// Inflate the view
 			if (convertView == null) {
 				filterRow = new LinearLayout(getContext());
 				String inflater = Context.LAYOUT_INFLATER_SERVICE;
@@ -68,11 +67,6 @@ delta dPriority {
 		import br.unb.cic.reminders.model.Priority;
 		import br.unb.cic.reminders2.R;
 
-		/**
-		* A list fragment that holds the list of categories.
-		*
-		* @author rbonifacio
-		*/
 		public class FilterListFragment extends Fragment implements OnItemClickListener {
 
 		private static final String CURRENT_FILTER_KEY = "current_filter";
@@ -86,7 +80,6 @@ delta dPriority {
 		private FiltersListChangeListener filtersChangeListener;
 
 		private int currentFilterId;
-		// Used to list the filters.
 		private ReminderFilterArrayAdapter adapter;
 		private View view;
 
@@ -97,34 +90,15 @@ delta dPriority {
 		public void onActivityCreated(Bundle savedInstanceState) {
 			super.onActivityCreated(savedInstanceState);
 
-			// this way, we could retrieve the selected filter
-			// after an orientation change.
 			if (savedInstanceState != null) {
 				currentFilterIndex = savedInstanceState.getInt(CURRENT_FILTER_KEY);
 			}
-
-			/*
-			 * categoryList = new ArrayList<String>();
-			 *
-			 * setListAdapter(new ArrayAdapter<String>(getActivity(),
-			 * R.layout.list_content));
-			 *
-			 * ListView thisListView = getListView();
-			 *
-			 * categoriesArrayAdapter = (ArrayAdapter<String>)getListAdapter();
-			 *
-			 * thisListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-			 * thisListView.setBackgroundColor(Color.WHITE);
-			 */
 
 			currentFilterId = 0;
 
 			adapter = null;
 		}
 
-		/**
-		 * Creates the view.
-		 */
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			view = inflater.inflate(R.layout.categories_list_fragment, container, false);
@@ -132,55 +106,11 @@ delta dPriority {
 			return view;
 		}
 
-		/**
-		 * When resumed updates the filters list view.
-		 */
 		@Override
 		public void onResume() {
 			super.onResume();
 			updateListView();
 		}
-
-		/**
-		 * Creates the context menu where shows the Edit and Delete options.
-		 */
-		// @Override
-		/*public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-			super.onCreateContextMenu(menu, v, menuInfo);
-
-			menu.setHeaderTitle(R.string.context_menu_category_title);
-
-			MenuInflater inflater = getActivity().getMenuInflater();
-			inflater.inflate(R.menu.category_list_fragment_context_menu, menu);
-		}*/
-
-		/**
-		 * Provides each action based in the chosen option(Edit or Delete).
-		 **/
-		/*
-		 * @Override public boolean onContextItemSelected(MenuItem item) {
-		 *
-		 * if(item.getGroupId() == R.id.context_menu_category) { //Used to verify if
-		 * it is the right context_menu //Gets the item position and gets the
-		 * category in that position: AdapterView.AdapterContextMenuInfo info =
-		 * (AdapterView.AdapterContextMenuInfo)item.getMenuInfo(); Category category
-		 * = (Category)lvCategory.getAdapter().getItem(info.position);
-		 *
-		 * //Switch between the options in the context menu(Edit and Delete) switch
-		 * (item.getItemId()) { case R.id.edit: //Passes the current reminder to be
-		 * edited via Intent and Invokes edit method DialogFragment newFragment =
-		 * new EditCategoryDialogFragment(category);
-		 * newFragment.show(getFragmentManager(),
-		 * ""+R.string.dialog_editcategory_title); updateListView(); return true;
-		 * case R.id.delete: //Invokes delete method try {//Deletes from the bank;
-		 * Controller
-		 * .instance(getActivity().getApplicationContext()).deleteCategory(
-		 * category); } catch (DBException e) { Log.e(TAG,e.getMessage()); }
-		 * updateListView(); return true; default: return
-		 * super.onContextItemSelected(item); }
-		 *
-		 * } return super.onContextItemSelected(item); }
-		 */
 
 		public void addListener(FiltersListChangeListener filter) {
 			if (listeners == null)
@@ -194,34 +124,13 @@ delta dPriority {
 			}
 		}
 
-		/**
-		 * Creates the User Interface.
-		 **/
 		private void createUI() {
-
-			// Button to add a Category:
-			// btAddCategory = (Button) view.findViewById(R.id.btAddCategory);
-			// btAddCategory.setOnClickListener(new OnClickListener() {
-			//
-			// public void onClick(View v) {// Creates one DialogFragment to add a
-			// // category
-			// DialogFragment newFragment = new AddCategoryDialogFragment();
-			// newFragment.show(getFragmentManager(), ""
-			// + R.string.dialog_addcategory_title);
-			// }
-			// });
-
-			// List of filters
 			lvFilters = (ListView) view.findViewById(R.id.listCategories);
 			lvFilters.setOnItemClickListener(this);
 			registerForContextMenu(lvFilters);
 			updateListView();
 		}
 
-		/**
-		 * Used to populate the list view with the current filters and other
-		 * filters.
-		 */
 		private void updateListView() {
 
 			List<ReminderFilter> filters = listOfFilters();
@@ -234,11 +143,9 @@ delta dPriority {
 		private List<ReminderFilter> listOfFilters() {
 				List<ReminderFilter> filters = new ArrayList<ReminderFilter>();
 
-				// Add the allReminders to the filter list
 				AllRemindersFilter allRemindersFilter = new AllRemindersFilter(getActivity());
 				filters.add(allRemindersFilter);
 
-				// Add the priorities to the filter list
 				PriorityFilter highPriorityFilter = new PriorityFilter(Priority.HIGH, getActivity());
 				filters.add(highPriorityFilter);
 				PriorityFilter normalPriorityFilter = new PriorityFilter(Priority.NORMAL, getActivity());
@@ -255,7 +162,6 @@ delta dPriority {
 		}
 
 		public void onNothingSelected(AdapterView<? extends Object> arg0) {
-			// TODO Auto-generated method stub
 
 		}
 
@@ -379,13 +285,10 @@ delta dPriority {
 			reminderRow.findViewById(R.id.txtReminder);
 			LinearLayout reminderRow = view(position, convertView, parent, tvReminder);
 			ImageView ivPriority = (ImageView) reminderRow.findViewById(R.id.ivPriority);
-			// Fill the views with its contents
-			// Fill the imageview based in the priority
 			if (getItem(position).getPriority() == 1)
 				ivPriority.setImageResource(R.drawable.important);
 			else if (getItem(position).getPriority() == 2)
 				ivPriority.setImageResource(R.drawable.urgent);
-			// if it is "Importante" or "Urgente" it might be bold!
 			if (getItem(position).getPriority() != 0)
 				tvReminder.setTypeface(null, Typeface.BOLD);
 			return reminderRow;
@@ -417,7 +320,6 @@ delta dPriority {
 				}
 
 				public void onNothingSelected(AdapterView<? extends Object> parent) {
-					// well... do nothing
 				}
 			});
 		}
@@ -456,7 +358,6 @@ delta dPriority {
 				}
 
 				public void onNothingSelected(AdapterView<? extends Object> parent) {
-					// well... do nothing
 				}
 			});
 		}

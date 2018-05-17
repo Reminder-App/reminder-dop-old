@@ -36,25 +36,16 @@ delta dManageCategory {
 
 			@Override
 			public Dialog onCreateDialog(Bundle savedInstanceState) {
-			// Use the Builder class for convenient dialog construction
 				AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-				// Add one title to the dialog
 				builder.setTitle(R.string.dialog_addcategory_title);
-				// Get the layout inflater
 				LayoutInflater inflater = getActivity().getLayoutInflater();
 
-				// Inflate and set the layout for the dialog
-				// Pass null as the parent view because its going in the dialog layout
 				final View view = inflater.inflate(R.layout.category_dialog, null);
 				builder.setView(view)
-				// Add action buttons
 .setPositiveButton(R.string.dialog_addcategory_add, new
 					DialogInterface.OnClickListener() {
 						@SuppressWarnings("unchecked")
 						public void onClick(DialogInterface dialog, int which) {
-						// Add the category informed in the edit text
-						// Gets the EditText, then its content and creates an
-						// category with its content
 							EditText edtCategoryName = ( EditText )
 							view.findViewById(R.id.dialog_category);
 
@@ -71,7 +62,6 @@ delta dManageCategory {
 							Category category = new Category();
 							try {
 								category.setName(edtCategoryName.getText().toString());
-								// Controller.instance(getActivity()).addCategory(category);
 								if(spinner != null) {
 									ArrayAdapter<Category> adapter = ( ArrayAdapter<Category> )
 									spinner.getAdapter();
@@ -84,29 +74,18 @@ delta dManageCategory {
 								}
 							}
 							catch(InvalidTextException e) {
-								Log.e("CategoryDialogFragment", e.getMessage()); // TODO:Handle
-								// it
-								// properly.
+								Log.e("CategoryDialogFragment", e.getMessage()); 
 								e.printStackTrace();
 								Toast.makeText(getActivity().getApplicationContext(),
 									"Categoria inválida.", Toast.LENGTH_SHORT).show();
-									// } catch (DBException e) {
-								// Log.e("CategoryDialogFragment", e.getMessage());
-								// // TODO:Handle it properly.
-								// e.printStackTrace();
-								// }
 
 							}
 							catch(Exception e) {
-								Log.e("CategoryDialogFragment", e.getMessage()); // TODO:
-								// Handle
-								// it
-								// properly.
+								Log.e("CategoryDialogFragment", e.getMessage());
 								e.printStackTrace();
 							}
 						}
 					})
-					// Cancel the dialog
 .setNegativeButton(R.string.dialog_category_cancel, new
 					DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog, int id) {
@@ -118,17 +97,9 @@ delta dManageCategory {
 				return builder.create();
 			}
 
-			/**
-			 * Recreates the preview activity to update the categories list.
-			 */
 			@Override
 			public void onDestroy() {
 				super.onDestroy();
-				// getActivity().recreate();
-				// Intent intent = new Intent(getActivity().getApplicationContext(),
-				// ReminderMainActivity.class);
-				// startActivity(intent);
-				// getActivity().finish();
 
 			}
 		}
@@ -177,7 +148,6 @@ delta dManageCategory {
 				}
 			}
 			catch(DBException e) {
-			// TODO: we need to define what to do in these situations.
 				throw e;
 			}
 		}
@@ -186,7 +156,6 @@ delta dManageCategory {
 				DBFactory.factory(context).createCategoryDAO().saveCategory(category);
 			}
 			catch(DBException e) {
-			// TODO: we need to define what to do in these situations.
 				throw e;
 			}
 		}
@@ -195,7 +164,6 @@ delta dManageCategory {
 				DBFactory.factory(context).createCategoryDAO().updateCategory(category);
 			}
 			catch(DBException e) {
-			// TODO: we need to define what to do in these situations.
 				throw e;
 			}
 		}
@@ -204,7 +172,6 @@ delta dManageCategory {
 				DBFactory.factory(context).createCategoryDAO().deleteCategory(category);
 			}
 			catch(DBException e) {
-			// TODO: we need to define what to do in these situations.
 				throw e;
 			}
 		}
@@ -237,8 +204,6 @@ delta dManageCategory {
 		}
 		adds public void updateCategory(Category category) throws DBException {
 			try {
-			// db.delete(DBConstants.CATEGORY_TABLE,
-			// DBConstants.CATEGORY_PK_COLUMN + "=" + category.getId(), null);
 				try {
 					persist(category);
 				}
@@ -288,7 +253,6 @@ delta dManageCategory {
 				}
 			}
 			catch(Exception e) {
-			// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
@@ -296,7 +260,6 @@ delta dManageCategory {
 				Controller.instance(getApplicationContext()).addReminder(reminder);
 			}
 			catch(DBException e) {
-			// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -323,11 +286,9 @@ delta dManageCategory {
 				Controller.instance(getApplicationContext()).addReminder(reminder);
 			}
 			catch(DBException e) {
-			// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			catch(Exception e) {
-			// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -366,7 +327,6 @@ delta dManageCategory {
 
 		public class EditCategoryDialogFragment extends DialogFragment {
 
-		// The category that is being edited
 			Category category;
 
 			public static EditCategoryDialogFragment newInstance(Category category) {
@@ -381,30 +341,20 @@ delta dManageCategory {
 
 			@Override
 			public Dialog onCreateDialog(Bundle savedInstanceState) {
-			// Use the Builder class for convenient dialog construction
 				AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-				// Add one title to the dialog
 				builder.setTitle(R.string.dialog_editcategory_title);
-				// Get the layout inflater
 				LayoutInflater inflater = getActivity().getLayoutInflater();
 
-				// Inflate and set the layout for the dialog
-				// Pass null as the parent view because its going in the dialog layout
 				final View view = inflater.inflate(R.layout.category_dialog, null);
 
-				// Initiates the editText with the preview category information:
 				EditText edtCategoryName = ( EditText )
 				view.findViewById(R.id.dialog_category);
 				edtCategoryName.setText(category.getName());
 
 				builder.setView(view)
-				// Add action buttons
 .setPositiveButton(R.string.dialog_editcategory_save, new
 					DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog, int which) {
-						// Add the category informed in the edit text
-						// Gets the EditText, then its content and updates the
-						// category with its content
 							EditText edtCategoryName = ( EditText )
 							view.findViewById(R.id.dialog_category);
 							try {
@@ -412,29 +362,21 @@ delta dManageCategory {
 								Controller.instance(getActivity()).updateCategory(category);
 							}
 							catch(InvalidTextException e) {
-								Log.e("CategoryDialogFragment", e.getMessage()); // TODO:Handle
-								// it
-								// properly.
+								Log.e("CategoryDialogFragment", e.getMessage()); 
 								e.printStackTrace();
 								Toast.makeText(getActivity().getApplicationContext(),
 									"Categoria inválida.", Toast.LENGTH_SHORT).show();
 							}
 							catch(DBException e) {
-								Log.e("CategoryDialogFragment", e.getMessage()); // TODO:Handle
-								// it
-								// properly.
+								Log.e("CategoryDialogFragment", e.getMessage()); 
 								e.printStackTrace();
 							}
 							catch(Exception e) {
-								Log.e("CategoryDialogFragment", e.getMessage()); // TODO:
-								// Handle
-								// it
-								// properly.
+								Log.e("CategoryDialogFragment", e.getMessage()); 
 								e.printStackTrace();
 							}
 						}
 					})
-					// Cancel the dialog
 .setNegativeButton(R.string.dialog_category_cancel, new
 					DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog, int id) {
@@ -445,9 +387,6 @@ delta dManageCategory {
 				return builder.create();
 			}
 
-			/**
-			 * Recreates the preview activity to update the categories list.
-			 */
 			@Override
 			public void onDestroy() {
 				super.onDestroy();
@@ -478,16 +417,13 @@ delta dManageCategory {
 		adds @Override
 		public boolean onContextItemSelected(MenuItem item) {
 			if(item.getGroupId() == R.id.context_menu_category) {
-			//Used to verify it it is the right context_menu //Gets the item position and gets the category in that position:
 				AdapterView.AdapterContextMenuInfo info = (
 				AdapterView.AdapterContextMenuInfo ) item.getMenuInfo();
 				Category category =(( CategoryFilter )
 					lvFilters.getAdapter().getItem(info.position)).getCategory();
 
-					//Switch between the options in the context menu(Edit and Delete)
 				switch(item.getItemId()) {
 					case R.id.edit :
-					//Passes the current reminder to be edited via Intent and Invokes edit method
 					DialogFragment newFragment =
 					EditCategoryDialogFragment.newInstance(category);
 					newFragment.show(getFragmentManager(), "" +
@@ -495,9 +431,7 @@ delta dManageCategory {
 					updateListView();
 					return true;
 					case R.id.delete :
-					//Invokes delete method
 					try {
-					//Deletes from the bank;
 						Controller.instance(getActivity().getApplicationContext()).deleteReminderByCategory(category);
 						Controller.instance(getActivity().getApplicationContext()).deleteCategory(category);
 						updateListView();
@@ -521,7 +455,6 @@ delta dManageCategory {
 			spinnerCategory.setOnItemSelectedListener(new OnItemSelectedListener() {
 					public void onItemSelected(AdapterView<? extends Object> parent, View
 						view, int pos, long id) {
-						// if user clicked "+ Category"
 						if(pos ==(spinnerCategory.getCount() - 1)) {
 							DialogFragment newFragment =
 							AddCategoryDialogFragment.newInstance(spinnerCategory);
@@ -531,7 +464,6 @@ delta dManageCategory {
 					}
 
 					public void onNothingSelected(AdapterView<? extends Object> parent) {
-					// well... do nothing
 
 					}
 				});
@@ -548,7 +480,6 @@ delta dManageCategory {
 			ArrayAdapter<Category> adapter =
 			adapterCategoryGenerator.getSpinnerAdapter(categories, this);
 
-			// We do not persist this! It's just to show the add category dialog.
 			Category temp = new Category();
 			temp.setName("+ Category");
 			adapter.add(temp);
@@ -570,7 +501,6 @@ delta dManageCategory {
 		public View getView(int position, View convertView, ViewGroup parent) {
 			LinearLayout filterRow;
 
-			// Inflate the view
 			if(convertView == null) {
 				filterRow = new LinearLayout(getContext());
 				String inflater = Context.LAYOUT_INFLATER_SERVICE;
@@ -605,14 +535,12 @@ delta dManageCategory {
 					reminder.setCategory(findCategory(reminder.getCategory()));
 				}
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 	
 			try {
 				Controller.instance(getApplicationContext()).updateReminder(reminder);
 			} catch (DBException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			

@@ -10,7 +10,6 @@ delta dSearch {
 	    adds @Override public boolean onOptionsItemSelected(MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.menu_addReminder:
-                    // app icon in action bar clicked; go home
                     Intent reminderIntent = new Intent(getApplicationContext(), AddReminderActivity.class);
                     startActivity(reminderIntent);
                     return true;
@@ -28,7 +27,6 @@ delta dSearch {
     
             new AlertDialog.Builder(this)
                     .setTitle("Search for a reminder")
-                    //.setMessage("Paste in the link of an image to moustachify!")
                     .setView(etBusca)
                     .setCancelable(true)
                     .setPositiveButton("Search", new DialogInterface.OnClickListener() {
@@ -81,10 +79,6 @@ delta dSearch {
             adapter = new ReminderArrayAdapter(getActivity().getApplicationContext(), reminders);
     
     
-    
-            // Divide the adapter in 4 possibilities of dates(Late, Today, Next Days
-            // and No Date)
-            // and distribute it to each responsible ListView:
             ReminderArrayAdapter adapterLate, adapterToday, adapterNextDays, adapterNoDate;
     
             Reminder r = new Reminder();
@@ -93,7 +87,6 @@ delta dSearch {
             List<Reminder> remindersNextDays = new ArrayList<Reminder>();
             List<Reminder> remindersNoDate = new ArrayList<Reminder>();
     
-            // Runs through the adapter and divides to the correspondent adapter
             for (int i = 0; i < adapter.getCount(); ++i) {
                 r = adapter.getItem(i);
                 if (r.getDate() != null) {
@@ -111,7 +104,6 @@ delta dSearch {
                     } else {
                         gc.set(Integer.parseInt(year), Integer.parseInt(month) - 1, Integer.parseInt(day));
                     }
-                    // if(Integer.parseInt(day)<cal.get(Calendar.DAY_OF_MONTH))
                     if (gc.before(cal))
                         remindersLate.add(r);
                     else if ((cal.get(Calendar.YEAR) == gc.get(Calendar.YEAR))
@@ -125,7 +117,6 @@ delta dSearch {
                 }
             }
     
-            // Creates each adapter:
             adapterLate = new ReminderArrayAdapter(getActivity().getApplicationContext(), remindersLate,
                     Color.rgb(0xED, 0x1C, 0x24), ReminderArrayAdapter.LATE);
             adapterToday = new ReminderArrayAdapter(getActivity().getApplicationContext(), remindersToday,
@@ -135,7 +126,6 @@ delta dSearch {
             adapterNoDate = new ReminderArrayAdapter(getActivity().getApplicationContext(), remindersNoDate,
                     Color.rgb(0x00, 0x00, 0x00), ReminderArrayAdapter.NO_DATE);
     
-            // Apply the adapters and rearrange the ListViews to its contents size:
             lvReminderLate.setAdapter(adapterLate);
             Utility.setListViewHeightBasedOnChildren(lvReminderLate);
             lvReminderToday.setAdapter(adapterToday);

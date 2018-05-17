@@ -21,14 +21,11 @@ delta dGoogleCalendar {
 			private String userAccount, timeZone, accountName, displayName;
 			private long calendarID;
 			private boolean haveMainCalendar;
-			/*
-			 * Columns of the Calendar's table
-			 */
-			private static final String[] COLUMNS = new String[] { Calendars._ID, // 0
-					Calendars.ACCOUNT_NAME, // 1
-					Calendars.CALENDAR_DISPLAY_NAME, // 2
-					Calendars.OWNER_ACCOUNT, // 3
-					Calendars.CALENDAR_TIME_ZONE // 4
+			private static final String[] COLUMNS = new String[] { Calendars._ID, 
+					Calendars.ACCOUNT_NAME, 
+					Calendars.CALENDAR_DISPLAY_NAME, 
+					Calendars.OWNER_ACCOUNT,
+					Calendars.CALENDAR_TIME_ZONE 
 			};
 
 			private void initializer() {
@@ -40,10 +37,6 @@ delta dGoogleCalendar {
 				calendarID = -1;
 			}
 
-			/*
-			 * Search for the first gmail account TODO:support multiple google accounts
-			 * on the same device
-			 */
 			private void getUserMainCalendar(Context ctx) {
 				ContentResolver cr = ctx.getContentResolver();
 				initializer();
@@ -62,11 +55,6 @@ delta dGoogleCalendar {
 				}
 			}
 
-			/*
-			 * Receive a reminder and a context. With those two, create a new entry in
-			 * google calendar TODO: correctly input the start time of the event TODO:
-			 * We need a better title for the reminder
-			 */
 			public void addEventCalendar(Reminder reminder, Context ctx) throws CalendarNotFoundException, ParseException {
 				long startMilliseconds, endmilliseconds;
 				Calendar calEnd;
@@ -104,7 +92,6 @@ delta dGoogleCalendar {
 		adds private CalendarEventCreator creator;
 		adds private CheckBox cbCalendar;
 
-		// implementar cbCalendar!!!
 
 		modifies initializeFields() {
 			cbCalendar = (CheckBox) findViewById(R.id.cbCalendar);

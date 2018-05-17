@@ -19,15 +19,7 @@ delta dManageReminder {
 			private FragmentTransaction ft;
 			private ReminderListFragment listReminderFragment;
 
-			/**
-			 * Called when the activity is first created.
-			 *
-			 * @param savedInstanceState
-			 *            If the activity is being re-initialized after previously being
-			 *            shut down then this Bundle contains the data it most recently
-			 *            supplied in onSaveInstanceState(Bundle). <b>Note: Otherwise it
-			 *            is null.</b>
-			 */
+			
 			@Override
 			protected void onCreate(Bundle savedInstanceState) {
 				super.onCreate(savedInstanceState);
@@ -35,9 +27,6 @@ delta dManageReminder {
 				createUI();
 			}
 
-			/**
-			 * Creates the User Interface. Creates the ListFragment.
-			 */
 			private void createUI() {
 				ft = getFragmentManager().beginTransaction();
 				listReminderFragment = new ReminderListFragment();
@@ -45,9 +34,6 @@ delta dManageReminder {
 				ft.commit();
 			}
 
-			/**
-			 * Create Options Menu. Creates the buttons on the ActionBar.
-			 */
 			@Override
 			public boolean onCreateOptionsMenu(Menu menu) {
 				MenuInflater inflater = getMenuInflater();
@@ -55,14 +41,10 @@ delta dManageReminder {
 				return true;
 			}
 
-			/**
-			 * Switch between the buttons in the options menu.
-			 */
 			@Override
 			public boolean onOptionsItemSelected(MenuItem item) {
 				switch (item.getItemId()) {
 				case R.id.menu_addReminder:
-					// app icon in action bar clicked; go home
 					Intent reminderIntent = new Intent(getApplicationContext(), AddReminderActivity.class);
 					startActivity(reminderIntent);
 					return true;
@@ -82,10 +64,6 @@ delta dManageReminder {
 		import java.util.Locale;
 
 		public class DateFormat {
-			/*
-			 * Static function that formats the database readable date into an object of
-			 * type Date
-			 */
 			public static Date dateFormater(String dateUnformated) throws ParseException {
 				SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.getDefault());
 				return sdf.parse(dateUnformated);
@@ -100,27 +78,14 @@ delta dManageReminder {
 		import android.text.TextWatcher;
 		import android.widget.EditText;
 
-		/**
-		 * Class used to mask the input of editTexts. For example for date:YYYY-MM-DD.
-		 */
 		public abstract class Mask {
 
-			/**
-			 * Unmasks a String;
-			 */
 			public static String unmask(String str) {
 				return str.replaceAll("[:]", "").replaceAll("[.]", "").replaceAll("[-]", "").replaceAll("[/]", "")
 						.replaceAll("[(]", "").replaceAll("[)]", "");
 			}
 
-			/**
-			 * Inserts one mask to an EditText.
-			 *
-			 * @param String
-			 *            mask, EditText editText, the string is used to pass the format
-			 *            of the mask through a string, for example "##-##-####" and the
-			 *            EditText that will be watched and changed based in the mask.
-			 */
+			
 			public static TextWatcher insert(final String mask, final EditText ediTxt) {
 				return new TextWatcher() {
 					boolean isUpdating;
@@ -166,8 +131,6 @@ delta dManageReminder {
 
 		public class Patterns {
 
-			// TODO: Fix TEXT_PATTERN to allow "." in the middle of text and not only in
-			// the end of the sentence.
 			public static final String TEXT_PATTERN = "[^.!?\\s][^.!?]*(?:[.!?](?![']?\\s|$)[^.!?]*)*[.!?]?[']?(?=\\s|$)";
 
 			public static final String DATE_PATTERN = "(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\\d\\d";
@@ -183,23 +146,12 @@ delta dManageReminder {
 		import android.widget.ListAdapter;
 		import android.widget.ListView;
 
-		/**
-		 * Created to give some general use functions.
-		 *
-		 * @author rafaelsimao
-		 */
 
 		public class Utility {
 
-			/**
-			 * Rearrange the size of a ListView to its content size.
-			 *
-			 * @param listView
-			 */
 			public static void setListViewHeightBasedOnChildren(ListView listView) {
 				ListAdapter listAdapter = listView.getAdapter();
 				if (listAdapter == null) {
-					// pre-condition
 					return;
 				}
 
@@ -245,11 +197,6 @@ delta dManageReminder {
 		import java.lang.annotation.RetentionPolicy;
 		import java.lang.annotation.Target;
 
-		/**
-		 * An interface to declare entity classes.
-		 *
-		 * @author rbonifacio
-		 */
 		@Retention(RetentionPolicy.RUNTIME)
 		@Target(ElementType.TYPE)
 		public @interface Entity {
@@ -264,11 +211,6 @@ delta dManageReminder {
 		import java.lang.annotation.RetentionPolicy;
 		import java.lang.annotation.Target;
 
-		/**
-		 * Used to map an attribute as a foreign key in the database.
-		 *
-		 * @author rbonifacio
-		 */
 		@Retention(RetentionPolicy.RUNTIME)
 		@Target(ElementType.FIELD)
 		public @interface ForeignKey {
@@ -278,11 +220,6 @@ delta dManageReminder {
 	adds {
 		package br.unb.cic.framework.persistence;
 
-		/**
-		 * Use to signal database exceptions.
-		 *
-		 * @author rbonifacio.
-		 */
 		public class DBException extends Exception {
 
 			private static final long serialVersionUID = 1L;
@@ -292,22 +229,10 @@ delta dManageReminder {
 	adds {
 		package br.unb.cic.framework.persistence;
 
-		/**
-		 * Exception that is thrown when an invalid Entity is identified by the
-		 * persistence framework.
-		 *
-		 * @author rbonifacio
-		 */
 		public class DBInvalidEntityException extends Exception {
 
 			private static final long serialVersionUID = 1L;
 
-			/**
-			 * Constructor
-			 *
-			 * @param e
-			 *            the invalid entity
-			 */
 			public DBInvalidEntityException(Object e) {
 				super(e.getClass().getCanonicalName() + "is not a valid entity according to the persistence framework.");
 			}
@@ -316,12 +241,6 @@ delta dManageReminder {
 	adds {
 		package br.unb.cic.framework.persistence;
 
-		/**
-		 * An enumeration with the valid types that can be mapped into the database
-		 * columns.
-		 *
-		 * @author rbonifacio
-		 */
 		public enum DBTypes {
 			INT, LONG, TEXT;
 		}
@@ -344,11 +263,6 @@ delta dManageReminder {
 		import br.unb.cic.framework.persistence.annotations.ForeignKey;
 		import br.unb.cic.reminders.model.db.DBHelper;
 
-		/**
-		 * A generic DAO class.
-		 *
-		 * @author rbonifacio
-		 */
 		public class GenericDAO<T> {
 
 			protected Context context;
@@ -358,25 +272,11 @@ delta dManageReminder {
 			private static final String DATABASE_NAME = "ReminderDB";
 			private static final int DATABASE_VERSION = 7;
 
-			/**
-			 * Constructor of GenericDAO.
-			 *
-			 * @param c
-			 *            the application context.
-			 */
 			public GenericDAO(Context c) {
 				context = c;
 				dbHelper = new DBHelper(context, DATABASE_NAME, null, DATABASE_VERSION);
 			}
 
-			/**
-			 * Save a specific entity into the database.
-			 *
-			 * @param entity
-			 *            that will be stored.
-			 *
-			 * @return the Id of the entity in the database.
-			 */
 			protected Long persist(T entity) throws DBInvalidEntityException, DBException {
 				try {
 					db = dbHelper.getWritableDatabase();
@@ -403,11 +303,6 @@ delta dManageReminder {
 
 							Object value = m.invoke(entity, args);
 
-							// in the cases where the field is a related object, mapped
-							// by a FK, a specific
-							// behavior is necessary, since we need to get the value of
-							// the
-							// primary key of the related object.
 							if (f.isAnnotationPresent(ForeignKey.class)) {
 								String fk = f.getAnnotation(ForeignKey.class).mappedBy();
 								methodName = getMethod(fk);
@@ -521,23 +416,10 @@ delta dManageReminder {
 	adds {
 		package br.unb.cic.reminders.model;
 
-		/**
-		 * Exception that might be used to report situations where an invalid format was
-		 * detected. For instance, we throw an instance of this exception when we try to
-		 * set a date as a string that does not match the expected date format.
-		 *
-		 * @author rbonifacio
-		 */
 		public class InvalidFormatException extends RuntimeException {
 
 			private static final long serialVersionUID = 2850584940310533216L;
 
-			/**
-			 * InvalidFormatException constructor.
-			 *
-			 * @param o
-			 *            An object that does not match an expected format.
-			 */
 			public InvalidFormatException(Object o) {
 				super(o + " is in the wrong format");
 			}
@@ -612,61 +494,16 @@ delta dManageReminder {
 		import br.unb.cic.framework.persistence.DBException;
 		import br.unb.cic.reminders.model.Reminder;
 
-		/**
-		 * A Data Access Object for handling the persistence mechanism of reminders.
-		 *
-		 * @author rbonifacio
-		 */
 		public interface ReminderDAO {
 
-			/**
-			 * Save a reminder in the reminders database.
-			 *
-			 * @param reminder
-			 *            - the reminder that will be stored.
-			 * @return the reminder id.
-			 */
 			public Long saveReminder(Reminder r) throws DBException;
 
-			/**
-			 * List all reminders of the Reminders database.
-			 *
-			 * @return list of registered reminders.
-			 * @throws DBException
-			 *             if anything goes wrong with the database query
-			 */
 			public List<Reminder> listReminders() throws DBException;
 
-			/**
-			 * Update a given reminder from the database
-			 *
-			 * @param reminder
-			 *            the reminder that will be updated from the database. it
-			 *            contains all fields with the new values and the id of the
-			 *            reminder to be updated.
-			 * @throws DBException
-			 *             if anything goes wrong with the database query
-			 */
 			public void updateReminder(Reminder reminder) throws DBException;
 
-			/**
-			 * Delete a given reminder from the database
-			 *
-			 * @param reminder
-			 *            the reminder that will be dropped from the database
-			 * @throws DBException
-			 *             if anything goes wrong with the database query
-			 */
 			public void deleteReminder(Reminder reminder) throws DBException;
 
-			/**
-			 * Persist a given reminder from the database
-			 *
-			 * @param reminder
-			 *            the reminder that will be persisted in the database
-			 * @throws DBException
-			 *             if anything goes wrong with the database query
-			 */
 			public void persistReminder(Reminder reminder) throws DBException;
 		}
 	}
@@ -685,21 +522,12 @@ delta dManageReminder {
 		import br.unb.cic.framework.persistence.GenericDAO;
 		import br.unb.cic.reminders.model.Reminder;
 
-		/**
-		 * A default implementation of the @see {@link ReminderDAO} interface.
-		 *
-		 * @author positivo
-		 *
-		 */
 		public class DefaultReminderDAO extends GenericDAO<Reminder> implements ReminderDAO {
 
 			public DefaultReminderDAO(Context c) {
 				super(c);
 			}
 
-			/**
-			 * @see ReminderDAO#saveReminder(Reminder reminder)
-			 */
 			public Long saveReminder(Reminder r) throws DBException {
 				try {
 					return persist(r);
@@ -708,9 +536,6 @@ delta dManageReminder {
 				}
 			}
 
-			/**
-			 * @see ReminderDAO#saveReminder(Reminder)
-			 */
 			public List<Reminder> listReminders() throws DBException {
 				try {
 					db = dbHelper.getReadableDatabase();
@@ -725,16 +550,6 @@ delta dManageReminder {
 				}
 			}
 
-			/**
-			 * TODO: I guess that this note does not make sense any more.
-			 *
-			 * @see ReminderDAO#updateReminder(Reminder reminder) As it was asked on
-			 *      iceScrum, the update use the persist method after removing the given
-			 *      reminder. If this was what was asked then it is done, otherwise the
-			 *      persist method can be upgraded to support the update functionality
-			 *      (if it isn't already implemented. I guess it isn't) later by
-			 *      refactoring it.
-			 */
 			public void updateReminder(Reminder reminder) throws DBException {
 				try {
 					persist(reminder);
@@ -746,9 +561,6 @@ delta dManageReminder {
 				}
 			}
 
-			/**
-			 * @see ReminderDAO#deleteReminder(Reminder reminder)
-			 */
 			public void deleteReminder(Reminder reminder) throws DBException {
 				try {
 					db = dbHelper.getWritableDatabase();
@@ -772,9 +584,6 @@ delta dManageReminder {
 				}
 			}
 
-			/*
-			 * Transform a cursor into a Reminder
-			 */
 			private Reminder cursorToReminder(Cursor cursor) throws DBException {
 				Long pk = cursor.getLong(cursor.getColumnIndex(DBConstants.REMINDER_PK_COLUMN));
 				String text = cursor.getString(cursor.getColumnIndex(DBConstants.REMINDER_TEXT_COLUMN));
@@ -799,9 +608,6 @@ delta dManageReminder {
 				return reminder;
 			}
 
-			/*
-			 * Iterates over a cursor in order to build a list of reminders.
-			 */
 			private List<Reminder> remindersFromCursor(Cursor cursor) throws DBException {
 				List<Reminder> reminders = new ArrayList<Reminder>();
 
@@ -847,12 +653,10 @@ delta dManageReminder {
 
 			@Override
 			public Dialog onCreateDialog(Bundle savedInstanceState) {
-				// Use the current date as the default date in the picker
 				int year = date.get(Calendar.YEAR);
 				int month = date.get(Calendar.MONTH);
 				int day = date.get(Calendar.DAY_OF_MONTH);
 
-				// Create a new instance of DatePickerDialog and return it
 				return new DatePickerDialog(getActivity(), this, year, month, day);
 			}
 
@@ -864,11 +668,6 @@ delta dManageReminder {
 
 				ArrayAdapter<String> adapter = (ArrayAdapter<String>) spinnerDate.getAdapter();
 
-				/* DO NOT DELETE THESE COMMENTS! (Alexandre) */
-				/* Maybe we need it next Sprint. */
-				// if(adapter.getCount() > 2) {
-				// adapter.remove(adapter.getItem(2));
-				// }
 				adapter.add(sDate);
 				spinnerDate.setSelection(2);
 
@@ -888,11 +687,6 @@ delta dManageReminder {
 
 		import br.unb.cic.reminders.controller.ReminderFilter;
 
-		/**
-		 * Interface used to receive a category list changing notificaton.
-		 *
-		 * @author rbonifacio
-		 */
 		public interface FiltersListChangeListener {
 
 			public void onSelectedFilterChanged(ReminderFilter filter);
@@ -940,19 +734,10 @@ delta dManageReminder {
 		import br.unb.cic.reminders.model.Reminder;
 		import br.unb.cic.reminders2.R;
 
-		/**
-		 * Activity used to add reminders (local or from external applications).
-		 *
-		 * If an external app wants to add a reminder, it must pass all the
-		 * corresponding reminders' attributes to the intent which starts this activity.
-		 * They are: "text", "category", "date" and "hour".
-		 */
 
 		public class ReminderAddActivity extends Activity {
 
-			private EditText edtReminder, edtDetails, edtDate, edtHour; // ,
-																		// edtPriority,
-																		// edtCategory;
+			private EditText edtReminder, edtDetails, edtDate, edtHour; 
 
 			private Button btnSave, btnCancel;
 
@@ -964,23 +749,13 @@ delta dManageReminder {
 				super.onCreate(savedInstanceState);
 				setContentView(R.layout.reminder_add);
 
-				/*
-				 * Checks whether reminder's data exists in the intent, that is, verify
-				 * if this activity was started by an external app.
-				 */
 				Reminder existingReminder = getReminderFromIntent();
 
 				if (existingReminder == null) {
-					// Used to get the informations of the Reminder being edited:
 					editingReminder = true;
 					Reminder editReminder = getExistingReminder();
 					initialize(editReminder);
 				} else {
-					/*
-					 * Initialize the view, optionally filling the fields with content
-					 * sent by another app. This is the ONLY purpose of the object
-					 * "existingReminder".
-					 */
 					editingReminder = false;
 					initialize(existingReminder);
 				}
@@ -1005,7 +780,7 @@ delta dManageReminder {
 							} else {
 								Controller.instance(getApplicationContext()).addReminder(reminder);
 							}
-							finish(); // Kills the activity
+							finish();
 						} catch (Exception e) {
 							Log.e("ReminderAddActivity", e.getMessage());
 							e.printStackTrace();
@@ -1023,16 +798,8 @@ delta dManageReminder {
 				});
 			}
 
-			/*
-			 * Just an auxiliary method to create reminders from the UI data.
-			 *
-			 * @return a new reminder.
-			 */
 			private Reminder createReminder() {
-				/*
-				 * Since view's not passing all the information yet (priority ...), we
-				 * instantiate a reminder initially passing only "text" and "date".
-				 */
+				
 				Reminder reminder = new Reminder();
 				try {
 					reminder = createReminderAux();
@@ -1055,11 +822,6 @@ delta dManageReminder {
 				return reminder;
 			}
 
-			/*
-			 * This method is used to verify if it is an editing call and if it is gets
-			 * the information of the reminder wanted to be updated and its id that will
-			 * be used latter to update the Reminder from the Intent.
-			 */
 			private Reminder getExistingReminder() {
 				Reminder reminder = null;
 
@@ -1067,7 +829,6 @@ delta dManageReminder {
 				String action = intent.getAction();
 				String type = intent.getType();
 
-				// Gets the information from the intent if it is an edit call
 				if (Intent.ACTION_SEND.equals(action) && "text/plain".equals(type)) {
 					previewReminderId = intent.getLongExtra("id", 0);
 					String text = intent.getStringExtra("text");
@@ -1089,59 +850,23 @@ delta dManageReminder {
 				return reminder;
 			}
 
-			/*
-			 * Integration code (with another apps).
-			 *
-			 * The code below handles incoming requests from external apps which wants
-			 * to add a reminder (eg.: Users may want to add a reminder for a TV program
-			 * which they're seeing in GuiaTV app).
-			 */
 			private Reminder getReminderFromIntent() {
 				Intent intent = getIntent();
 				String action = intent.getAction();
 				String type = intent.getType();
 
-				/*
-				 * External apps which wants to share content with "Lembretes" must
-				 * follow the protocol described by the "if" below, that is, they must
-				 * instantiate an intent and set:
-				 *
-				 * ACTION as "br.com.positivo.reminders.ADD_REMINDER"; MIME as
-				 * "text/plain";
-				 *
-				 * and pass the contents through "putExtra" in the following fields:
-				 * "text", "details", "category", "date", "hour" and "priority".
-				 */
 				if ("br.com.positivo.reminders.ADD_REMINDER".equals(action) && "text/plain".equals(type)) {
 					try {
 						String text = intent.getStringExtra("text");
 						String details = intent.getStringExtra("details");
 
-						/*
-						 * Code below just validates the data supplied, since validation
-						 * code is implemented in setter methods.
-						 */
-
-						// Would we better apply validations here?
 						Reminder reminder = createReminderIntent(intent);
 						reminder.setText(text);
 						reminder.setDetails(details);
-						/*
-						 * Upon here, all validations were applied and we have a valid
-						 * reminder. So, we return it.
-						 */
 						return reminder;
 					} catch (InvalidFormatException e) {
-						/*
-						 * What would be better? 1. Return user to the calling activity.
-						 * 2. Show an empty reminder's add form (implemented now).
-						 */
 					}
 				}
-				/*
-				 * If this activity was not started from an external app or a valid
-				 * reminder could not be derived, we simply return "null".
-				 */
 				return null;
 			}
 
@@ -1154,25 +879,11 @@ delta dManageReminder {
 				return reminder;
 			}
 
-			/*
-			 * Initializes the view.
-			 *
-			 * This method just initializes the form for adding a new reminder. If a
-			 * reminder object is supplied, "initialize" pre-populates the form with
-			 * that content.
-			 */
 			private void initialize(Reminder reminder) {
 				try {
 					edtReminder = (EditText) findViewById(R.id.edtReminder);
 
 					edtDetails = (EditText) findViewById(R.id.edtDetails);
-
-					// edtDate = (EditText) findViewById(R.id.edtDate);
-					// edtDate.addTextChangedListener(Mask.insert("##-##-####",
-					// edtDate));
-
-					// edtHour = (EditText) findViewById(R.id.edtHour);
-					// edtHour.addTextChangedListener(Mask.insert("##:##", edtHour));
 
 					if (reminder != null) {
 						updateFieldsFromReminder(reminder);
@@ -1181,8 +892,6 @@ delta dManageReminder {
 					btnSave = (Button) findViewById(R.id.btnSave);
 					btnCancel = (Button) findViewById(R.id.btnCancel);
 				} catch (Exception e) {
-					// TODO: we really need to think about our exception handling
-					// approach
 					e.printStackTrace();
 				}
 			}
@@ -1224,28 +933,14 @@ delta dManageReminder {
 
 			private Context context;
 
-			private int rowColor = Color.BLACK;// Used to change the row texts color
-
-			// rowType: used to identify which type of row it might produce, once
-			// that each one has a different way to show the Date, for example.
+			private int rowColor = Color.BLACK;
 			private int rowType = NEXT_DAYS;
 
-			// Type constants:
 			public static final int LATE = 0;
 			public static final int TODAY = 1;
 			public static final int NEXT_DAYS = 2;
 			public static final int NO_DATE = 3;
 
-			/**
-			 * This class is used in the parts of the view which is needed to list the
-			 * reminders, as an adapter to these components listing the Reminders items.
-			 *
-			 * @param context
-			 *            , and the reminders objects(List<Reminders>).
-			 *
-			 * @author positivo
-			 *
-			 */
 			public ReminderArrayAdapter(Context context, List<Reminder> objects) {
 				super(context, R.layout.reminder_row, objects);
 				this.context = context;
@@ -1273,7 +968,6 @@ delta dManageReminder {
 			public View view(int position, View convertView, ViewGroup parent, TextView tvReminder){
 				LinearLayout reminderRow;
 
-				// Inflate the row view
 				if (convertView == null) {
 					reminderRow = new LinearLayout(getContext());
 					String inflater = Context.LAYOUT_INFLATER_SERVICE;
@@ -1284,7 +978,6 @@ delta dManageReminder {
 					reminderRow = (LinearLayout) convertView;
 				}
 
-				// Takes the views included in the row
 				TextView tvDateFirst = (TextView) reminderRow.findViewById(R.id.txtDateFirst);
 				TextView tvDateSecond = (TextView) reminderRow.findViewById(R.id.txtDateSecond);
 				CheckBox tvDone = (CheckBox) reminderRow.findViewById(R.id.cbDone);
@@ -1304,7 +997,6 @@ delta dManageReminder {
 				tvReminder.setTextColor(rowColor);
 				tvReminder.setText(getItem(position).getText());
 
-				// Based in the type of the row includes the specified date
 				tvDateFirst.setTextColor(rowColor);
 				tvDateFirst.setText(getDateFirst(position));
 				tvDateSecond.setTextColor(rowColor);
@@ -1315,13 +1007,6 @@ delta dManageReminder {
 				return reminderRow;
 			}
 
-			/**
-			 * Used to get the DateFirst based in the rowType and proximity to the
-			 * current date.
-			 *
-			 * @param position
-			 * @return
-			 */
 			private String getDateFirst(int position) {
 
 				if (getItem(position).getDate() == null) {
@@ -1331,14 +1016,12 @@ delta dManageReminder {
 				String months[] = { "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC" };
 				String week[] = { "", "SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT" };
 
-				// Today and thatDay Calendars being initialized
 				Calendar today = Calendar.getInstance();
 				GregorianCalendar thatDay = new GregorianCalendar();
-				thatDay.set(Integer.parseInt(getItem(position).getDate().substring(6, 10)), // year
-						Integer.parseInt(getItem(position).getDate().substring(3, 5)) - 1, // month
-						Integer.parseInt(getItem(position).getDate().substring(0, 2)));// day
+				thatDay.set(Integer.parseInt(getItem(position).getDate().substring(6, 10)),
+						Integer.parseInt(getItem(position).getDate().substring(3, 5)) - 1, 
+						Integer.parseInt(getItem(position).getDate().substring(0, 2)));
 
-				// switch based on the row type
 				switch (rowType) {
 				case LATE:
 					long diff = today.getTimeInMillis() - thatDay.getTimeInMillis();
@@ -1347,11 +1030,9 @@ delta dManageReminder {
 						return "Yesterday";
 					else
 						return days + " days ago";
-					// break;
 
 				case TODAY:
 					return getDatesHour(position);
-				// break;
 
 				case NEXT_DAYS:
 					diff = thatDay.getTimeInMillis() - today.getTimeInMillis();
@@ -1365,7 +1046,6 @@ delta dManageReminder {
 						return thatDay.get(Calendar.DAY_OF_MONTH) + " " + months[thatDay.get(Calendar.MONTH)];
 					}
 
-					// break;
 
 				default:
 					break;
@@ -1375,28 +1055,19 @@ delta dManageReminder {
 
 			}
 
-			/**
-			 * Used to get the DateSecond based in the rowType
-			 *
-			 * @param position
-			 * @return
-			 */
 			private String getDateSecond(int position) {
 
 				switch (rowType) {
 				case LATE:
 					return getDatesHour(position);
-				// break;
 				case TODAY:
 					return "today";
-				// break;
 				case NEXT_DAYS:
-					// Today and thatDay Calendars being initialized
 					Calendar today = Calendar.getInstance();
 					GregorianCalendar thatDay = new GregorianCalendar();
-					thatDay.set(Integer.parseInt(getItem(position).getDate().substring(6, 10)), // year
-							Integer.parseInt(getItem(position).getDate().substring(3, 5)) - 1, // month
-							Integer.parseInt(getItem(position).getDate().substring(0, 2)));// day
+					thatDay.set(Integer.parseInt(getItem(position).getDate().substring(6, 10)), 
+							Integer.parseInt(getItem(position).getDate().substring(3, 5)) - 1,
+							Integer.parseInt(getItem(position).getDate().substring(0, 2)));
 
 					long diff = thatDay.getTimeInMillis() - today.getTimeInMillis();
 					long days = diff / (24*60*60*1000);
@@ -1405,7 +1076,6 @@ delta dManageReminder {
 						return "tomorrow";
 					else
 						return getDatesHour(position);
-					// break;
 				default:
 					break;
 				}
@@ -1413,12 +1083,6 @@ delta dManageReminder {
 				return getItem(position).getHour();
 			}
 
-			/**
-			 * Gets the hour in the DateFirst/DateSecond format
-			 *
-			 * @param position
-			 * @return
-			 */
 			private String getDatesHour(int position) {
 
 				if (getItem(position).getHour() == null) {
@@ -1431,38 +1095,17 @@ delta dManageReminder {
 					return getItem(position).getHour().substring(0, 2) + "h";
 			}
 
-			/**
-			 * Get rowColor
-			 *
-			 * @return
-			 */
 			public int getRowColor() {
 				return rowColor;
 			}
-
-			/**
-			 * Set rowColor
-			 *
-			 * @param rowColor
-			 */
 			public void setRowColor(int rowColor) {
 				this.rowColor = rowColor;
 			}
 
-			/**
-			 * Get rowType
-			 *
-			 * @return
-			 */
 			public int getRowType() {
 				return rowType;
 			}
 
-			/**
-			 * Set rowType
-			 *
-			 * @param rowType
-			 */
 			public void setRowType(int rowType) {
 				this.rowType = rowType;
 			}
@@ -1486,13 +1129,6 @@ delta dManageReminder {
 
 		public class ReminderFilterArrayAdapter extends ArrayAdapter<ReminderFilter> {
 
-			/**
-			 * This class is used in the parts of the view which is needed to list the
-			 * filters, as an adapter to these components listing the ReminderFilter
-			 * items.
-			 *
-			 * @author positivo
-			 */
 
 			public ReminderFilterArrayAdapter(Context context, List<ReminderFilter> objects) {
 				super(context, R.layout.reminder_row, objects);
@@ -1502,7 +1138,6 @@ delta dManageReminder {
 			public View getView(int position, View convertView, ViewGroup parent) {
 				LinearLayout filterRow;
 
-				// Inflate the view
 				if (convertView == null) {
 					filterRow = new LinearLayout(getContext());
 					String inflater = Context.LAYOUT_INFLATER_SERVICE;
@@ -1557,21 +1192,10 @@ delta dManageReminder {
 			private ListView lvReminderLate, lvReminderToday, lvReminderNextDays, lvReminderNoDate;
 			private ReminderArrayAdapter adapter;
 
-			// Used to keep the adapter of the listview that called the context menu:
 			private ReminderArrayAdapter contextMenuAdapter;
 
-			// Used to reference the interface views to the code in the createUI():
 			private View view;
 
-			/**
-			 * Called when the activity is first created by the activity.
-			 *
-			 * @param savedInstanceState
-			 *            If the activity is being re-initialized after previously being
-			 *            shut down then this Bundle contains the data it most recently
-			 *            supplied in onSaveInstanceState(Bundle). <b>Note: Otherwise it
-			 *            is null.</b>
-			 */
 			@Override
 			public View onCreateView(android.view.LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 				super.onCreate(savedInstanceState);
@@ -1581,23 +1205,15 @@ delta dManageReminder {
 				return view;
 			}
 
-			/**
-			 * onResume method used to update the activity.
-			 */
 			@Override
 			public void onResume() {
 				super.onResume();
 				updateListView(null);
 			}
 
-			/**
-			 * Creates the context menu where shows the Edit and Delete options.
-			 */
-			// @Override
 			public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
 				super.onCreateContextMenu(menu, v, menuInfo);
 
-				// Save the adapter which created this context menu:
 				ListView view = (ListView) v;
 				contextMenuAdapter = (ReminderArrayAdapter) view.getAdapter();
 
@@ -1607,24 +1223,14 @@ delta dManageReminder {
 				inflater.inflate(R.menu.reminder_list_fragment_context_menu, menu);
 			}
 
-			/**
-			 * Provides each action based in the chosen option(Edit or Delete).
-			 */
 			@Override
 			public boolean onContextItemSelected(MenuItem item) {
-				if (item.getGroupId() == R.id.context_menu_reminder) { // Used to verify
-					// if it is the right context_menu
-
-					// Gets the item position and gets the reminder in that position:
+				if (item.getGroupId() == R.id.context_menu_reminder) { 
 					AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 					Reminder reminder = (Reminder) contextMenuAdapter.getItem(info.position);
 
-					// Switch between the options in the context menu(Edit, Delete and
-					// Share)
 					switch (item.getItemId()) {
 					case R.id.edit:
-						// Passes the current reminder to be edited via Intent and
-						// Invokes edit method
 						Intent editIntent = editIntent(reminder);
 						editIntent.putExtra("id", reminder.getId());
 						editIntent.putExtra("text", reminder.getText());
@@ -1633,8 +1239,7 @@ delta dManageReminder {
 						updateListView(null);
 						return true;
 					case R.id.delete:
-						// Invokes delete method
-						try {// Deletes from the bank;
+						try {
 							Controller.instance(getActivity().getApplicationContext()).deleteReminder(reminder);
 						} catch (DBException e) {
 							Log.e(TAG, e.getMessage());
@@ -1655,13 +1260,7 @@ delta dManageReminder {
 				editIntent.putExtra("hour", reminder.getHour());
 				return editIntent;
 			}
-
-			/**
-			 * Creates the User Interface.
-			 **/
 			public void createUI() {
-				// Take the ListView view form the layout and apply the
-				// ReminderArrayAdapter to it
 				lvReminderLate = (ListView) view.findViewById(R.id.lvRemindersLate);
 				lvReminderToday = (ListView) view.findViewById(R.id.lvRemindersToday);
 				lvReminderNextDays = (ListView) view.findViewById(R.id.lvRemindersNextDays);
@@ -1673,17 +1272,10 @@ delta dManageReminder {
 				registerForContextMenu(lvReminderNoDate);
 			}
 
-			/**
-			 * Updates the ListView with the current reminders.
-			 */
 			public void updateListView(ReminderFilter filter) {
 				if (filter == null)
 					filter = new AllRemindersFilter(getActivity());
 				adapter = new ReminderArrayAdapter(getActivity().getApplicationContext(), filter.getReminderList());
-
-				// Divide the adapter in 4 possibilities of dates(Late, Today, Next Days
-				// and No Date)
-				// and distribute it to each responsible ListView:
 				ReminderArrayAdapter adapterLate, adapterToday, adapterNextDays, adapterNoDate;
 
 				Reminder r = new Reminder();
@@ -1692,7 +1284,6 @@ delta dManageReminder {
 				List<Reminder> remindersNextDays = new ArrayList<Reminder>();
 				List<Reminder> remindersNoDate = new ArrayList<Reminder>();
 
-				// Runs through the adapter and divides to the correspondent adapter
 				for (int i = 0; i < adapter.getCount(); ++i) {
 					r = adapter.getItem(i);
 					if (r.getDate() != null) {
@@ -1710,7 +1301,6 @@ delta dManageReminder {
 						} else {
 							gc.set(Integer.parseInt(year), Integer.parseInt(month) - 1, Integer.parseInt(day));
 						}
-						// if(Integer.parseInt(day)<cal.get(Calendar.DAY_OF_MONTH))
 						if (gc.before(cal))
 							remindersLate.add(r);
 						else if ((cal.get(Calendar.YEAR) == gc.get(Calendar.YEAR))
@@ -1724,7 +1314,6 @@ delta dManageReminder {
 					}
 				}
 
-				// Creates each adapter:
 				adapterLate = new ReminderArrayAdapter(getActivity().getApplicationContext(), remindersLate,
 						Color.rgb(0xED, 0x1C, 0x24), ReminderArrayAdapter.LATE);
 				adapterToday = new ReminderArrayAdapter(getActivity().getApplicationContext(), remindersToday,
@@ -1733,8 +1322,6 @@ delta dManageReminder {
 						Color.rgb(0x99, 0x99, 0x99), ReminderArrayAdapter.NEXT_DAYS);
 				adapterNoDate = new ReminderArrayAdapter(getActivity().getApplicationContext(), remindersNoDate,
 						Color.rgb(0x00, 0x00, 0x00), ReminderArrayAdapter.NO_DATE);
-
-				// Apply the adapters and rearrange the ListViews to its contents size:
 				lvReminderLate.setAdapter(adapterLate);
 				Utility.setListViewHeightBasedOnChildren(lvReminderLate);
 				lvReminderToday.setAdapter(adapterToday);
@@ -1763,7 +1350,6 @@ delta dManageReminder {
 
 			public ArrayAdapter<T> getSpinnerAdapter(Iterable<T> items, Context context) {
 
-				// create an empty adapter
 				ArrayAdapter<T> adapter = new ArrayAdapter<T>(context.getApplicationContext(), R.layout.spinner_item);
 				adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
 
@@ -1809,11 +1395,9 @@ delta dManageReminder {
 
 			@Override
 			public Dialog onCreateDialog(Bundle savedInstanceState) {
-				// Use the current date as the default date in the picker
 				int hour = time.get(Calendar.HOUR_OF_DAY);
 				int minute = time.get(Calendar.MINUTE);
 
-				// Create a new instance of DatePickerDialog and return it
 				return new TimePickerDialog(getActivity(), this, hour, minute, true);
 			}
 
@@ -1900,14 +1484,11 @@ delta dManageReminder {
 				List<Reminder> allReminders = null;
 
 				try {
-					// Get all reminders
 					allReminders = Controller.instance(context).listReminders();
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 
-				// Filter the reminders
 				for (Reminder r : allReminders) {
 					if (selectReminder(r)) {
 						reminders.add(r);
@@ -1933,11 +1514,6 @@ delta dManageReminder {
 		import br.unb.cic.framework.persistence.annotations.ForeignKey;
 		import br.unb.cic.reminders.view.InvalidHourException;
 
-		/**
-		 * This class provides basic representation of a reminder.
-		 *
-		 * @author rbonifacio
-		 */
 		@Entity(table = "REMINDER")
 		public class Reminder {
 
@@ -1951,10 +1527,10 @@ delta dManageReminder {
 			private String details;
 
 			@Column(column = "DATE", type = DBTypes.TEXT)
-			private String date; // it must be in the YYYY-MM-DD format
+			private String date; 
 
 			@Column(column = "HOUR", type = DBTypes.TEXT)
-			private String hour; // it must be in the HH:mm format
+			private String hour; 
 
 			@Column(column = "DONE", type = DBTypes.INT)
 			private boolean done;
@@ -1991,7 +1567,6 @@ delta dManageReminder {
 			}
 
 			public void setDetails(String details) {
-				// Details are optional.
 				if (details == null || details.trim().equals("")) {
 					this.details = null;
 				} else {
@@ -2004,7 +1579,6 @@ delta dManageReminder {
 			}
 
 			public void setDate(String date) {
-				// We allow reminders to have no date associated.
 				if (!(date == null || date.equals("")) && !checkFormat(date, Patterns.DATE_PATTERN)) {
 					throw new InvalidDateException(date);
 				}
@@ -2016,7 +1590,6 @@ delta dManageReminder {
 			}
 
 			public void setHour(String hour) {
-				// We allow reminders to have no hour associated.
 				if (!(hour == null || hour.equals("")) && !checkFormat(hour, Patterns.HOUR_PATTERN)) {
 					throw new InvalidHourException(hour);
 				}
@@ -2041,7 +1614,6 @@ delta dManageReminder {
 				this.done = done;
 			}
 
-			/* DB getter & setter */
 			public int getDone() {
 				return done ? 1 : 0;
 			}
@@ -2084,11 +1656,6 @@ delta dManageReminder {
 
 		import android.content.Context;
 
-		/**
-		 * An abstract factory class to instantiate DAOs.
-		 *
-		 * @author rbonifacio
-		 */
 		public abstract class DBFactory {
 			protected Context context;
 
@@ -2096,21 +1663,10 @@ delta dManageReminder {
 				return new DefaultDBFactory(context);
 			}
 
-			/**
-			 * DBFactory constructor
-			 *
-			 * @param context
-			 *            the application context.
-			 */
 			public DBFactory(Context context) {
 				this.context = context;
 			}
 
-			/**
-			 * Returns an instance of ReminderDAO.
-			 *
-			 * @return an instance of ReminderDAO
-			 */
 			public abstract ReminderDAO createReminderDAO();
 		}
 	}
@@ -2119,11 +1675,6 @@ delta dManageReminder {
 
 		import android.content.Context;
 
-		/**
-		 * A default implementation of the abstract class DBFactory.
-		 *
-		 * @author rbonifacio
-		 */
 		public class DefaultDBFactory extends DBFactory {
 
 			public DefaultDBFactory(Context context) {
@@ -2151,11 +1702,6 @@ delta dManageReminder {
 		import br.unb.cic.reminders.model.db.DefaultDBFactory;
 		import br.unb.cic.reminders.model.db.ReminderDAO;
 
-		/**
-		 * A content provider for the Reminders database.
-		 *
-		 * @author rbonifacio
-		 */
 		public class ReminderContentProvider extends ContentProvider {
 
 			private static final int REMINDERS = 10;
@@ -2181,8 +1727,6 @@ delta dManageReminder {
 
 			private ReminderDAO rdao;
 
-			// this is only relevant in the cases where we want to expose
-			// access to more than one database table.
 			private static final UriMatcher sURIMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
 			static {
@@ -2220,32 +1764,20 @@ delta dManageReminder {
 
 			@Override
 			public Cursor query(Uri arg0, String[] arg1, String arg2, String[] arg3, String arg4) {
-				// TODO Auto-generated method stub
 				return null;
 			}
 
 			@Override
-			/**
-			 * An external application could not delete an existing reminder.
-			 */
 			public int delete(Uri arg0, String arg1, String[] arg2) {
 				throw new SecurityException(SECURITY_EXCEPTION);
 			}
 
 			@Override
-			/**
-			 * It is not clear the rationale for this method. Most examples just return
-			 * null.
-			 */
 			public String getType(Uri arg0) {
 				return null;
 			}
 
 			@Override
-			/**
-			 * Ok, we also do not allow an externa application to update an existing
-			 * reminder. A RuntimeException is thrown.
-			 */
 			public int update(Uri arg0, ContentValues arg1, String arg2, String[] arg3) {
 				throw new SecurityException(SECURITY_EXCEPTION);
 			}
@@ -2272,7 +1804,6 @@ delta dManageReminder {
 				try {
 					Controller.instance(getApplicationContext()).addReminder(reminder);
 				} catch (DBException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -2296,7 +1827,6 @@ delta dManageReminder {
 			protected void initializeValues() {
 				Intent intent = getIntent();
 
-				// Gets the information from the intent if it is an edit call
 				long reminderId = intent.getLongExtra("id", 0);
 				String text = intent.getStringExtra("text");
 				String details = intent.getStringExtra("details");
@@ -2325,7 +1855,6 @@ delta dManageReminder {
 				try {
 					Controller.instance(getApplicationContext()).updateReminder(reminder);
 				} catch (DBException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -2363,7 +1892,6 @@ delta dManageReminder {
 				String action = intent.getAction();
 				String type = intent.getType();
 
-				// Gets the information from the intent if it is an edit call
 				if (action.equals("br.com.positivo.reminders.ADD_REMINDER") && "text/plain".equals(type)) {
 					String text = intent.getStringExtra("text");
 					String details = intent.getStringExtra("details");
@@ -2410,10 +1938,8 @@ delta dManageReminder {
 				try {
 					Controller.instance(getApplicationContext()).addReminder(reminder);
 				} catch (DBException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -2460,8 +1986,6 @@ delta dManageReminder {
 			protected Spinner spinnerDate, spinnerTime;
 			private Button btnSave, btnCancel;
 
-			// TODO: Rename XML from reminder_add to reminder_form.
-
 			@Override
 			protected void onCreate(Bundle savedInstanceState) {
 				super.onCreate(savedInstanceState);
@@ -2481,8 +2005,6 @@ delta dManageReminder {
 				edtDetails = (EditText) findViewById(R.id.edtDetails);
 				spinnerDate = getSpinnerDate();
 				spinnerTime = getSpinnerTime();
-				// edtDate = (EditText) findViewById(R.id.selectedDate);
-				// edtTime = (EditText) findViewById(R.id.selectedTime);
 
 			}
 
@@ -2521,39 +2043,6 @@ delta dManageReminder {
 
 			private void addListenerToSpinnerDate() {
 
-				/* DO NOT DELETE THESE COMMENTS! (Alexandre) */
-				/*
-				 * They work and give a different behaviour to the spinner! Maybe we
-				 * need this for the next sprint, depending on the Designer.
-				 */
-				// spinnerDate.setOnTouchListener(new View.OnTouchListener() {
-				// @SuppressWarnings("unchecked")
-				// public boolean onTouch(View v, MotionEvent event) {
-				// if(spinnerDate.getAdapter().getCount() > 2) {
-				// spinnerDate.setTag((String) spinnerDate.getSelectedItem());
-				// ArrayAdapter<String> adapter = (ArrayAdapter<String>)
-				// spinnerDate.getAdapter();
-				// adapter.remove((String) spinnerDate.getSelectedItem());
-				// spinnerDate.setSelection(0);
-				// }
-				// return false;
-				// }
-				// });
-				//
-				// spinnerDate.setOnKeyListener(new View.OnKeyListener() {
-				// @SuppressWarnings("unchecked")
-				// public boolean onKey(View v, int keyCode, KeyEvent event) {
-				// if(spinnerDate.getAdapter().getCount() > 2) {
-				// spinnerDate.setTag((String) spinnerDate.getSelectedItem());
-				// ArrayAdapter<String> adapter = (ArrayAdapter<String>)
-				// spinnerDate.getAdapter();
-				// adapter.remove((String) spinnerDate.getSelectedItem());
-				// spinnerDate.setSelection(0);
-				// }
-				// return false;
-				// }
-				// });
-
 				spinnerDate.setOnTouchListener(new View.OnTouchListener() {
 					public boolean onTouch(View v, MotionEvent event) {
 						spinnerDate = getSpinnerDate();
@@ -2587,7 +2076,6 @@ delta dManageReminder {
 					}
 
 					public void onNothingSelected(AdapterView<? extends Object> arg0) {
-						// Well, do nothing...
 					}
 
 				});
@@ -2628,32 +2116,24 @@ delta dManageReminder {
 					}
 
 					public void onNothingSelected(AdapterView<? extends Object> arg0) {
-						// Well, do nothing...
 					}
 
 				});
 
 			}
 
-			/**
-			 * Just an auxiliary method to create reminders from the UI data.
-			 *
-			 * @return a new reminder with the ui values.
-			 **/
 			private void createReminder() {
 				try {
 					reminder.setText(edtReminder.getText().toString());
 					reminder.setDetails(edtDetails.getText().toString());
 					setValuesOnReminder();
 				} catch (InvalidTextException e) {
-					// This catch is handling both Reminder's Text and Details.
 					Toast.makeText(getApplicationContext(), "Invalid text.", Toast.LENGTH_SHORT).show();
 				} catch (InvalidDateException e) {
 					Toast.makeText(getApplicationContext(), "Invalid date.", Toast.LENGTH_SHORT).show();
 				} catch (InvalidHourException e) {
 					Toast.makeText(getApplicationContext(), "Invalid time.", Toast.LENGTH_SHORT).show();
 				} catch (Exception e) {
-					// this is an exceptional case that needs to be studied
 					Toast.makeText(getApplicationContext(), "Serious error.", Toast.LENGTH_SHORT).show();
 				}
 			}
@@ -2721,10 +2201,6 @@ delta dManageReminder {
 				time.set(Calendar.HOUR_OF_DAY, hour);
 			}
 
-			/*
-			 * Utility method which inserts a new date into the last position of the
-			 * spinner.
-			 */
 			@SuppressWarnings("unchecked")
 			protected void updateSpinnerDateHour(Spinner spinner, String dateOrHour) {
 				if (dateOrHour == null)
@@ -2735,7 +2211,6 @@ delta dManageReminder {
 				int count = adapter.getCount();
 				if (count > 2) {
 					for (int i = 2; i < count; ++i)
-						// Date and Time Spinners can have max of 3 elements.
 						adapter.remove(adapter.getItem(i));
 				}
 				adapter.add(dateOrHour);
@@ -2748,7 +2223,6 @@ delta dManageReminder {
 				SpinnerAdapterGenerator<String> adapterDateGenerator = new SpinnerAdapterGenerator<String>();
 
 				List<String> items = new ArrayList<String>();
-				// TODO: Move these to XML.
 				items.add("No date");
 				items.add("+ Select");
 
@@ -2763,7 +2237,6 @@ delta dManageReminder {
 				SpinnerAdapterGenerator<String> adapterTimeGenerator = new SpinnerAdapterGenerator<String>();
 
 				List<String> items = new ArrayList<String>();
-				// TODO: Move these to XML.
 				items.add("No time");
 				items.add("+ Select");
 
@@ -2787,32 +2260,16 @@ delta dManageReminder {
 		import br.unb.cic.reminders.model.Reminder;
 		import br.unb.cic.reminders.model.db.DBFactory;
 
-		/**
-		 * Class that is responsible for handling user inputs and processing the
-		 * business rules of the system. Nevertheless, it is important to note that the
-		 * business rules in this system are really, really simple. For this reason, a
-		 * single controller might be enough.
-		 *
-		 * @author rbonifacio
-		 *
-		 */
 		public class Controller {
 
 			private Context context;
 
 			private static Controller instance;
 
-			/*
-			 * Private constructor, according to the singleton design pattern.
-			 */
 			private Controller(Context c) {
 				this.context = c;
 			}
 
-			/**
-			 * The single interface to obtain an instance of the Controller class,
-			 * according to the singleton pattern.
-			 */
 			public static final Controller instance(Context c) {
 				if (instance == null) {
 					instance = new Controller(c);
@@ -2821,72 +2278,46 @@ delta dManageReminder {
 				return instance;
 			}
 
-			/**
-			 * Return all reminders
-			 */
 			public List<Reminder> listReminders() throws Exception {
 				try {
 					return DBFactory.factory(context).createReminderDAO().listReminders();
 				} catch (DBException e) {
-					// TODO: we need to define what to do in these situations.
 					throw e;
 				}
 			}
 
-			/**
-			 * Add a new reminder to the list of existing reminders
-			 */
 			public void addReminder(Reminder reminder) throws DBException {
 				try {
 					DBFactory.factory(context).createReminderDAO().saveReminder(reminder);
 				} catch (DBException e) {
-					// TODO: we need to define what to do in these situations.
 					throw e;
 				}
 			}
 
-			/**
-			 * Add a new reminder to the list of existing reminders
-			 */
 			public void updateReminder(Reminder reminder) throws DBException {
 				try {
 					DBFactory.factory(context).createReminderDAO().updateReminder(reminder);
 				} catch (DBException e) {
-					// TODO: we need to define what to do in these situations.
 					throw e;
 				}
 			}
 
-			/**
-			 * Remove a reminder given a Reminder object
-			 */
 			public void deleteReminder(Reminder reminder) throws DBException {
 				try {
 					DBFactory.factory(context).createReminderDAO().deleteReminder(reminder);
 				} catch (DBException e) {
-					// TODO: we need to define what to do in these situations.
 					throw e;
 				}
 			}
 
-			/**
-			 * Persist a reminder given a Reminder object
-			 */
 			public void persistReminder(Reminder reminder) throws DBException {
 				try {
 					DBFactory.factory(context).createReminderDAO().persistReminder(reminder);
 				} catch (DBException e) {
-					// TODO: we need to define what to do in these situations.
 					throw e;
 				}
 			}
 
-			/*
-			 * throws a RunTimeException
-			 *
-			 * TODO: remove this method after all other public methods would have been
-			 * implemented.
-			 */
 			private void notImplementedYet() {
 				throw new RuntimeException("not implemented yet");
 			}

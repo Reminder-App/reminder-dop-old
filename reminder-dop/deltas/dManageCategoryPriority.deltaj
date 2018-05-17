@@ -23,7 +23,6 @@ delta dManageCategoryPriority {
 		}
 		modifies listOfFilters() {
 			List<ReminderFilter> filters = original();
-			// Add the priorities to the filter list
 			PriorityFilter highPriorityFilter = new PriorityFilter(Priority.HIGH, getActivity());
 			filters.add(highPriorityFilter);
 			PriorityFilter normalPriorityFilter = new PriorityFilter(Priority.NORMAL, getActivity());

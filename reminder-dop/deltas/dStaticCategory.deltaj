@@ -137,7 +137,6 @@ delta dStaticCategory {
 			try {
 				return DBFactory.factory(context).createCategoryDAO().listCategories();
 			} catch (DBException e) {
-				// TODO: we need to define what to do in these situations.
 				throw e;
 			}
 		}
@@ -151,7 +150,6 @@ delta dStaticCategory {
 			try {
 				return DBFactory.factory(context).createReminderDAO().listRemindersByCategory(category);
 			} catch (DBException e) {
-				// TODO: we need to define what to do in these situations.
 				throw e;
 			}
 		}
@@ -164,7 +162,6 @@ delta dStaticCategory {
 				}
 				return null;
 			} catch (DBException e) {
-				// TODO: we need to define what to do in these situations.
 				throw e;
 			}
 		}
@@ -221,38 +218,12 @@ delta dStaticCategory {
 		import br.unb.cic.framework.persistence.DBException;
 		import br.unb.cic.reminders.model.Category;
 
-		/**
-		 * A Data Access Object for handling the persistence mechanism of categories.
-		 *
-		 * @author rbonifacio
-		 */
 		public interface CategoryDAO {
 
-			/**
-			 * List all Categories of the Reminders database.
-			 *
-			 * @return list of registered categories.
-			 * @throws DBException
-			 *             if anything goes wrong with the database query
-			 */
 			public List<Category> listCategories() throws DBException;
 
-			/**
-			 * Find a category by name
-			 *
-			 * @param name
-			 *            category name
-			 * @return category that satisfies the name criteria
-			 */
 			public Category findCategory(String name) throws DBException;
 
-			/**
-			 * Find a category by id
-			 *
-			 * @param id
-			 *            category id
-			 * @return category that satisfies the id criteria
-			 */
 			public Category findCategoryById(Long id) throws DBException;
 		}
 	}
@@ -271,20 +242,12 @@ delta dStaticCategory {
 		import br.unb.cic.framework.persistence.GenericDAO;
 		import br.unb.cic.reminders.model.Category;
 
-		/**
-		 * A default implementation of the @see {@link CategoryDAO} interface.
-		 *
-		 * @author rbonifacio
-		 */
 		public class DefaultCategoryDAO extends GenericDAO<Category> implements CategoryDAO {
 
 			public DefaultCategoryDAO(Context c) {
 				super(c);
 			}
 
-			/**
-			 * @see CategoryDAO#listCategories()
-			 */
 			public List<Category> listCategories() throws DBException {
 				try {
 					db = dbHelper.getReadableDatabase();
@@ -309,9 +272,6 @@ delta dStaticCategory {
 				}
 			}
 
-			/**
-			 * @see CategoryDAO#findCategory(String)
-			 */
 			public Category findCategory(String name) throws DBException {
 				try {
 					db = dbHelper.getReadableDatabase();
@@ -327,9 +287,6 @@ delta dStaticCategory {
 				}
 			}
 
-			/**
-			 * @see CategoryDAO#findCategoryById(Long)
-			 */
 			public Category findCategoryById(Long id) throws DBException {
 				try {
 					db = dbHelper.getReadableDatabase();
@@ -344,10 +301,6 @@ delta dStaticCategory {
 					dbHelper.close();
 				}
 			}
-
-			/*
-			 * Given a cursor, returns the first category.
-			 */
 			private Category returnUniqueCategory(Cursor cursor) {
 				List<Category> categories = new ArrayList<Category>();
 
@@ -360,9 +313,6 @@ delta dStaticCategory {
 				return null;
 			}
 
-			/*
-			 * Creates a category from a given cursor.
-			 */
 			private Category cursorToCategory(Cursor cursor) {
 				Long pk = cursor.getLong(cursor.getColumnIndex(DBConstants.CATEGORY_PK_COLUMN));
 				String name = cursor.getString(cursor.getColumnIndex(DBConstants.CATEGORY_NAME_COLUMN));
@@ -449,12 +399,6 @@ delta dStaticCategory {
 		import br.unb.cic.framework.persistence.annotations.Column;
 		import br.unb.cic.framework.persistence.annotations.Entity;
 
-		/**
-		 * This class represents a categegory, an useful abstraction for classifying
-		 * reminders.
-		 *
-		 * @author rbonifacio
-		 */
 		@Entity(table = "CATEGORY")
 		public class Category {
 			@Column(column = "PK", type = DBTypes.LONG, primaryKey = true)
@@ -558,14 +502,12 @@ delta dStaticCategory {
 				Category category = findCategory(reminder.getCategory());
 				reminder.setCategory(category);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
 			try {
 				Controller.instance(getApplicationContext()).updateReminder(reminder);
 			} catch (DBException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -608,17 +550,6 @@ delta dStaticCategory {
 
 			private Context context;
 
-			/**
-			 * This class is used in the parts of the view which is needed to list the
-			 * categories, as an adapter to these components listing the Categories
-			 * items.
-			 *
-			 * @param context,
-			 *            and the reminders objects(List<Category>).
-			 *
-			 * @author positivo
-			 *
-			 */
 			public CategoryArrayAdapter(Context context, List<Category> objects) {
 				super(context, R.layout.category_row, objects);
 				this.context = context;
@@ -628,7 +559,6 @@ delta dStaticCategory {
 			public View getView(int position, View convertView, ViewGroup parent) {
 				LinearLayout categoryRow;
 
-				// Inflate the view
 				if (convertView == null) {
 					categoryRow = new LinearLayout(getContext());
 					String inflater = Context.LAYOUT_INFLATER_SERVICE;
@@ -656,14 +586,12 @@ delta dStaticCategory {
 				Category category = findCategory(reminder.getCategory());
 				reminder.setCategory(category);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
 			try {
 				Controller.instance(getApplicationContext()).updateReminder(reminder);
 			} catch (DBException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -749,11 +677,6 @@ delta dStaticCategory {
 		import br.unb.cic.reminders.model.Category;
 		import br.unb.cic.reminders2.R;
 
-		/**
-		 * A list fragment that holds the list of categories.
-		 *
-		 * @author rbonifacio
-		 */
 		public class FilterListFragment extends Fragment implements OnItemClickListener {
 
 			private static final String CURRENT_FILTER_KEY = "current_filter";
@@ -767,7 +690,6 @@ delta dStaticCategory {
 			private FiltersListChangeListener filtersChangeListener;
 
 			private int currentFilterId;
-			// Used to list the filters.
 			private ReminderFilterArrayAdapter adapter;
 			private View view;
 
@@ -778,34 +700,14 @@ delta dStaticCategory {
 			public void onActivityCreated(Bundle savedInstanceState) {
 				super.onActivityCreated(savedInstanceState);
 
-				// this way, we could retrieve the selected filter
-				// after an orientation change.
 				if (savedInstanceState != null) {
 					currentFilterIndex = savedInstanceState.getInt(CURRENT_FILTER_KEY);
 				}
-
-				/*
-				 * categoryList = new ArrayList<String>();
-				 *
-				 * setListAdapter(new ArrayAdapter<String>(getActivity(),
-				 * R.layout.list_content));
-				 *
-				 * ListView thisListView = getListView();
-				 *
-				 * categoriesArrayAdapter = (ArrayAdapter<String>)getListAdapter();
-				 *
-				 * thisListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-				 * thisListView.setBackgroundColor(Color.WHITE);
-				 */
 
 				currentFilterId = 0;
 
 				adapter = null;
 			}
-
-			/**
-			 * Creates the view.
-			 */
 			@Override
 			public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 				view = inflater.inflate(R.layout.categories_list_fragment, container, false);
@@ -813,42 +715,11 @@ delta dStaticCategory {
 				return view;
 			}
 
-			/**
-			 * When resumed updates the filters list view.
-			 */
 			@Override
 			public void onResume() {
 				super.onResume();
 				updateListView();
 			}
-
-			/**
-			 * Provides each action based in the chosen option(Edit or Delete).
-			 **/
-			/*
-			 * @Override public boolean onContextItemSelected(MenuItem item) {
-			 *
-			 * if(item.getGroupId() == R.id.context_menu_category) { //Used to verify if
-			 * it is the right context_menu //Gets the item position and gets the
-			 * category in that position: AdapterView.AdapterContextMenuInfo info =
-			 * (AdapterView.AdapterContextMenuInfo)item.getMenuInfo(); Category category
-			 * = (Category)lvCategory.getAdapter().getItem(info.position);
-			 *
-			 * //Switch between the options in the context menu(Edit and Delete) switch
-			 * (item.getItemId()) { case R.id.edit: //Passes the current reminder to be
-			 * edited via Intent and Invokes edit method DialogFragment newFragment =
-			 * new EditCategoryDialogFragment(category);
-			 * newFragment.show(getFragmentManager(),
-			 * ""+R.string.dialog_editcategory_title); updateListView(); return true;
-			 * case R.id.delete: //Invokes delete method try {//Deletes from the bank;
-			 * Controller
-			 * .instance(getActivity().getApplicationContext()).deleteCategory(
-			 * category); } catch (DBException e) { Log.e(TAG,e.getMessage()); }
-			 * updateListView(); return true; default: return
-			 * super.onContextItemSelected(item); }
-			 *
-			 * } return super.onContextItemSelected(item); }
-			 */
 
 			public void addListener(FiltersListChangeListener filter) {
 				if (listeners == null)
@@ -862,34 +733,12 @@ delta dStaticCategory {
 				}
 			}
 
-			/**
-			 * Creates the User Interface.
-			 **/
 			private void createUI() {
-
-				// Button to add a Category:
-				// btAddCategory = (Button) view.findViewById(R.id.btAddCategory);
-				// btAddCategory.setOnClickListener(new OnClickListener() {
-				//
-				// public void onClick(View v) {// Creates one DialogFragment to add a
-				// // category
-				// DialogFragment newFragment = new AddCategoryDialogFragment();
-				// newFragment.show(getFragmentManager(), ""
-				// + R.string.dialog_addcategory_title);
-				// }
-				// });
-
-				// List of filters
 				lvFilters = (ListView) view.findViewById(R.id.listCategories);
 				lvFilters.setOnItemClickListener(this);
 				registerForContextMenu(lvFilters);
 				updateListView();
 			}
-
-			/**
-			 * Used to populate the list view with the current filters and other
-			 * filters.
-			 */
 			private void updateListView() {
 
 				List<ReminderFilter> filters = listOfFilters();
@@ -901,30 +750,21 @@ delta dStaticCategory {
 			private List<ReminderFilter> listOfFilters() {
 				List<ReminderFilter> filters = new ArrayList<ReminderFilter>();
 
-				// Add the allReminders to the filter list
 				AllRemindersFilter allRemindersFilter = new AllRemindersFilter(getActivity());
 				filters.add(allRemindersFilter);
 
-				// Get all categories
 				List<Category> categories = new ArrayList<Category>();
 				try {
 					categories = Controller.instance(getActivity().getApplicationContext()).listCategories();
 					notifyListeners(null);
 				} catch (DBException e) {
-					Log.e(CURRENT_FILTER_KEY, "STORAGE_SERVICE error. Message: " + e.getMessage()); // TODO:
-																									// Handle
-																									// it
-																									// properly.
+					Log.e(CURRENT_FILTER_KEY, "STORAGE_SERVICE error. Message: " + e.getMessage()); 
 					e.printStackTrace();
 				} catch (Exception e) {
-					Log.e(CURRENT_FILTER_KEY, "STORAGE_SERVICE error. Message: " + e.getMessage()); // TODO:
-																									// Handle
-																									// it
-																									// properly.
+					Log.e(CURRENT_FILTER_KEY, "STORAGE_SERVICE error. Message: " + e.getMessage()); 
 					e.printStackTrace();
 				}
 
-				// Add the categories to the filter list
 				ReminderFilter filter;
 				for (Category c : categories) {
 					filter = new CategoryFilter(c, getActivity());
@@ -940,7 +780,6 @@ delta dStaticCategory {
 			}
 
 			public void onNothingSelected(AdapterView<? extends Object> arg0) {
-				// TODO Auto-generated method stub
 
 			}
 
@@ -962,7 +801,6 @@ delta dStaticCategory {
 			try {
 				spinnerCategory = getSpinnerCategory();
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -975,7 +813,6 @@ delta dStaticCategory {
 				public void onItemSelected(AdapterView<? extends Object> parent, View view, int pos, long id) {}
 
 				public void onNothingSelected(AdapterView<? extends Object> parent) {
-					// well... do nothing
 				}
 			});
 		}
@@ -1020,12 +857,10 @@ delta dStaticCategory {
 		adds private void addListenerToSpinnerCategory() {
 			spinnerCategory.setOnItemSelectedListener(new OnItemSelectedListener() {
 				public void onItemSelected(AdapterView<? extends Object> parent, View view, int pos, long id) {
-					// get the category from the spinner
 					selectedCategory = (Category) parent.getItemAtPosition(pos);
 				}
 
 				public void onNothingSelected(AdapterView<? extends Object> parent) {
-					// well... do nothing
 				}
 			});
 		}
@@ -1095,7 +930,6 @@ delta dStaticCategory {
 		adds @Override public View getView(int position, View convertView, ViewGroup parent) {
 			LinearLayout filterRow;
 
-			// Inflate the view
 			if (convertView == null) {
 				filterRow = new LinearLayout(getContext());
 				String inflater = Context.LAYOUT_INFLATER_SERVICE;
