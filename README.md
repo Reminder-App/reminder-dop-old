@@ -4,7 +4,7 @@ This project integrated the *Positivo Challenge*, a research and development pro
 ### Features
 The features present in this release are:
 
-![Feature Model](https://i.imgur.com/NMbezl9.png)
+![Feature Model](https://i.imgur.com/ENMbZFT.png)
 
 
 # Steps to Generate a Product
