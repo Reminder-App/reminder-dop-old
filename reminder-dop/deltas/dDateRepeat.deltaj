@@ -24,6 +24,7 @@ delta dDateRepeat {
     }
     removes br.unb.cic.reminders.view.DatePickerDialogFragment;
     modifies br.unb.cic.reminders.view.ReminderAddActivity {
+        removes edtDate;
         adds import android.widget.CheckBox;
         adds private CheckBox cbMonday, cbTuesday, cbWednesday, cbThursday,
 			cbFriday, cbSaturday, cbSunday;
@@ -450,6 +451,7 @@ delta dDateRepeat {
         }
     }
     modifies br.unb.cic.reminders.view.ReminderActivity {
+        removes edtDate;
         removes date;
         removes spinnerDate;
         adds protected CheckBox cbMonday, cbTuesday, cbWednesday, cbThursday, cbFriday,
