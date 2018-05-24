@@ -400,6 +400,7 @@ delta dManageCategory {
 		adds import android.widget.AdapterView.AdapterContextMenuInfo;
 		adds import android.app.DialogFragment;
 		adds import android.view.MenuItem;
+		adds import android.app.FragmentTransaction;
 		adds public void onCreateContextMenu(ContextMenu menu, View v,
 			ContextMenuInfo menuInfo) {
 			super.onCreateContextMenu(menu, v, menuInfo);
@@ -414,6 +415,15 @@ delta dManageCategory {
 
 			inflater.inflate(R.menu.category_list_fragment_context_menu, menu);
 		}
+		adds public void reloadReminderListFragment() {
+			Fragment currentFragment = getActivity().getFragmentManager().findFragmentById(R.id.listReminders);
+			if (currentFragment instanceof ReminderListFragment) {
+				FragmentTransaction fragTransaction = (getActivity()).getFragmentManager().beginTransaction();
+				fragTransaction.detach(currentFragment);
+				fragTransaction.attach(currentFragment);
+				fragTransaction.commit();
+			}
+		}
 		adds @Override
 		public boolean onContextItemSelected(MenuItem item) {
 			if(item.getGroupId() == R.id.context_menu_category) {
@@ -426,7 +436,7 @@ delta dManageCategory {
 					case R.id.edit :
 					DialogFragment newFragment =
 					EditCategoryDialogFragment.newInstance(category);
-					newFragment.show(getFragmentManager(), "" +
+					newFragment.show(getFragmentManager(), ""  
 						R.string.dialog_editcategory_title);
 					updateListView();
 					return true;
@@ -434,12 +444,11 @@ delta dManageCategory {
 					try {
 						Controller.instance(getActivity().getApplicationContext()).deleteReminderByCategory(category);
 						Controller.instance(getActivity().getApplicationContext()).deleteCategory(category);
-						updateListView();
-						return true;
 					}
 					catch(DBException e) {
 						Log.e(TAG, e.getMessage());
 					}
+					reloadReminderListFragment();
 					updateListView();
 					return true;
 					default : return super.onContextItemSelected(item);
