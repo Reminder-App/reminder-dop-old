@@ -24,6 +24,7 @@ delta dDateRepeat {
     }
     removes br.unb.cic.reminders.view.DatePickerDialogFragment;
     modifies br.unb.cic.reminders.view.ReminderAddActivity {
+        adds import br.unb.cic.reminders.model.InvalidDaysException;
         removes edtDate;
         adds import android.widget.CheckBox;
         adds private CheckBox cbMonday, cbTuesday, cbWednesday, cbThursday,
@@ -37,7 +38,11 @@ delta dDateRepeat {
 			reminder.setThursday(cbThursday.isChecked());
 			reminder.setFriday(cbFriday.isChecked());
 			reminder.setSaturday(cbSaturday.isChecked());
-			reminder.setSunday(cbSunday.isChecked());
+            try {
+			    reminder.setSunday(cbSunday.isChecked());
+            } catch (InvalidDaysException e) {
+                Toast.makeText(getApplicationContext(), "At least one day should be checked.", Toast.LENGTH_SHORT).show();
+            }
             reminder.setHour(edtHour.getText().toString());
             return reminder;
         }
@@ -265,6 +270,19 @@ delta dDateRepeat {
             Utility.setListViewHeightBasedOnChildren(lvSunday);
         }
     }
+    adds {
+		package br.unb.cic.reminders.model;
+
+		public class InvalidDaysException extends InvalidFormatException {
+
+			private static final long serialVersionUID = 7998188562654167391L;
+
+			public InvalidDaysException(Object o) {
+				super("These days " + o);
+			}
+
+		}
+	}
     modifies br.unb.cic.reminders.model.Reminder {
         removes date;
         adds @Column(column = "MONDAY", type = DBTypes.INT) private boolean monday;
@@ -279,7 +297,11 @@ delta dDateRepeat {
         removes setDate(String date);
         removes isValid();
         adds public boolean isValid() {
-            return (text != null && hour != null);
+            return (isOneCbSelected() && text != null && hour != null);
+        }
+        adds public boolean isOneCbSelected() {
+            return (monday != false || tuesday != false || wednesday != false || thursday != false 
+                || friday != false || saturday != false || sunday != false);
         }
 
         adds public boolean isMonday() {
@@ -358,6 +380,9 @@ delta dDateRepeat {
             return sunday;
         }
         adds public void setSunday(boolean sunday) {
+            if (!isOneCbSelected()) {
+                throw new InvalidDaysException("are all false");
+            }
             this.sunday = sunday;
         }
         adds public void setSunday(int sunday) {
@@ -451,6 +476,7 @@ delta dDateRepeat {
         }
     }
     modifies br.unb.cic.reminders.view.ReminderActivity {
+        adds import br.unb.cic.reminders.model.InvalidDaysException;
         removes edtDate;
         removes date;
         removes spinnerDate;
@@ -487,7 +513,11 @@ delta dDateRepeat {
 			reminder.setThursday(cbThursday.isChecked());
 			reminder.setFriday(cbFriday.isChecked());
 			reminder.setSaturday(cbSaturday.isChecked());
-			reminder.setSunday(cbSunday.isChecked());
+            try {
+			    reminder.setSunday(cbSunday.isChecked());
+            } catch (InvalidDaysException e) {
+                Toast.makeText(getApplicationContext(), "At least one day should be checked.", Toast.LENGTH_SHORT).show();
+            }
             reminder.setHour(timeToString());
         }
         removes dateToString();
