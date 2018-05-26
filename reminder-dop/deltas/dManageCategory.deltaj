@@ -436,7 +436,7 @@ delta dManageCategory {
 					case R.id.edit :
 					DialogFragment newFragment =
 					EditCategoryDialogFragment.newInstance(category);
-					newFragment.show(getFragmentManager(), ""  
+					newFragment.show(getFragmentManager(), "" + 
 						R.string.dialog_editcategory_title);
 					updateListView();
 					return true;

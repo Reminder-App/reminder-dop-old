@@ -25,8 +25,8 @@ delta dDateRepeat {
     removes br.unb.cic.reminders.view.DatePickerDialogFragment;
     modifies br.unb.cic.reminders.view.ReminderAddActivity {
         adds import br.unb.cic.reminders.model.InvalidDaysException;
-        removes edtDate;
         adds import android.widget.CheckBox;
+        removes edtDate;
         adds private CheckBox cbMonday, cbTuesday, cbWednesday, cbThursday,
 			cbFriday, cbSaturday, cbSunday;
         removes createReminderAux();
@@ -125,7 +125,7 @@ delta dDateRepeat {
             this.rowType = MONDAY;
         }
         removes view(int position, View convertView, ViewGroup parent, TextView tvReminder);
-        adds 
+	adds
         public View view(int position, View convertView, ViewGroup parent, TextView tvReminder) {
             LinearLayout reminderRow;
 
