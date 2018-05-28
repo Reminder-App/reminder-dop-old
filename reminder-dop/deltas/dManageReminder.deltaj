@@ -960,14 +960,6 @@ delta dManageReminder {
 			@Override
 			public View getView(int position, View convertView, ViewGroup parent) {
 				LinearLayout reminderRow;
-				TextView tvReminder = (TextView) reminderRow.findViewById(R.id.txtReminder);
-				reminderRow = (LinearLayout) view(position, convertView, parent, tvReminder);
-
-				return reminderRow;
-			}
-
-			public View view(int position, View convertView, ViewGroup parent, TextView tvReminder){
-				LinearLayout reminderRow;
 
 				if (convertView == null) {
 					reminderRow = new LinearLayout(getContext());
@@ -978,7 +970,13 @@ delta dManageReminder {
 				} else {
 					reminderRow = (LinearLayout) convertView;
 				}
+				TextView tvReminder = (TextView) reminderRow.findViewById(R.id.txtReminder);
+				view(position, tvReminder, reminderRow);
 
+				return reminderRow;
+			}
+
+			public void view(int position, TextView tvReminder, LinearLayout reminderRow){
 				TextView tvDateFirst = (TextView) reminderRow.findViewById(R.id.txtDateFirst);
 				TextView tvDateSecond = (TextView) reminderRow.findViewById(R.id.txtDateSecond);
 				CheckBox tvDone = (CheckBox) reminderRow.findViewById(R.id.cbDone);

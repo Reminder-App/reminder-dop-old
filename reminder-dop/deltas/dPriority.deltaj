@@ -281,9 +281,19 @@ delta dPriority {
 	modifies br.unb.cic.reminders.view.ReminderArrayAdapter {
 		removes getView(int position, View convertView, ViewGroup parent);
 		adds @Override public View getView(int position, View convertView, ViewGroup parent) {
-			TextView tvReminder = ( TextView )
-			reminderRow.findViewById(R.id.txtReminder);
-			LinearLayout reminderRow = view(position, convertView, parent, tvReminder);
+			LinearLayout reminderRow;
+
+			if (convertView == null) {
+				reminderRow = new LinearLayout(getContext());
+				String inflater = Context.LAYOUT_INFLATER_SERVICE;
+				LayoutInflater vi;
+				vi = (LayoutInflater) getContext().getSystemService(inflater);
+				vi.inflate(R.layout.reminder_row, reminderRow, true);
+			} else {
+				reminderRow = (LinearLayout) convertView;
+			}
+			TextView tvReminder = (TextView) reminderRow.findViewById(R.id.txtReminder);
+			view(position, tvReminder, reminderRow);
 			ImageView ivPriority = (ImageView) reminderRow.findViewById(R.id.ivPriority);
 			if (getItem(position).getPriority() == 1)
 				ivPriority.setImageResource(R.drawable.important);

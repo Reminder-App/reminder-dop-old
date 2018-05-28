@@ -124,21 +124,9 @@ delta dDateRepeat {
             this.rowColor = Color.BLACK;
             this.rowType = MONDAY;
         }
-        removes view(int position, View convertView, ViewGroup parent, TextView tvReminder);
+        removes view(int position, TextView tvReminder, LinearLayout reminderRow);
 	adds
-        public View view(int position, View convertView, ViewGroup parent, TextView tvReminder) {
-            LinearLayout reminderRow;
-
-            if (convertView == null) {
-                reminderRow = new LinearLayout(getContext());
-                String inflater = Context.LAYOUT_INFLATER_SERVICE;
-                LayoutInflater vi;
-                vi = (LayoutInflater) getContext().getSystemService(inflater);
-                vi.inflate(R.layout.reminder_row, reminderRow, true);
-            } else {
-                reminderRow = (LinearLayout) convertView;
-            }
-
+        public void view(int position, TextView tvReminder, LinearLayout reminderRow) {
             TextView tvHour = (TextView) reminderRow.findViewById(R.id.txtHour);
             CheckBox tvDone = (CheckBox) reminderRow.findViewById(R.id.cbDone);
             tvDone.setTag(position);
@@ -161,8 +149,6 @@ delta dDateRepeat {
             tvHour.setText(getDatesHour(position));
             
             tvDone.setChecked(getItem(position).isDone());
-
-            return reminderRow;
         }
         removes getDateFirst(int position);
         removes getDateSecond(int position);
