@@ -959,8 +959,9 @@ delta dManageReminder {
 
 			@Override
 			public View getView(int position, View convertView, ViewGroup parent) {
+				LinearLayout reminderRow;
 				TextView tvReminder = (TextView) reminderRow.findViewById(R.id.txtReminder);
-				LinearLayout reminderRow = view(position, convertView, parent, tvReminder);
+				reminderRow = (LinearLayout) view(position, convertView, parent, tvReminder);
 
 				return reminderRow;
 			}
