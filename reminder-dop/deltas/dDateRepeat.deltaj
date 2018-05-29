@@ -366,7 +366,7 @@ delta dDateRepeat {
             return sunday;
         }
         adds public void setSunday(boolean sunday) {
-            if (!isOneCbSelected()) {
+            if (!isOneCbSelected() && !sunday) {
                 throw new InvalidDaysException("are all false");
             }
             this.sunday = sunday;
