@@ -1002,8 +1002,6 @@ delta dManageReminder {
 				tvDateSecond.setText(getDateSecond(position));
 
 				tvDone.setChecked(getItem(position).isDone());
-
-				return reminderRow;
 			}
 
 			private String getDateFirst(int position) {
