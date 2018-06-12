@@ -305,6 +305,7 @@ delta dPriority {
 		}
 	}
 	modifies br.unb.cic.reminders.view.ReminderListFragment {
+		adds import android.app.FragmentTransaction;
 		adds public void reloadFilterListFragment() {
 			Fragment currentFragment = getActivity().getFragmentManager().findFragmentById(R.id.listCategories);
 			if (currentFragment instanceof FilterListFragment) {
