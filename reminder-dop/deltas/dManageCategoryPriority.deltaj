@@ -1,8 +1,11 @@
 delta dManageCategoryPriority {
 	modifies br.unb.cic.reminders.view.FilterListFragment {
+		//#if manageCategory && priority
 		adds import br.unb.cic.reminders.controller.PriorityFilter;
 		adds import br.unb.cic.reminders.model.Priority;
+		//#endif
 		removes onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo);
+		//#if manageCategory && priority
 		adds public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
 			super.onCreateContextMenu(menu, v, menuInfo);
 			menu.setHeaderTitle(R.string.context_menu_category_title);
@@ -31,5 +34,6 @@ delta dManageCategoryPriority {
 			filters.add(lowPriorityFilter);
 			return filters;
 		}
+		//#endif
 	}
 }
