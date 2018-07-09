@@ -1,13 +1,17 @@
 delta dSearch {
 	modifies br.unb.cic.reminders.ReminderMainActivity {
+        //#ifdef search
 		adds import android.app.AlertDialog;
 		adds import android.content.Context;
 		adds import android.content.DialogInterface;
 		adds import android.widget.EditText;
 		adds import java.util.ArrayList;
-		adds public static String search = "";
-	    removes onOptionsItemSelected(MenuItem item);
-	    adds @Override public boolean onOptionsItemSelected(MenuItem item) {
+        adds public static String search = "";
+        //#endif
+        removes onOptionsItemSelected(MenuItem item);
+        //#ifdef search
+        adds @Override 
+        public boolean onOptionsItemSelected(MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.menu_addReminder:
                     Intent reminderIntent = new Intent(getApplicationContext(), AddReminderActivity.class);
@@ -47,8 +51,10 @@ delta dSearch {
     
     
         }
+        //#endif
 	}
     modifies br.unb.cic.reminders.controller.ReminderFilter {
+        //#ifdef search
         adds public List<Reminder> getReminders(String search){
             updateReminders();
             if(search == null || search.trim().equals("")){
@@ -63,8 +69,10 @@ delta dSearch {
             }
             return values;
         }
+        //#endif
     }
     modifies br.unb.cic.reminders.view.ReminderListFragment {
+        //#ifdef search
         adds public void updateListViewFilter(String filterRemider) {
     
             ReminderFilter filter = new AllRemindersFilter(getActivity());
@@ -135,5 +143,6 @@ delta dSearch {
             lvReminderNoDate.setAdapter(adapterNoDate);
             Utility.setListViewHeightBasedOnChildren(lvReminderNoDate);
         }
+        //#endif
     }
 }
