@@ -1,5 +1,6 @@
 delta dDateRangeSearch {
 	modifies br.unb.cic.reminders.view.ReminderListFragment {
+		//#if dateRange && search
 		modifies updateListViewFilter(String filterRemider) {
 			ReminderFilter filter = new AllRemindersFilter(getActivity());
 			ArrayList<Reminder> reminders = new ArrayList<Reminder>();
@@ -73,5 +74,6 @@ delta dDateRangeSearch {
 			lvReminderNextDays.setAdapter(adapterNextDays);
 			Utility.setListViewHeightBasedOnChildren(lvReminderNextDays);
 		}
+		//#endif
 	}
 }
