@@ -1,5 +1,6 @@
 delta dManageCategory {
 	adds {
+		//#ifdef manageCategory
 		package br.unb.cic.reminders.view;
 
 		import android.annotation.SuppressLint;
@@ -103,8 +104,10 @@ delta dManageCategory {
 
 			}
 		}
+		//#endif
 	}
 	adds {
+		//#ifdef manageCategory
 		package br.unb.cic.reminders.controller;
 
 		import android.content.Context;
@@ -135,11 +138,12 @@ delta dManageCategory {
 			}
 
 		}
+		//#endif
 	}
 	modifies br.unb.cic.reminders.controller.Controller {
 		removes notImplementedYet();
-		adds public void deleteReminderByCategory(Category category) throws
-		DBException {
+		//#ifdef manageCategory
+		adds public void deleteReminderByCategory(Category category) throws DBException {
 			try {
 				List<Reminder> allReminders =
 				DBFactory.factory(context).createReminderDAO().listRemindersByCategory(category);
@@ -175,8 +179,10 @@ delta dManageCategory {
 				throw e;
 			}
 		}
+		//#endif
 	}
 	modifies br.unb.cic.reminders.model.cp.ReminderContentProvider {
+		//#ifdef manageCategory
 		modifies createCategoryInsert(ContentValues values) {
 			Category category = original(values);
 			if(category == null) {
@@ -187,13 +193,17 @@ delta dManageCategory {
 			}
 			return category;
 		}
+		//#endif
 	}
 	modifies br.unb.cic.reminders.model.db.CategoryDAO {
+		//#ifdef manageCategory
 		adds public void saveCategory(Category category) throws DBException;
 		adds public void updateCategory(Category category) throws DBException;
 		adds public void deleteCategory(Category category) throws DBException;
+		//#endif
 	}
 	modifies br.unb.cic.reminders.model.db.DefaultCategoryDAO {
+		//#ifdef manageCategory
 		adds public void saveCategory(Category category) throws DBException {
 			try {
 				persist(category);
@@ -237,9 +247,11 @@ delta dManageCategory {
 				dbHelper.close();
 			}
 		}
+		//#endif
 	}
 	modifies br.unb.cic.reminders.view.AddReminderActivity {
 		removes persist(Reminder reminder);
+		//#ifdef manageCategory
 		adds @Override
 		protected void persist(Reminder reminder) {
 			try {
@@ -263,8 +275,10 @@ delta dManageCategory {
 				e.printStackTrace();
 			}
 		}
+		//#endif
 	}
 	modifies br.unb.cic.reminders.view.ExternalAddReminderActivity {
+		//#ifdef manageCategory
 		adds private boolean isNewCategory = false;
 		modifies setNewCategory(Intent intent) {
 			original(intent);
@@ -275,7 +289,9 @@ delta dManageCategory {
 				newCategory.setName(categoryName);
 			}
 		}
+		//#endif
 		removes persist(Reminder reminder);
+		//#ifdef manageCategory
 		adds @Override
 		protected void persist(Reminder reminder) {
 			try {
@@ -296,7 +312,9 @@ delta dManageCategory {
 			original();
 			if(isNewCategory) spinnerCategory.setSelection(spinnerCategory.getCount() - 2);
 		}
+		//#endif
 		removes getCategories();
+		//#ifdef manageCategory
 		adds @Override
 		protected List<Category> getCategories() throws Exception {
 			List<Category> categories = super.getCategories();
@@ -305,8 +323,10 @@ delta dManageCategory {
 			}
 			return categories;
 		}
+		//#endif
 	}
 	adds {
+		//#ifdef manageCategory
 		package br.unb.cic.reminders.view;
 
 		import android.app.AlertDialog;
@@ -394,9 +414,10 @@ delta dManageCategory {
 			}
 
 		}
-
+		//#endif
 	}
 	modifies br.unb.cic.reminders.view.FilterListFragment {
+		//#ifdef manageCategory
 		adds import android.widget.AdapterView.AdapterContextMenuInfo;
 		adds import android.app.DialogFragment;
 		adds import android.view.MenuItem;
@@ -457,9 +478,11 @@ delta dManageCategory {
 			}
 			return super.onContextItemSelected(item);
 		}
+		//#endif
 	}
 	modifies br.unb.cic.reminders.view.ReminderActivity {
 		removes addListenerToSpinnerCategory();
+		//#ifdef manageCategory
 		adds private void addListenerToSpinnerCategory() {
 			spinnerCategory.setOnItemSelectedListener(new OnItemSelectedListener() {
 					public void onItemSelected(AdapterView<? extends Object> parent, View
@@ -477,7 +500,9 @@ delta dManageCategory {
 					}
 				});
 		}
+		//#endif
 		removes getSpinnerCategory();
+		//#ifdef manageCategory
 		adds private Spinner getSpinnerCategory() throws Exception {
 			Spinner spinner = ( Spinner ) findViewById(R.id.spinnerCategories);
 
@@ -497,15 +522,19 @@ delta dManageCategory {
 
 			return spinner;
 		}
+		//#endif
 	}
 	modifies br.unb.cic.reminders.view.ReminderFilterArrayAdapter {
 		removes ReminderFilterArrayAdapter(Context context, List<ReminderFilter>
 			objects);
+		//#ifdef manageCategory
 		adds public ReminderFilterArrayAdapter(Context context, List<ReminderFilter>
 			objects) {
 			super(context, R.layout.category_row, objects);
 		}
+		//#endif
 		removes getView(int position, View convertView, ViewGroup parent);
+		//#ifdef manageCategory
 		adds @Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			LinearLayout filterRow;
@@ -531,10 +560,13 @@ delta dManageCategory {
 
 			return filterRow;
 		}
+		//#endif
 	}
 	modifies br.unb.cic.reminders.view.EditReminderActivity {
 		removes persist(Reminder reminder);
-		adds @Override protected void persist(Reminder reminder) {
+		//#ifdef manageCategory
+		adds @Override 
+		protected void persist(Reminder reminder) {
 			try {
 				Category category = findCategory(reminder.getCategory());
 				if (category != null) {
@@ -554,5 +586,6 @@ delta dManageCategory {
 			}
 			
 		}
+		//#endif
 	}
 }
