@@ -2,14 +2,17 @@ delta dDateRange {
 	modifies br.unb.cic.reminders.model.Reminder {
 		removes date;
 		removes hour;
+		//#ifdef dateRange
 		adds @Column(column = "INITIAL_DATE", type = DBTypes.TEXT) private String dateStart;
 		adds @Column(column = "INITIAL_HOUR", type = DBTypes.TEXT) private String hourStart;
 		adds @Column(column = "FINAL_DATE", type = DBTypes.TEXT) private String dateFinal;
 		adds @Column(column = "FINAL_HOUR", type = DBTypes.TEXT) private String hourFinal;
+		//#endif
 		removes getDate();
 		removes setDate(String date);
 		removes getHour();
 		removes setHour(String hour);
+		//#ifdef dateRange
 		adds public String getDateStart() {
 			return dateStart;
 		}
@@ -21,7 +24,6 @@ delta dDateRange {
 			}
 			this.dateStart = dateStart;
 		}
-
 		adds public String getHourStart() {
 			return hourStart;
 		}
@@ -31,7 +33,6 @@ delta dDateRange {
 			}
 			this.hourStart = hourStart;
 		}
-
 		adds public String getDateFinal() {
 			return dateFinal;
 		}
@@ -52,15 +53,19 @@ delta dDateRange {
 			}
 			this.hourFinal = hourFinal;
 		}
+		//#endif
 		removes isValid();
+		//#ifdef dateRange
 		adds public boolean isValid() {
 			return (text != null && dateStart != null && hourStart != null
 					&& dateFinal != null && hourFinal != null);
 		}
+		//#endif
 	}
 	modifies br.unb.cic.reminders.model.cp.ReminderContentProvider {
 		removes date();
 		removes hour();
+		//#ifdef dateRange
 		adds public static final String dateStart() {
 			return DBConstants.REMINDER_INITIAL_DATE_COLUMN;
 		}
@@ -73,7 +78,9 @@ delta dDateRange {
 		adds public static final String hourFinal() {
 			return DBConstants.REMINDER_FINAL_HOUR_COLUMN;
 		}
+		//#endif
 		removes createReminderInsert(ContentValues values);
+		//#ifdef dateRange
 		adds private Reminder createReminderInsert(ContentValues values) throws DBException {
 			Reminder reminder = new Reminder();
 			reminder.setDateStart(values.getAsString(dateStart()));
@@ -82,23 +89,29 @@ delta dDateRange {
 			reminder.setHourFinal(values.getAsString(hourFinal()));
 			return reminder;
 		}
+		//#endif
 	}
 	modifies br.unb.cic.reminders.model.db.DBConstants {
 		removes tableStatement();
+		//#ifdef dateRange
 		adds private static String tableStatement() {
 			return "INITIAL_DATE CHAR(10) NOT NULL,"
 				+ "INITIAL_HOUR CHAR(5) NULL," + "FINAL_DATE CHAR(10) NOT NULL,"
 				+ "FINAL_HOUR CHAR(5) NULL,";
 		}
+		//#endif
 		removes REMINDER_DATE_COLUMN;
 		removes REMINDER_HOUR_COLUMN;
+		//#ifdef dateRange
 		adds public static String REMINDER_INITIAL_DATE_COLUMN = "INITIAL_DATE";
 		adds public static String REMINDER_INITIAL_HOUR_COLUMN = "INITIAL_HOUR";
 		adds public static String REMINDER_FINAL_DATE_COLUMN = "FINAL_DATE";
 		adds public static String REMINDER_FINAL_HOUR_COLUMN = "FINAL_HOUR";
+		//#endif
 	}
 	modifies br.unb.cic.reminders.model.db.DefaultReminderDAO {
 		removes  createReminderCursor(Cursor cursor);
+		//#ifdef dateRange
 		adds private Reminder createReminderCursor(Cursor cursor) throws DBException {
 			Reminder reminder = new Reminder();
 			String dateStart = cursor.getString(cursor.getColumnIndex(DBConstants.REMINDER_INITIAL_DATE_COLUMN));
@@ -111,9 +124,11 @@ delta dDateRange {
 			reminder.setHourFinal(hourFinal);
 			return reminder;
 		}
+		//#endif
 	}
 	modifies br.unb.cic.reminders.view.ExternalAddReminderActivity {
 		removes reminderFromIntent(Intent intent);
+		//#ifdef dateRange
 		adds private void reminderFromIntent(Intent intent) throws Exception {
 			String dateStart = intent.getStringExtra("dateStart");
 			String hourStart = intent.getStringExtra("hourStart");
@@ -124,7 +139,9 @@ delta dDateRange {
 			reminder.setDateFinal(dateFinal);
 			reminder.setHourFinal(hourFinal);
 		}
+		//#endif
 		removes initialize();
+		//#ifdef dateRange
 		adds private void initialize() throws Exception {
 			updateSpinnerDateHour(spinnerDateStart, reminder.getDateStart());
 			updateDateFromString(reminder.getDateStart(), false);
@@ -135,15 +152,30 @@ delta dDateRange {
 			updateSpinnerDateHour(spinnerTimeStart, reminder.getHourFinal());
 			updateTimeFromString(reminder.getHourFinal(), true);
 		}
+		//#endif
 	}
 	modifies br.unb.cic.reminders.view.ReminderActivity {
 		removes date;
 		removes time;
+		//#ifdef dateRange
 		adds protected Calendar dateStart, timeStart, dateFinal, timeFinal;
+		//#endif
 		removes spinnerDate;
 		removes spinnerTime;
+		//#ifdef dateRange
 		adds protected Spinner spinnerDateStart, spinnerTimeStart, spinnerDateFinal, spinnerTimeFinal;
+		//#endif
 		removes initializeFields();
+		removes setValuesOnReminder();
+		removes addListenerToSpinnerDate();
+		removes addListenerToSpinnerTime();
+		removes  dateToString();
+		removes timeToString();
+		removes updateDateFromString(String sDate);
+		removes updateTimeFromString(String sTime);
+		removes getSpinnerDate();
+		removes getSpinnerTime();
+		//#ifdef dateRange
 		adds private void initializeFields() {
 			btnSave = (Button) findViewById(R.id.btnSave);
 			btnCancel = (Button) findViewById(R.id.btnCancel);
@@ -153,16 +185,13 @@ delta dDateRange {
 			spinnerTimeStart = getSpinnerTimeStart();
 			spinnerDateFinal = getSpinnerDateFinal();
 			spinnerTimeFinal = getSpinnerTimeFinal();
-
 		}
-		removes setValuesOnReminder();
 		adds private void setValuesOnReminder() throws Exception {
 			reminder.setDateStart(dateToString(dateStart));
 			reminder.setHourStart(timeToString(timeStart));
 			reminder.setDateFinal(dateToString(dateFinal));
 			reminder.setHourFinal(timeToString(timeFinal));
 		}
-		removes addListenerToSpinnerDate();
 		adds private void addListenerToSpinnerDate() {
 
 			spinnerDateStart.setOnTouchListener(new View.OnTouchListener() {
@@ -239,7 +268,6 @@ delta dDateRange {
 
 			});
 		}
-		removes addListenerToSpinnerTime();
 		adds private void addListenerToSpinnerTime() {
 
 			spinnerTimeStart.setOnTouchListener(new View.OnTouchListener() {
@@ -315,7 +343,6 @@ delta dDateRange {
 			});
 
 		}
-		removes  dateToString();
 		adds private String dateToString(Calendar date) {
 			if (date == null)
 				return null;
@@ -329,7 +356,6 @@ delta dDateRange {
 			sDate += "-" + Integer.toString(date.get(Calendar.YEAR));
 			return sDate;
 		}
-		removes timeToString();
 		adds private String timeToString(Calendar time) {
 			if (time == null)
 				return null;
@@ -342,7 +368,6 @@ delta dDateRange {
 				sTime = "0" + sTime;
 			return sTime;
 		}
-		removes updateDateFromString(String sDate);
 		adds protected void updateDateFromString(String sDate, boolean isFinal) {
 			if (sDate == null || sDate.equals("")) {
 				if (isFinal) dateFinal = null;
@@ -364,7 +389,6 @@ delta dDateRange {
 			else
 				dateStart.set(year, month - 1, day);
 		}
-		removes updateTimeFromString(String sTime);
 		adds protected void updateTimeFromString(String sTime, boolean isFinal) {
 			if (sTime == null || sTime.equals("")) {
 				if (isFinal) timeFinal = null;
@@ -388,8 +412,6 @@ delta dDateRange {
 			}
 
 		}
-		removes getSpinnerDate();
-		removes getSpinnerTime();
 		adds private Spinner getSpinnerDateStart() {
 			Spinner spinner = (Spinner) findViewById(R.id.spinnerDateStart);
 
@@ -403,7 +425,6 @@ delta dDateRange {
 
 			return spinner;
 		}
-
 		adds private Spinner getSpinnerTimeStart() {
 			Spinner spinner = (Spinner) findViewById(R.id.spinnerTimeStart);
 
@@ -417,7 +438,6 @@ delta dDateRange {
 
 			return spinner;
 		}
-
 		adds private Spinner getSpinnerDateFinal() {
 			Spinner spinner = (Spinner) findViewById(R.id.spinnerDateFinal);
 
@@ -431,7 +451,6 @@ delta dDateRange {
 
 			return spinner;
 		}
-
 		adds private Spinner getSpinnerTimeFinal() {
 			Spinner spinner = (Spinner) findViewById(R.id.spinnerTimeFinal);
 
@@ -445,12 +464,19 @@ delta dDateRange {
 
 			return spinner;
 		}
+		//#endif
 	}
 	modifies br.unb.cic.reminders.view.ReminderAddActivity {
 		removes edtDate;
 		removes edtHour;
+		//#ifdef dateRange
 		adds private EditText edtDateStart, edtHourStart, edtDateFinal, edtHourFinal;
+		//#endif
 		removes createReminderAux();
+		removes createReminderExisting(Intent intent);
+		removes createReminderIntent(Intent intent);
+		removes updateFieldsFromReminder(Reminder reminder);
+		//#ifdef dateRange
 		adds private Reminder createReminderAux() {
 			Reminder reminder = new Reminder();
 			reminder.setDateStart(edtDateStart.getText().toString());
@@ -459,7 +485,6 @@ delta dDateRange {
 			reminder.setHourFinal(edtHourFinal.getText().toString());
 			return reminder;
 		}
-		removes createReminderExisting(Intent intent);
 		adds private Reminder createReminderExisting(Intent intent) {
 			Reminder reminder = new Reminder();
 			String dateStart = intent.getStringExtra("dateStart");
@@ -472,7 +497,6 @@ delta dDateRange {
 			reminder.setHourFinal(hourFinal);
 			return reminder;
 		}
-		removes createReminderIntent(Intent intent);
 		adds private Reminder createReminderIntent(Intent intent) {
 			Reminder reminder = new Reminder();
 			String dateStart = intent.getStringExtra("dateStart");
@@ -485,7 +509,6 @@ delta dDateRange {
 			reminder.setHourFinal(hourFinal);
 			return reminder;
 		}
-		removes updateFieldsFromReminder(Reminder reminder);
 		adds private void updateFieldsFromReminder(Reminder reminder) throws Exception {
 			edtReminder.setText(reminder.getText());
 			edtDetails.setText(reminder.getDetails());
@@ -494,9 +517,13 @@ delta dDateRange {
 			edtDateFinal.setText(reminder.getDateFinal());
 			edtHourFinal.setText(reminder.getHourFinal());
 		}
+		//#endif
 	}
 	modifies br.unb.cic.reminders.view.ReminderArrayAdapter {
 		removes getDateFirst(int position);
+		removes getDateSecond(int position);
+		removes getDatesHour(int position);
+		//#ifdef dateRange
 		adds private String getDateFirst(int position) {
 
 			if (getItem(position).getDateFinal() == null) {
@@ -543,7 +570,6 @@ delta dDateRange {
 
 			return getItem(position).getDateFinal();
 		}
-		removes getDateSecond(int position);
 		adds private String getDateSecond(int position) {
 
 			switch (rowType) {
@@ -571,7 +597,6 @@ delta dDateRange {
 
 			return getItem(position).getHourFinal();
 		}
-		removes getDatesHour(int position);
 		adds private String getDatesHour(int position) {
 
 			if (getItem(position).getHourFinal() == null) {
@@ -583,10 +608,14 @@ delta dDateRange {
 			else
 				return getItem(position).getHourFinal().substring(0, 2) + "h";
 		}
+		//#endif
 	}
 	modifies br.unb.cic.reminders.view.ReminderListFragment {
 		removes lvReminderNoDate;
 		removes createUI();
+		removes editIntent(Reminder reminder);
+		removes updateListView(ReminderFilter filter);
+		//#ifdef dateRange
 		adds public void createUI() {
 			lvReminderLate = (ListView) view.findViewById(R.id.lvRemindersLate);
 			lvReminderToday = (ListView) view.findViewById(R.id.lvRemindersToday);
@@ -596,7 +625,6 @@ delta dDateRange {
 			registerForContextMenu(lvReminderToday);
 			registerForContextMenu(lvReminderNextDays);
 		}
-		removes editIntent(Reminder reminder);
 		adds private Intent editIntent(Reminder reminder) {
 			Intent editIntent = new Intent(getActivity().getApplicationContext(), EditReminderActivity.class);
 			editIntent.putExtra("dateStart", reminder.getDateStart());
@@ -605,7 +633,6 @@ delta dDateRange {
 			editIntent.putExtra("hourFinal", reminder.getHourFinal());
 			return editIntent;
 		}
-		removes updateListView(ReminderFilter filter);
 		adds public void updateListView(ReminderFilter filter) {
 			if (filter == null)
 				filter = new AllRemindersFilter(getActivity());
@@ -670,9 +697,11 @@ delta dDateRange {
 			lvReminderNextDays.setAdapter(adapterNextDays);
 			Utility.setListViewHeightBasedOnChildren(lvReminderNextDays);
 		}
+		//#endif
 	}
 	modifies br.unb.cic.reminders.view.EditReminderActivity {
 		removes initializeValues(Intent intent);
+		//#ifdef dateRange
 		adds private void initializeValues(Intent intent) throws Exception {
 			String dateStart = intent.getStringExtra("dateStart");
 			String hourStart = intent.getStringExtra("hourStart");
@@ -687,5 +716,6 @@ delta dDateRange {
 			updateSpinnerDateHour(spinnerTimeFinal, hourFinal);
 			updateTimeFromString(hourFinal, false);
 		}
+		//#endif
 	}
 }
