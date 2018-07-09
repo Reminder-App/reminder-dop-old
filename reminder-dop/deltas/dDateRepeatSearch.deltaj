@@ -1,5 +1,6 @@
 delta dDateRepeatSearch {
     modifies br.unb.cic.reminders.view.ReminderListFragment {
+        //#if dateRepeat && search
         modifies updateListViewFilter(String filterRemider) {
             ReminderFilter filter = new AllRemindersFilter(getActivity());
 			ArrayList<Reminder> reminders = new ArrayList<Reminder>();
@@ -70,5 +71,6 @@ delta dDateRepeatSearch {
             lvSunday.setAdapter(adapterSunday);
             Utility.setListViewHeightBasedOnChildren(lvSunday);
         }
+        //#endif
     }
 }
