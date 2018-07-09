@@ -1,41 +1,40 @@
 delta dStaticCategory {
 	modifies br.unb.cic.reminders.model.db.DBConstants {
 		removes DROP_TABLE_STATEMENTS;
+		//#ifdef staticCategory
 		adds public static String DROP_TABLE_STATEMENTS[] = { "DROP TABLE IF EXISTS REMINDER", "DROP TABLE IF EXISTS CATEGORY" };
-
+		//#endif
 		removes CREATE_TABLE_STATEMENTS;
+		//#ifdef staticCategory
 		adds public static String CREATE_TABLE_STATEMENTS[] = { "CREATE TABLE CATEGORY("
 			+ "PK INTEGER PRIMARY KEY AUTOINCREMENT, " + "NAME VARCHAR(50) NOT NULL, " + "LOCKED INT NOT NULL);",
 
 			"CREATE TABLE REMINDER ( " + "PK INTEGER PRIMARY KEY AUTOINCREMENT, " + "TEXT VARCHAR(50) NOT NULL,"
 					+ "DETAILS VARCHAR(50) NULL,"
 					+ tableStatement() + "DONE INTEGER NOT NULL);", };
-
 		modifies tableStatement() {
 			return "FK_CATEGORY INTEGER NOT NULL REFERENCES CATEGORY ON DELETE CASCADE," + original();
 		}
-
 		adds public static final String SELECT_CATEGORIES = "SELECT PK, NAME FROM CATEGORY";
 		adds public static final String SELECT_CATEGORY_BY_NAME = "SELECT PK, NAME FROM CATEGORY WHERE NAME = ?";
 		adds public static final String SELECT_CATEGORY_BY_ID = "SELECT PK, NAME FROM CATEGORY WHERE PK = ?";
-
 		adds public static final String SELECT_REMINDERS_BY_CATEGORY = "SELECT * FROM REMINDER WHERE FK_CATEGORY = ?";
 		adds public static String DELETE_CATEGORIES = "DELETE FROM CATEGORY WHERE PK = ?";
-
 		adds public static final String PREDEFINED_CATEGORIES[] = { "INSERT INTO CATEGORY VALUES (NULL,'College',1);",
 			"INSERT INTO CATEGORY VALUES (NULL,'Job',1);", "INSERT INTO CATEGORY VALUES (NULL,'Personal',1);" };
-
 		adds public static String CATEGORY_TABLE = "CATEGORY";
 		adds public static String CATEGORY_PK_COLUMN = "PK";
 		adds public static String CATEGORY_NAME_COLUMN = "NAME";
 		adds public static String CATEGORY_LOCKED_COLUMN = "LOCKED";
-
 		adds public static String REMINDER_FK_CATEGORY_COLUMN = "FK_CATEGORY";
+		//#endif
 	}
 	modifies br.unb.cic.framework.persistence.GenericDAO {
+		//#ifdef staticCategory
 		adds import br.unb.cic.reminders.model.db.DefaultCategoryDAO;
-
+		//#endif
 		removes persist(T entity);
+		//#ifdef staticCategory
 		adds protected Long persist(T entity) throws DBInvalidEntityException, DBException {
 			try {
 				db = dbHelper.getWritableDatabase();
@@ -97,9 +96,10 @@ delta dStaticCategory {
 				dbHelper.close();
 			}
 		}
-
+		//#endif
 	}
 	adds {
+		//#ifdef staticCategory
 		package br.unb.cic.reminders.controller;
 
 		import android.content.Context;
@@ -130,8 +130,10 @@ delta dStaticCategory {
 			}
 
 		}
+		//#endif
 	}
 	modifies br.unb.cic.reminders.controller.Controller {
+		//#ifdef staticCategory
 		adds import br.unb.cic.reminders.model.Category;
 		adds public List<Category> listCategories() throws Exception {
 			try {
@@ -165,8 +167,10 @@ delta dStaticCategory {
 				throw e;
 			}
 		}
+		//#endif
 	}
 	modifies br.unb.cic.reminders.model.cp.ReminderContentProvider {
+		//#ifdef staticCategory
 		adds import br.unb.cic.reminders.model.Category;
 		adds import br.unb.cic.reminders.model.db.CategoryDAO;
 		adds public static final String category() {
@@ -188,13 +192,18 @@ delta dStaticCategory {
 			reminder.setCategory(category);
 			return reminder;
 		}
+		//#endif
 	}
 	modifies br.unb.cic.reminders.model.db.DBFactory {
+		//#ifdef staticCategory
 		adds public abstract CategoryDAO createCategoryDAO();
+		//#endif
 	}
 	modifies br.unb.cic.reminders.model.db.DBHelper {
 		removes onCreate(SQLiteDatabase db);
-		adds @Override public void onCreate(SQLiteDatabase db) {
+		//#ifdef staticCategory
+		adds @Override 
+		public void onCreate(SQLiteDatabase db) {
 			try {
 				for (String sql : DBConstants.CREATE_TABLE_STATEMENTS) {
 					Log.i(DBHelper.class.getCanonicalName(), sql);
@@ -209,8 +218,10 @@ delta dStaticCategory {
 				Log.v(DBHelper.class.getName(), e.getMessage());
 			}
 		}
+		//#endif
 	}
 	adds {
+		//#ifdef staticCategory
 		package br.unb.cic.reminders.model.db;
 
 		import java.util.List;
@@ -226,8 +237,10 @@ delta dStaticCategory {
 
 			public Category findCategoryById(Long id) throws DBException;
 		}
+		//#endif
 	}
 	adds {
+		//#ifdef staticCategory
 		package br.unb.cic.reminders.model.db;
 
 		import java.util.ArrayList;
@@ -324,13 +337,18 @@ delta dStaticCategory {
 				return category;
 			}
 		}
+		//#endif
 	}
 	modifies br.unb.cic.reminders.model.db.DefaultDBFactory {
-		adds @Override public CategoryDAO createCategoryDAO() {
+		//#ifdef staticCategory
+		adds @Override 
+		public CategoryDAO createCategoryDAO() {
 			return new DefaultCategoryDAO(context);
 		}
+		//#endif
 	}
 	modifies br.unb.cic.reminders.model.db.DefaultReminderDAO {
+		//#ifdef staticCategory
 		adds import br.unb.cic.reminders.model.Category;
 		adds public List<Reminder> listRemindersByCategory(Category category) throws DBException {
 			try {
@@ -347,7 +365,9 @@ delta dStaticCategory {
 				dbHelper.close();
 			}
 		}
+		//#endif
 		removes listReminders();
+		//#ifdef staticCategory
 		adds public List<Reminder> listReminders() throws DBException {
 			try {
 				db = dbHelper.getReadableDatabase();
@@ -363,7 +383,9 @@ delta dStaticCategory {
 				dbHelper.close();
 			}
 		}
+		//#endif
 		removes deleteReminder(Reminder reminder);
+		//#ifdef staticCategory
 		adds public void deleteReminder(Reminder reminder) throws DBException {
 			try {
 				db = dbHelper.getWritableDatabase();
@@ -387,12 +409,16 @@ delta dStaticCategory {
 
 			return reminder;
 		}
+		//#endif
 	}
 	modifies br.unb.cic.reminders.model.db.ReminderDAO {
+		//#ifdef staticCategory
 		adds import br.unb.cic.reminders.model.Category;
 		adds public List<Reminder> listRemindersByCategory(Category category) throws DBException;
+		//#endif
 	}
 	adds {
+		//#ifdef staticCategory
 		package br.unb.cic.reminders.model;
 
 		import br.unb.cic.framework.persistence.DBTypes;
@@ -457,8 +483,10 @@ delta dStaticCategory {
 				return name;
 			}
 		}
+		//#endif
 	}
 	modifies br.unb.cic.reminders.model.Reminder {
+		//#ifdef staticCategory
 		adds @Column(column = "FK_CATEGORY", type = DBTypes.LONG)
 			@ForeignKey(mappedBy = "id")
 			private Category category;
@@ -471,10 +499,14 @@ delta dStaticCategory {
 		modifies isValid() {
 			return(category != null && original());
 		}
+		//#endif
 	}
 	modifies br.unb.cic.reminders.ReminderMainActivity {
+		//#ifdef staticCategory
 		adds import br.unb.cic.reminders.view.FilterListFragment;
+		//#endif
 		removes createUI();
+		//#ifdef staticCategory
 		adds private void createUI() {
 			ft = getFragmentManager().beginTransaction();
 			listReminderFragment = new ReminderListFragment();
@@ -484,8 +516,10 @@ delta dStaticCategory {
 			ft.add(R.id.listCategories, listCategoryFragment);
 			ft.commit();
 		}
+		//#endif
 	}
 	modifies br.unb.cic.reminders.view.EditReminderActivity {
+		//#ifdef staticCategory
 		adds import br.unb.cic.reminders.model.Category;
 		modifies initializeValues(Intent intent) {
 			original(intent);
@@ -496,8 +530,11 @@ delta dStaticCategory {
 			category.setName(categoryName);
 			spinnerCategory.setSelection(categoryToIndex(category));
 		}
+		//#endif
 		removes persist(Reminder reminder);
-		adds @Override protected void persist(Reminder reminder) {
+		//#ifdef staticCategory
+		adds @Override 
+		protected void persist(Reminder reminder) {
 			try {
 				Category category = findCategory(reminder.getCategory());
 				reminder.setCategory(category);
@@ -530,8 +567,10 @@ delta dStaticCategory {
 			}
 			return null;
 		}
+		//#endif
 	}
 	adds {
+		//#ifdef staticCategory
 		package br.unb.cic.reminders.view;
 
 		import java.util.List;
@@ -577,11 +616,16 @@ delta dStaticCategory {
 			}
 
 		}
+		//#endif
 	}
 	modifies br.unb.cic.reminders.view.AddReminderActivity {
+		//#ifdef staticCategory
 		adds import br.unb.cic.reminders.model.Category;
+		//#endif
 		removes persist(Reminder reminder);
-		adds @Override protected void persist(Reminder reminder) {
+		//#ifdef staticCategory
+		adds @Override 
+		protected void persist(Reminder reminder) {
 			try {
 				Category category = findCategory(reminder.getCategory());
 				reminder.setCategory(category);
@@ -603,8 +647,10 @@ delta dStaticCategory {
 			}
 			return null;
 		}
+		//#endif
 	}
 	modifies br.unb.cic.reminders.view.ExternalAddReminderActivity {
+		//#ifdef staticCategory
 		adds import br.unb.cic.reminders.model.Category;
 		adds private Category newCategory = null;
 		adds private void setNewCategory(Intent intent) throws Exception {
@@ -626,7 +672,8 @@ delta dStaticCategory {
 			original();
 			spinnerCategory.setSelection(categoryToIndex(reminder.getCategory()));
 		}
-		adds @Override protected List<Category> getCategories() throws Exception {
+		adds @Override 
+		protected List<Category> getCategories() throws Exception {
 			List<Category> categories = super.getCategories();
 			return categories;
 		}
@@ -649,8 +696,10 @@ delta dStaticCategory {
 			}
 			return 0;
 		}
+		//#endif
 	}
 	adds {
+		//#ifdef staticCategory
 		package br.unb.cic.reminders.view;
 
 		import java.util.ArrayList;
@@ -784,8 +833,10 @@ delta dStaticCategory {
 			}
 
 		}
+		//#endif
 	}
 	modifies br.unb.cic.reminders.view.ReminderListFragment {
+		//#ifdef staticCategory
 		adds import android.app.FragmentTransaction;
 		adds public void reloadFilterListFragment() {
 			Fragment currentFragment = getActivity().getFragmentManager().findFragmentById(R.id.listCategories);
@@ -796,7 +847,9 @@ delta dStaticCategory {
 				fragTransaction.commit();
 			}
 		}
+		//#endif
 		removes onContextItemSelected(MenuItem item);
+		//#ifdef staticCategory
 		adds @Override
 		public boolean onContextItemSelected(MenuItem item) {
 			if (item.getGroupId() == R.id.context_menu_reminder) { 
@@ -834,8 +887,10 @@ delta dStaticCategory {
 			editIntent.putExtra("category_id", Long.toString(reminder.getCategory().getId()));
 			return editIntent;
 		}
+		//#endif
 	}
 	modifies br.unb.cic.reminders.view.ReminderActivity {
+		//#ifdef staticCategory
 		adds import br.unb.cic.reminders.model.Category;
 		adds protected Spinner spinnerCategory;
 		modifies initializeFields() {
@@ -887,8 +942,10 @@ delta dStaticCategory {
 
 			return spinner;
 		}
+		//#endif
 	}
 	modifies br.unb.cic.reminders.view.ReminderAddActivity {
+		//#ifdef staticCategory
 		adds import br.unb.cic.reminders.model.Category;
 		adds private Category selectedCategory;
 		adds private Spinner spinnerCategory;
@@ -962,14 +1019,19 @@ delta dStaticCategory {
 			}
 			return 0;
 		}
+		//#endif
 	}
 	modifies br.unb.cic.reminders.view.ReminderFilterArrayAdapter {
 		removes ReminderFilterArrayAdapter(Context context, List<ReminderFilter> objects);
+		//#ifdef staticCategory
 		adds public ReminderFilterArrayAdapter(Context context, List<ReminderFilter> objects) {
 			super(context, R.layout.category_row, objects);
 		}
+		//#endif
 		removes getView(int position, View convertView, ViewGroup parent);
-		adds @Override public View getView(int position, View convertView, ViewGroup parent) {
+		//#ifdef staticCategory
+		adds @Override 
+		public View getView(int position, View convertView, ViewGroup parent) {
 			LinearLayout filterRow;
 
 			if (convertView == null) {
@@ -990,5 +1052,6 @@ delta dStaticCategory {
 
 			return filterRow;
 		}
+		//#endif
 	}
 }
