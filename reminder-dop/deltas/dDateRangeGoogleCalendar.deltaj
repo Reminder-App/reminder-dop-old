@@ -1,5 +1,6 @@
 delta dDateRangeGoogleCalendar {
     modifies br.unb.cic.reminders.calendar.CalendarEventCreator {
+        //#if dateRange && googleCalendar
         modifies addEventCalendar(Reminder reminder, Context ctx) {
             long startMilliseconds, endmilliseconds;
             Calendar calStart;
@@ -32,5 +33,6 @@ delta dDateRangeGoogleCalendar {
             } else
                 throw new CalendarNotFoundException();
         }
+        //#endif
     }
 }
