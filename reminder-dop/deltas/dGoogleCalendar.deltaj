@@ -1,5 +1,6 @@
 delta dGoogleCalendar {
 	adds {
+		//#ifdef googleCalendar
 		package br.unb.cic.reminders.calendar;
 
 		import java.text.ParseException;
@@ -85,14 +86,14 @@ delta dGoogleCalendar {
 				}
 			}
 		}
+		//#endif
 	}
 	modifies br.unb.cic.reminders.view.ReminderActivity {
+		//#ifdef googleCalendar
 		adds import br.unb.cic.reminders.calendar.CalendarEventCreator;
 		adds import br.unb.cic.reminders.model.CalendarNotFoundException;
 		adds private CalendarEventCreator creator;
 		adds private CheckBox cbCalendar;
-
-
 		modifies initializeFields() {
 			cbCalendar = (CheckBox) findViewById(R.id.cbCalendar);
 			original();
@@ -104,8 +105,10 @@ delta dGoogleCalendar {
 				creator.addEventCalendar(reminder, getApplicationContext());
 			}
 		}
+		//#endif
 	}
 	adds {
+		//#ifdef googleCalendar
 		package br.unb.cic.reminders.model;
 
 		public class CalendarNotFoundException extends RuntimeException {
@@ -116,5 +119,6 @@ delta dGoogleCalendar {
 				super("Google Account Not Found");
 			}
 		}
+		//#endif
 	}
 }
