@@ -1,6 +1,7 @@
+//#if staticCategory && priority
 delta dStaticCategoryPriority {
 	modifies br.unb.cic.reminders.view.FilterListFragment {
-		//#if staticCategory && priority
+		 
 		adds import br.unb.cic.reminders.controller.PriorityFilter;
 		adds import br.unb.cic.reminders.model.Priority;
 		modifies listOfFilters() {
@@ -13,9 +14,14 @@ delta dStaticCategoryPriority {
 			filters.add(lowPriorityFilter);
 			return filters;
 		}
+		
+	}
+	//#ifdef reminder
+	modifies br.unb.cic.reminders.view.ReminderListFragment {
+		//#ifdef fixedDate
+		removes reloadFilterListFragment();
 		//#endif
 	}
-	modifies br.unb.cic.reminders.view.ReminderListFragment {
-		removes reloadFilterListFragment();
-	}
+	//#endif
 }
+//#endif
