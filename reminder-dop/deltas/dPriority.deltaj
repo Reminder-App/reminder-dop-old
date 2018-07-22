@@ -1,13 +1,16 @@
+//#ifdef priority
 delta dPriority {
+	//#ifdef reminder
 	modifies br.unb.cic.reminders.view.ReminderFilterArrayAdapter {
+		//#ifdef fixedDate
 		removes ReminderFilterArrayAdapter(Context context, List<ReminderFilter> objects);
-		//#ifdef priority
+		//#endif
 		adds public ReminderFilterArrayAdapter(Context context, List<ReminderFilter> objects) {
 			super(context, R.layout.category_row, objects);
 		}
-		//#endif
+		//#if fixedDate
 		removes getView(int position, View convertView, ViewGroup parent);
-		//#ifdef priority
+		//#endif
 		adds @Override 
 		public View getView(int position, View convertView, ViewGroup parent) {
 			LinearLayout filterRow;
@@ -30,14 +33,13 @@ delta dPriority {
 
 			return filterRow;
 		}
-		//#endif
 	}
 	modifies br.unb.cic.reminders.ReminderMainActivity {
-		//#ifdef priority
+		 
 		adds import br.unb.cic.reminders.view.FilterListFragment;
-		//#endif
+		//#ifdef fixedDate
 		removes createUI();
-		//#ifdef priority
+		//#endif
 		adds private void createUI() {
 			FragmentTransaction ft = getFragmentManager().beginTransaction();
 			ReminderListFragment listReminderFragment = new ReminderListFragment();
@@ -47,10 +49,9 @@ delta dPriority {
 			ft.add(R.id.listCategories, listCategoryFragment);
 			ft.commit();
 		}
-		//#endif
 	}
+	//#endif
 	adds {
-		//#ifdef priority
 		package br.unb.cic.reminders.view;
 
 		import java.util.ArrayList;
@@ -176,18 +177,16 @@ delta dPriority {
 		}
 
 		}
-		//#endif
 	}
+	//#ifdef reminder
 	modifies br.unb.cic.reminders.model.db.DBConstants {
-		//#ifdef priority
 		modifies tableStatement() {
 			return original() + "PRIORITY INTEGER NOT NULL,";
 		}
 		adds public static String REMINDER_PRIORITY_COLUMN = "PRIORITY";
-		//#endif
 	}
+	//#endif
 	adds {
-		//#ifdef priority
 		package br.unb.cic.reminders.controller;
 
 		import android.content.Context;
@@ -214,10 +213,11 @@ delta dPriority {
 			}
 
 		}
-		//#endif
+		
 	}
+	//#ifdef reminder
 	modifies br.unb.cic.reminders.model.db.DefaultReminderDAO {
-		//#ifdef priority
+		 
 		adds import br.unb.cic.reminders.model.Priority;
 		modifies createReminderCursor(Cursor cursor) {
 			Reminder reminder = original(cursor);
@@ -225,10 +225,10 @@ delta dPriority {
 			reminder.setPriority(Priority.fromCode(priority));
 			return reminder;
 		}
-		//#endif
+		 
 	}
+	//#endif
 	adds {
-		//#ifdef priority
 		package br.unb.cic.reminders.model;
 
 		public enum Priority {
@@ -262,10 +262,10 @@ delta dPriority {
 			}
 
 		}
-		//#endif
 	}
+	//#ifdef reminder
 	modifies br.unb.cic.reminders.model.Reminder {
-		//#ifdef priority
+		
 		adds @Column(column = "PRIORITY", type = DBTypes.INT) private Priority priority;
 		adds public int getPriority() {
 			return priority.getCode();
@@ -276,20 +276,20 @@ delta dPriority {
 		modifies isValid() {
 			return(priority != null && original());
 		}
-		//#endif
+		
 	}
 	modifies br.unb.cic.reminders.view.EditReminderActivity {
-		//#ifdef priority
+		 
 		adds import br.unb.cic.reminders.model.Priority;
 		modifies initializeValues(Intent intent) {
 			original(intent);
 			String priority = intent.getStringExtra("priority");
 			spinnerPriority.setSelection(Priority.fromCode(Integer.parseInt(priority, 10)).getCode());
 		}
-		//#endif
+		 
 	}
 	modifies br.unb.cic.reminders.view.ExternalAddReminderActivity {
-		//#ifdef priority
+		 
 		adds import br.unb.cic.reminders.model.Priority;
 		modifies reminderFromIntent(Intent intent) {
 			original(intent);
@@ -300,11 +300,12 @@ delta dPriority {
 			original();
 			spinnerPriority.setSelection(reminder.getPriority());
 		}
-		//#endif
+		 
 	}
 	modifies br.unb.cic.reminders.view.ReminderArrayAdapter {
+		//#ifdef fixedDate
 		removes getView(int position, View convertView, ViewGroup parent);
-		//#ifdef priority
+		//#endif
 		adds @Override 
 		public View getView(int position, View convertView, ViewGroup parent) {
 			LinearLayout reminderRow;
@@ -329,10 +330,9 @@ delta dPriority {
 				tvReminder.setTypeface(null, Typeface.BOLD);
 			return reminderRow;
 		}
-		//#endif
 	}
 	modifies br.unb.cic.reminders.view.ReminderListFragment {
-		//#ifdef priority
+		 
 		adds import android.app.FragmentTransaction;
 		adds public void reloadFilterListFragment() {
 			Fragment currentFragment = getActivity().getFragmentManager().findFragmentById(R.id.listCategories);
@@ -343,9 +343,9 @@ delta dPriority {
 				fragTransaction.commit();
 			}
 		}
-		//#endif
+		//#ifdef fixedDate
 		removes onContextItemSelected(MenuItem item);
-		//#ifdef priority
+		//#endif
 		adds @Override
 		public boolean onContextItemSelected(MenuItem item) {
 			if (item.getGroupId() == R.id.context_menu_reminder) { 
@@ -381,11 +381,10 @@ delta dPriority {
 			Intent editIntent = original(reminder);
 			editIntent.putExtra("priority", Integer.toString(reminder.getPriority()));
 			return editIntent;
-		}
-		//#endif
+		} 
 	}
 	modifies br.unb.cic.reminders.view.ReminderActivity {
-		//#ifdef priority
+		
 		adds import br.unb.cic.reminders.model.Priority;
 		adds private Priority selectedPriority;
 		adds protected Spinner spinnerPriority;
@@ -426,10 +425,10 @@ delta dPriority {
 
 			return spinner;
 		}
-		//#endif
+		 
 	}
 	modifies br.unb.cic.reminders.view.ReminderAddActivity {
-		//#ifdef priority
+		 
 		adds import br.unb.cic.reminders.model.Priority;
 		adds private Priority selectedPriority;
 		adds private Spinner spinnerPriority;
@@ -486,6 +485,7 @@ delta dPriority {
 
 			return spinner;
 		}
-		//#endif
 	}
+	//#endif
 }
+//#endif
