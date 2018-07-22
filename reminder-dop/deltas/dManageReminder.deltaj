@@ -1,6 +1,6 @@
+//#if reminder || fixedDate
 delta dManageReminder {
 	adds {
-		//#ifdef reminder
 		package br.unb.cic.reminders;
 
 		import android.app.Activity;
@@ -55,10 +55,10 @@ delta dManageReminder {
 			}
 
 		}
-		//#endif
+		
 	}
 	adds {
-		//#ifdef reminder
+		
 		package util;
 
 		import java.text.ParseException;
@@ -73,10 +73,10 @@ delta dManageReminder {
 			}
 
 		}
-		//#endif
+		
 	}
 	adds {
-		//#ifdef reminder
+		
 		package util;
 
 		import android.text.Editable;
@@ -130,10 +130,10 @@ delta dManageReminder {
 			}
 
 		}
-		//#endif
+		
 	}
 	adds {
-		//#ifdef reminder
+		
 		package util;
 
 		public class Patterns {
@@ -144,10 +144,10 @@ delta dManageReminder {
 
 			public static final String HOUR_PATTERN = "([01]?[0-9]|2[0-3]):[0-5][0-9]";
 		}
-		//#endif
+		
 	}
 	adds {
-		//#ifdef reminder
+		
 		package util;
 
 		import android.view.View;
@@ -177,10 +177,10 @@ delta dManageReminder {
 			}
 
 		}
-		//#endif
+		
 	}
 	adds {
-		//#ifdef reminder
+		
 		package br.unb.cic.framework.persistence.annotations;
 
 		import java.lang.annotation.ElementType;
@@ -199,10 +199,10 @@ delta dManageReminder {
 
 			DBTypes type();
 		}
-		//#endif
+		
 	}
 	adds {
-		//#ifdef reminder
+		
 		package br.unb.cic.framework.persistence.annotations;
 
 		import java.lang.annotation.ElementType;
@@ -215,10 +215,10 @@ delta dManageReminder {
 		public @interface Entity {
 			String table();
 		}
-		//#endif
+		
 	}
 	adds {
-		//#ifdef reminder
+		
 		package br.unb.cic.framework.persistence.annotations;
 
 		import java.lang.annotation.ElementType;
@@ -231,10 +231,10 @@ delta dManageReminder {
 		public @interface ForeignKey {
 			String mappedBy();
 		}
-		//#endif
+		
 	}
 	adds {
-		//#ifdef reminder
+		
 		package br.unb.cic.framework.persistence;
 
 		public class DBException extends Exception {
@@ -242,10 +242,10 @@ delta dManageReminder {
 			private static final long serialVersionUID = 1L;
 
 		}
-		//#endif
+		
 	}
 	adds {
-		//#ifdef reminder
+		
 		package br.unb.cic.framework.persistence;
 
 		public class DBInvalidEntityException extends Exception {
@@ -256,19 +256,19 @@ delta dManageReminder {
 				super(e.getClass().getCanonicalName() + "is not a valid entity according to the persistence framework.");
 			}
 		}
-		//#endif
+		
 	}
 	adds {
-		//#ifdef reminder
+		
 		package br.unb.cic.framework.persistence;
 
 		public enum DBTypes {
 			INT, LONG, TEXT;
 		}
-		//#endif
+		
 	}
 	adds {
-		//#ifdef reminder
+		
 		package br.unb.cic.framework.persistence;
 
 		import java.lang.reflect.Field;
@@ -422,10 +422,10 @@ delta dManageReminder {
 				return "get" + field.substring(0, 1).toUpperCase() + field.substring(1);
 			}
 		}
-		//#endif
+		
 	}
 	adds {
-		//#ifdef reminder
+		
 		package br.unb.cic.reminders.model;
 
 		public class InvalidTextException extends InvalidFormatException {
@@ -437,10 +437,10 @@ delta dManageReminder {
 			}
 
 		}
-		//#endif
+		
 	}
 	adds {
-		//#ifdef reminder
+		
 		package br.unb.cic.reminders.model;
 
 		public class InvalidFormatException extends RuntimeException {
@@ -451,10 +451,10 @@ delta dManageReminder {
 				super(o + " is in the wrong format");
 			}
 		}
-		//#endif
+		
 	}
 	adds {
-		//#ifdef reminder
+		
 		package br.unb.cic.reminders.model;
 
 		public class InvalidDateException extends InvalidFormatException {
@@ -466,10 +466,10 @@ delta dManageReminder {
 			}
 
 		}
-		//#endif
+		
 	}
 	adds {
-		//#ifdef reminder
+		
 		package br.unb.cic.reminders.model.db;
 
 		import android.content.Context;
@@ -516,10 +516,10 @@ delta dManageReminder {
 			}
 
 		}
-		//#endif
+		
 	}
 	adds {
-		//#ifdef reminder
+		
 		package br.unb.cic.reminders.model.db;
 
 		import java.util.List;
@@ -539,10 +539,10 @@ delta dManageReminder {
 
 			public void persistReminder(Reminder reminder) throws DBException;
 		}
-		//#endif
+		
 	}
 	adds {
-		//#ifdef reminder
+		
 		package br.unb.cic.reminders.model.db;
 
 		import java.util.ArrayList;
@@ -657,10 +657,10 @@ delta dManageReminder {
 			}
 
 		}
-		//#endif
+		
 	}
 	adds {
-		//#ifdef reminder
+		
 		package br.unb.cic.reminders.view;
 
 		import java.util.Calendar;
@@ -718,10 +718,10 @@ delta dManageReminder {
 			}
 
 		}
-		//#endif
+		
 	}
 	adds {
-		//#ifdef reminder
+		
 		package br.unb.cic.reminders.view;
 
 		import br.unb.cic.reminders.controller.ReminderFilter;
@@ -731,10 +731,10 @@ delta dManageReminder {
 			public void onSelectedFilterChanged(ReminderFilter filter);
 
 		}
-		//#endif
+		
 	}
 	adds {
-		//#ifdef reminder
+		
 		package br.unb.cic.reminders.view;
 
 		import br.unb.cic.reminders.model.InvalidFormatException;
@@ -748,10 +748,10 @@ delta dManageReminder {
 			}
 
 		}
-		//#endif
+		
 	}
 	adds {
-		//#ifdef reminder
+		
 		package br.unb.cic.reminders.view;
 
 		import java.util.Arrays;
@@ -947,10 +947,10 @@ delta dManageReminder {
 			}
 
 		}
-		//#endif
+		
 	}
 	adds {
-		//#ifdef reminder
+		
 		package br.unb.cic.reminders.view;
 
 		import java.util.Calendar;
@@ -1153,10 +1153,10 @@ delta dManageReminder {
 			}
 
 		}
-		//#endif
+		
 	}
 	adds {
-		//#ifdef reminder
+		
 		package br.unb.cic.reminders.view;
 
 		import java.util.List;
@@ -1199,10 +1199,10 @@ delta dManageReminder {
 			}
 
 		}
-		//#endif
+		
 	}
 	adds {
-		//#ifdef reminder
+		
 		package br.unb.cic.reminders.view;
 
 		import java.util.ArrayList;
@@ -1382,10 +1382,10 @@ delta dManageReminder {
 				updateListView(filter);
 			}
 		}
-		//#endif
+		
 	}
 	adds {
-		//#ifdef reminder
+		
 		package br.unb.cic.reminders.view;
 
 		import java.util.Iterator;
@@ -1412,10 +1412,10 @@ delta dManageReminder {
 			}
 
 		}
-		//#endif
+		
 	}
 	adds {
-		//#ifdef reminder
+		
 		package br.unb.cic.reminders.view;
 
 		import java.util.Calendar;
@@ -1474,10 +1474,10 @@ delta dManageReminder {
 			}
 
 		}
-		//#endif
+		
 	}
 	adds {
-		//#ifdef reminder
+		
 		package br.unb.cic.reminders.controller;
 
 		import android.content.Context;
@@ -1502,10 +1502,10 @@ delta dManageReminder {
 			}
 
 		}
-		//#endif
+		
 	}
 	adds {
-		//#ifdef reminder
+		
 		package br.unb.cic.reminders.controller;
 
 		import java.util.ArrayList;
@@ -1554,10 +1554,10 @@ delta dManageReminder {
 
 			abstract public String getName();
 		}
-		//#endif
+		
 	}
 	adds {
-		//#ifdef reminder
+		
 		package br.unb.cic.reminders.model;
 
 		import java.util.regex.Matcher;
@@ -1679,10 +1679,10 @@ delta dManageReminder {
 			}
 
 		}
-		//#endif
+		
 	}
 	adds {
-		//#ifdef reminder
+		
 		package br.unb.cic.reminders.model.db;
 
 		public class DBConstants {
@@ -1707,10 +1707,10 @@ delta dManageReminder {
 			public static String REMINDER_DONE_COLUMN = "DONE";
 
 		}
-		//#endif
+		
 	}
 	adds {
-		//#ifdef reminder
+		
 		package br.unb.cic.reminders.model.db;
 
 		import android.content.Context;
@@ -1728,10 +1728,10 @@ delta dManageReminder {
 
 			public abstract ReminderDAO createReminderDAO();
 		}
-		//#endif
+		
 	}
 	adds {
-		//#ifdef reminder
+		
 		package br.unb.cic.reminders.model.db;
 
 		import android.content.Context;
@@ -1747,10 +1747,10 @@ delta dManageReminder {
 				return new DefaultReminderDAO(context);
 			}
 		}
-		//#endif
+		
 	}
 	adds {
-		//#ifdef reminder
+		
 		package br.unb.cic.reminders.model.cp;
 
 		import android.content.ContentProvider;
@@ -1845,10 +1845,10 @@ delta dManageReminder {
 			}
 
 		}
-		//#endif
+		
 	}
 	adds {
-		//#ifdef reminder
+		
 		package br.unb.cic.reminders.view;
 
 		import java.util.List;
@@ -1873,10 +1873,10 @@ delta dManageReminder {
 			}
 
 		}
-		//#endif
+		
 	}
 	adds {
-		//#ifdef reminder
+		
 		package br.unb.cic.reminders.view;
 
 		import java.util.List;
@@ -1924,10 +1924,10 @@ delta dManageReminder {
 				}
 			}
 		}
-		//#endif
+		
 	}
 	adds {
-		//#ifdef reminder
+		
 		package br.unb.cic.reminders.view;
 
 		import java.util.List;
@@ -2011,10 +2011,10 @@ delta dManageReminder {
 			}
 
 		}
-		//#endif
+		
 	}
 	adds {
-		//#ifdef reminder
+		
 		package br.unb.cic.reminders.view;
 
 		import java.text.ParseException;
@@ -2315,10 +2315,10 @@ delta dManageReminder {
 			protected abstract void persist(Reminder reminder);
 
 		}
-		//#endif
+		
 	}
 	adds {
-		//#ifdef reminder
+		
 		package br.unb.cic.reminders.controller;
 
 		import java.util.List;
@@ -2390,6 +2390,7 @@ delta dManageReminder {
 				throw new RuntimeException("not implemented yet");
 			}
 		}
-		//#endif
+		
 	}
 }
+//#endif
