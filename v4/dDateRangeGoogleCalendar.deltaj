@@ -5,9 +5,7 @@ delta dDateRangeGoogleCalendar {
 		modifies addEventCalendar(Reminder reminder, Context ctx) {
 		    long startMilliseconds, endmilliseconds;
 		    Calendar calStart;
-		    //#ifdef dateRange
 		    Calendar calFinal;
-		    //#endif
 		    startMilliseconds = endmilliseconds = 0;
 
 		    getUserMainCalendar(ctx);
@@ -17,13 +15,13 @@ delta dDateRangeGoogleCalendar {
 			calStart = Calendar.getInstance();
 			calFinal = Calendar.getInstance();
 			Date dateStart = DateFormat.dateFormater(reminder.getDateStart() + " " + reminder.getHourStart());
-			//#ifdef dateRange
+
 			Date dateFinal = DateFormat.dateFormater(reminder.getDateFinal() + " " + reminder.getHourFinal());
-			//#endif
+
 			calStart.setTime(dateStart);
-			//#ifdef dateRange
+
 			calFinal.setTime(dateFinal);
-			//#endif
+			
 
 			startMilliseconds = calStart.getTimeInMillis();
 			endmilliseconds = calFinal.getTimeInMillis();

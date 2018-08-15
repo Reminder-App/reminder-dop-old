@@ -1,7 +1,7 @@
-//#ifdef reminder || fixedDate
+//#ifdef reminder && fixedDate
 delta dManageReminder {
 	adds {
-		
+
 		package br.unb.cic.reminders;
 
 		import android.app.Activity;
@@ -55,10 +55,10 @@ delta dManageReminder {
 			}
 
 		}
-		 
+
 	}
 	adds {
-		 
+
 		package util;
 
 		import java.text.ParseException;
@@ -73,10 +73,10 @@ delta dManageReminder {
 			}
 
 		}
-		 
+
 	}
 	adds {
-		 
+
 		package util;
 
 		import android.text.Editable;
@@ -129,10 +129,10 @@ delta dManageReminder {
 			}
 
 		}
-		 
+
 	}
 	adds {
-		 
+
 		package util;
 
 		public class Patterns {
@@ -143,10 +143,10 @@ delta dManageReminder {
 
 			public static final String HOUR_PATTERN = "([01]?[0-9]|2[0-3]):[0-5][0-9]";
 		}
-		 
+
 	}
 	adds {
-		 
+
 		package util;
 
 		import android.view.View;
@@ -176,10 +176,10 @@ delta dManageReminder {
 			}
 
 		}
-		 
+
 	}
 	adds {
-		 
+
 		package br.unb.cic.framework.persistence.annotations;
 
 		import java.lang.annotation.ElementType;
@@ -198,10 +198,10 @@ delta dManageReminder {
 
 			DBTypes type();
 		}
-		 
+
 	}
 	adds {
-		 
+
 		package br.unb.cic.framework.persistence.annotations;
 
 		import java.lang.annotation.ElementType;
@@ -214,10 +214,10 @@ delta dManageReminder {
 		public @interface Entity {
 			String table();
 		}
-		 
+
 	}
 	adds {
-		 
+
 		package br.unb.cic.framework.persistence.annotations;
 
 		import java.lang.annotation.ElementType;
@@ -230,10 +230,10 @@ delta dManageReminder {
 		public @interface ForeignKey {
 			String mappedBy();
 		}
-		 
+
 	}
 	adds {
-		 
+
 		package br.unb.cic.framework.persistence;
 
 		public class DBException extends Exception {
@@ -241,10 +241,10 @@ delta dManageReminder {
 			private static final long serialVersionUID = 1L;
 
 		}
-		 
+
 	}
 	adds {
-		 
+
 		package br.unb.cic.framework.persistence;
 
 		public class DBInvalidEntityException extends Exception {
@@ -255,19 +255,19 @@ delta dManageReminder {
 				super(e.getClass().getCanonicalName() + "is not a valid entity according to the persistence framework.");
 			}
 		}
-		 
+
 	}
 	adds {
-		 
+
 		package br.unb.cic.framework.persistence;
 
 		public enum DBTypes {
 			INT, LONG, TEXT;
 		}
-		 
+
 	}
 	adds {
-		 
+
 		package br.unb.cic.framework.persistence;
 
 		import java.lang.reflect.Field;
@@ -421,10 +421,10 @@ delta dManageReminder {
 				return "get" + field.substring(0, 1).toUpperCase() + field.substring(1);
 			}
 		}
-		 
+
 	}
 	adds {
-		 
+
 		package br.unb.cic.reminders.model;
 
 		public class InvalidTextException extends InvalidFormatException {
@@ -436,10 +436,10 @@ delta dManageReminder {
 			}
 
 		}
-		 
+
 	}
 	adds {
-		 
+
 		package br.unb.cic.reminders.model;
 
 		public class InvalidFormatException extends RuntimeException {
@@ -450,10 +450,10 @@ delta dManageReminder {
 				super(o + " is in the wrong format");
 			}
 		}
-		 
+
 	}
 	adds {
-		 
+
 		package br.unb.cic.reminders.model;
 
 		public class InvalidDateException extends InvalidFormatException {
@@ -465,10 +465,10 @@ delta dManageReminder {
 			}
 
 		}
-		 
+
 	}
 	adds {
-		 
+
 		package br.unb.cic.reminders.model.db;
 
 		import android.content.Context;
@@ -515,10 +515,10 @@ delta dManageReminder {
 			}
 
 		}
-		 
+
 	}
 	adds {
-		 
+
 		package br.unb.cic.reminders.model.db;
 
 		import java.util.List;
@@ -538,10 +538,10 @@ delta dManageReminder {
 
 			public void persistReminder(Reminder reminder) throws DBException;
 		}
-		 
+
 	}
 	adds {
-		 
+
 		package br.unb.cic.reminders.model.db;
 
 		import java.util.ArrayList;
@@ -656,10 +656,10 @@ delta dManageReminder {
 			}
 
 		}
-		 
+
 	}
 	adds {
-		 
+
 		package br.unb.cic.reminders.view;
 
 		import java.util.Calendar;
@@ -717,10 +717,10 @@ delta dManageReminder {
 			}
 
 		}
-		 
+
 	}
 	adds {
-		 
+
 		package br.unb.cic.reminders.view;
 
 		import br.unb.cic.reminders.controller.ReminderFilter;
@@ -730,10 +730,10 @@ delta dManageReminder {
 			public void onSelectedFilterChanged(ReminderFilter filter);
 
 		}
-		 
+
 	}
 	adds {
-		 
+
 		package br.unb.cic.reminders.view;
 
 		import br.unb.cic.reminders.model.InvalidFormatException;
@@ -747,10 +747,10 @@ delta dManageReminder {
 			}
 
 		}
-		 
+
 	}
 	adds {
-		 
+
 		package br.unb.cic.reminders.view;
 
 		import java.util.Arrays;
@@ -822,7 +822,7 @@ delta dManageReminder {
 							} else {
 								Controller.instance(getApplicationContext()).addReminder(reminder);
 							}
-							finish(); 
+							finish();
 						} catch (Exception e) {
 							Log.e("ReminderAddActivity", e.getMessage());
 							e.printStackTrace();
@@ -946,10 +946,10 @@ delta dManageReminder {
 			}
 
 		}
-		 
+
 	}
 	adds {
-		 
+
 		package br.unb.cic.reminders.view;
 
 		import java.util.Calendar;
@@ -1056,8 +1056,8 @@ delta dManageReminder {
 
 				Calendar today = Calendar.getInstance();
 				GregorianCalendar thatDay = new GregorianCalendar();
-				thatDay.set(Integer.parseInt(getItem(position).getDate().substring(6, 10)), 
-						Integer.parseInt(getItem(position).getDate().substring(3, 5)) - 1, 
+				thatDay.set(Integer.parseInt(getItem(position).getDate().substring(6, 10)),
+						Integer.parseInt(getItem(position).getDate().substring(3, 5)) - 1,
 						Integer.parseInt(getItem(position).getDate().substring(0, 2)));
 
 				switch (rowType) {
@@ -1103,8 +1103,8 @@ delta dManageReminder {
 				case NEXT_DAYS:
 					Calendar today = Calendar.getInstance();
 					GregorianCalendar thatDay = new GregorianCalendar();
-					thatDay.set(Integer.parseInt(getItem(position).getDate().substring(6, 10)), 
-							Integer.parseInt(getItem(position).getDate().substring(3, 5)) - 1, 
+					thatDay.set(Integer.parseInt(getItem(position).getDate().substring(6, 10)),
+							Integer.parseInt(getItem(position).getDate().substring(3, 5)) - 1,
 							Integer.parseInt(getItem(position).getDate().substring(0, 2)));
 
 					long diff = thatDay.getTimeInMillis() - today.getTimeInMillis();
@@ -1150,10 +1150,10 @@ delta dManageReminder {
 			}
 
 		}
-		 
+
 	}
 	adds {
-		 
+
 		package br.unb.cic.reminders.view;
 
 		import java.util.List;
@@ -1196,10 +1196,10 @@ delta dManageReminder {
 			}
 
 		}
-		 
+
 	}
 	adds {
-		 
+
 		package br.unb.cic.reminders.view;
 
 		import java.util.ArrayList;
@@ -1268,7 +1268,7 @@ delta dManageReminder {
 
 			@Override
 			public boolean onContextItemSelected(MenuItem item) {
-				if (item.getGroupId() == R.id.context_menu_reminder) { 
+				if (item.getGroupId() == R.id.context_menu_reminder) {
 					AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 					Reminder reminder = (Reminder) contextMenuAdapter.getItem(info.position);
 
@@ -1382,10 +1382,10 @@ delta dManageReminder {
 				updateListView(filter);
 			}
 		}
-		 
+
 	}
 	adds {
-		 
+
 		package br.unb.cic.reminders.view;
 
 		import java.util.Iterator;
@@ -1412,10 +1412,10 @@ delta dManageReminder {
 			}
 
 		}
-		 
+
 	}
 	adds {
-		 
+
 		package br.unb.cic.reminders.view;
 
 		import java.util.Calendar;
@@ -1474,10 +1474,10 @@ delta dManageReminder {
 			}
 
 		}
-		 
+
 	}
 	adds {
-		 
+
 		package br.unb.cic.reminders.controller;
 
 		import android.content.Context;
@@ -1502,10 +1502,10 @@ delta dManageReminder {
 			}
 
 		}
-		 
+
 	}
 	adds {
-		 
+
 		package br.unb.cic.reminders.controller;
 
 		import java.util.ArrayList;
@@ -1554,10 +1554,10 @@ delta dManageReminder {
 
 			abstract public String getName();
 		}
-		 
+
 	}
 	adds {
-		 
+
 		package br.unb.cic.reminders.model;
 
 		import java.util.regex.Matcher;
@@ -1583,10 +1583,10 @@ delta dManageReminder {
 			private String details;
 
 			@Column(column = "DATE", type = DBTypes.TEXT)
-			private String date; 
+			private String date;
 
 			@Column(column = "HOUR", type = DBTypes.TEXT)
-			private String hour; 
+			private String hour;
 
 			@Column(column = "DONE", type = DBTypes.INT)
 			private boolean done;
@@ -1679,10 +1679,10 @@ delta dManageReminder {
 			}
 
 		}
-		 
+
 	}
 	adds {
-		 
+
 		package br.unb.cic.reminders.model.db;
 
 		public class DBConstants {
@@ -1707,10 +1707,10 @@ delta dManageReminder {
 			public static String REMINDER_DONE_COLUMN = "DONE";
 
 		}
-		 
+
 	}
 	adds {
-		 
+
 		package br.unb.cic.reminders.model.db;
 
 		import android.content.Context;
@@ -1728,10 +1728,10 @@ delta dManageReminder {
 
 			public abstract ReminderDAO createReminderDAO();
 		}
-		 
+
 	}
 	adds {
-		 
+
 		package br.unb.cic.reminders.model.db;
 
 		import android.content.Context;
@@ -1747,10 +1747,10 @@ delta dManageReminder {
 				return new DefaultReminderDAO(context);
 			}
 		}
-		 
+
 	}
 	adds {
-		 
+
 		package br.unb.cic.reminders.model.cp;
 
 		import android.content.ContentProvider;
@@ -1845,10 +1845,10 @@ delta dManageReminder {
 			}
 
 		}
-		 
+
 	}
 	adds {
-		 
+
 		package br.unb.cic.reminders.view;
 
 		import java.util.List;
@@ -1873,10 +1873,10 @@ delta dManageReminder {
 			}
 
 		}
-		 
+
 	}
 	adds {
-		 
+
 		package br.unb.cic.reminders.view;
 
 		import java.util.List;
@@ -1924,10 +1924,10 @@ delta dManageReminder {
 				}
 			}
 		}
-		 
+
 	}
 	adds {
-		 
+
 		package br.unb.cic.reminders.view;
 
 		import java.util.List;
@@ -2011,10 +2011,10 @@ delta dManageReminder {
 			}
 
 		}
-		 
+
 	}
 	adds {
-		 
+
 		package br.unb.cic.reminders.view;
 
 		import java.text.ParseException;
@@ -2317,10 +2317,10 @@ delta dManageReminder {
 			protected abstract void persist(Reminder reminder);
 
 		}
-		 
+
 	}
 	adds {
-		 
+
 		package br.unb.cic.reminders.controller;
 
 		import java.util.List;
@@ -2392,7 +2392,7 @@ delta dManageReminder {
 				throw new RuntimeException("not implemented yet");
 			}
 		}
-		 
+
 	}
 }
 //#endif

@@ -8,7 +8,7 @@ delta dPriority {
 		adds public ReminderFilterArrayAdapter(Context context, List<ReminderFilter> objects) {
 			super(context, R.layout.category_row, objects);
 		}
-		//#if fixedDate
+		//#ifdef fixedDate
 		removes getView(int position, View convertView, ViewGroup parent);
 		//#endif
 		adds @Override 

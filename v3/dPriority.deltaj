@@ -10,7 +10,7 @@ delta dPriority {
 		}
 		//#ifdef fixedDate
 		removes getView(int position, View convertView, ViewGroup parent);
-		//#ifdef priority
+		//#endif
 		adds @Override 
 		public View getView(int position, View convertView, ViewGroup parent) {
 			LinearLayout filterRow;
